@@ -1,11 +1,11 @@
-const dotenv = require("dotenv");
-dotenv.config();
-require("./db/index.js");
 const express = require("express");
 const morgan = require("morgan");
+const dotenv = require("dotenv");
+
+dotenv.config();
+require("./db/index.js");
 
 const app = express();
-
 const PORT = process.env.PORT || 5001;
 
 app.use((req, res, next) => {
