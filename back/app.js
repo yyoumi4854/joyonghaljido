@@ -1,5 +1,7 @@
-const express = require("express");
 const dotenv = require("dotenv");
+dotenv.config();
+require("./db/index.js");
+const express = require("express");
 const morgan = require("morgan");
 
 const app = express();
@@ -14,7 +16,6 @@ app.use((req, res, next) => {
   }
 });
 
-dotenv.config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
