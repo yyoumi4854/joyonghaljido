@@ -1,3 +1,4 @@
+const { deleteReview } = require("../../services/reviewService");
 const ReviewModel = require("../schemas/review");
 
 class Review {
@@ -20,10 +21,16 @@ class Review {
     return review;
   }
 
-  static async updateReview(id, toUpdate) {
-    const updatedReview = await ReviewModel.findOneAndUpdate( id, toUpdate, { returnDocument: 'after' });
+  static async updateReview(reviewId, toUpdate) {
+    const updatedReview = await ReviewModel.findOneAndUpdate( reviewId, toUpdate, { returnDocument: 'after' });
 
     return updatedReview;
+  }
+
+  static async deleteReview(reviewId) {
+    const deletedReview = await ReviewModel.findOneAndDelete({_id : reviewId});
+
+    return deletedReview;
   }
 }
 

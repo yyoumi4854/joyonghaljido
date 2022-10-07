@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const { findByReviewId } = require("../db/models/Review");
 const Review = require("../db/models/Review");
 
 class reviewService {
@@ -38,7 +37,7 @@ class reviewService {
   }
 
 
-  static async updateReview(review, toUpdate) {
+  static async updateReview(reviewId, toUpdate) {
     const updates = Object.keys(toUpdate);
     
     //password hashing
@@ -48,12 +47,18 @@ class reviewService {
     }
     
     updates.forEach(async (update) => {
-      await Review.updateReview({ _id: review._id }, { [update]: toUpdate[update] });
+      await Review.updateReview({ _id: reviewId }, { [update]: toUpdate[update] });
     })
 
-    const updatedReview = await Review.findByReviewId(review._id);
+    const updatedReview = await Review.findByReviewId(reviewId);
 
     return updatedReview;
+  }
+
+  static async deleteReview(reviewId) {
+    const deletedReview = await Review.deleteReview(reviewId);
+
+    return deletedReview;
   }
 }
 

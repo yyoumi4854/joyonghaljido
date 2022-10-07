@@ -51,9 +51,9 @@ router.get("/reviews/:gu", async (req, res, next) => {
 })
 
 //update review
-router.put("/reviews/:id", passwordMiddleware,async (req, res, next) => {
+router.put("/reviews/:id", passwordMiddleware, async (req, res, next) => {
   try {
-    const review = req.currentReview;
+    const reviewId = req.currentReview._id;
     const updates = [ "gu", "dong", "title", "description", "password", "noiseLevel" ];
     let toUpdate = {};
     
@@ -63,7 +63,7 @@ router.put("/reviews/:id", passwordMiddleware,async (req, res, next) => {
       }
     })
 
-    const updatedReview = await reviewService.updateReview(review, toUpdate)
+    const updatedReview = await reviewService.updateReview(reviewId, toUpdate)
 
     res.status(200).json(updatedReview);
   } catch(error) {
@@ -73,5 +73,17 @@ router.put("/reviews/:id", passwordMiddleware,async (req, res, next) => {
 
 
 //delete review
+router.delete("/reviews/:id", passwordMiddleware, async (req, res, next) => {
+  try {
+    const reviewId = req.currentReview._id;
+
+    const deletedReview = await reviewService.deleteReview(reviewId);
+
+    res.status(200).json(deletedReview);
+  } catch(error) {
+    next(error);
+
+  }
+})
 
 module.exports = router;
