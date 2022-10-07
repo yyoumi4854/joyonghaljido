@@ -17,7 +17,7 @@ const Header = () => {
             backgroundColor: 'salmon'
         }}>
             <div>
-                <Link href='/'><span>🤫 조용한 동네</span></Link>
+                <Link href='/'><span>조용할 지도</span></Link>
             </div>
             <div>
                 <Link href='/prolog'><span>PROLOG</span></Link>
