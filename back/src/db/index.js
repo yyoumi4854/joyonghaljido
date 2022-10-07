@@ -11,5 +11,5 @@ db.on("connected", () => {
 });
 
 db.on("error", (error) => {
-  console.log("✅ MongoDB 연결에 실패하였습니다...\n" + error);
+  console.log("✅ MongoDB 연결에 실패하였습니다..\n" + error);
 });
