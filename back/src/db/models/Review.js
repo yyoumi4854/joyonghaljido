@@ -1,7 +1,7 @@
 const ReviewModel = require("../schemas/review");
 
 class Review {
-  static async create(newReview) {
+  static async createReview(newReview) {
     const review = new ReviewModel(newReview);
     await review.save();
 
@@ -18,6 +18,12 @@ class Review {
     const review = await ReviewModel.findById({ _id: reviewId });
 
     return review;
+  }
+
+  static async updateReview(id, toUpdate) {
+    const updatedReview = await ReviewModel.findOneAndUpdate( id, toUpdate, { returnDocument: 'after' });
+
+    return updatedReview;
   }
 }
 

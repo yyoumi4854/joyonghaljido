@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const { findByReviewId } = require("../db/models/Review");
 const Review = require("../db/models/Review");
 
 class reviewService {
@@ -13,7 +14,7 @@ class reviewService {
       noiseLevel,
     };
 
-      const createdReview = await Review.create(newReview);
+      const createdReview = await Review.createReview(newReview);
       
       if (createdReview) {
         createdReview.errorMessage = null;
@@ -36,27 +37,24 @@ class reviewService {
     return reviews;
   }
 
-  static async identifyPassword(reviewId, password) {
-    const review = await Review.findByReviewId(reviewId);
-    console.log(review);
 
-    if (!review) {
-      throw new Error("해당 리뷰는 존재하지 않습니다.");
+  static async updateReview(review, toUpdate) {
+    const updates = Object.keys(toUpdate);
+    
+    //password hashing
+    if (toUpdate.password) {
+      const hashedPassword = await bcrypt.hash(toUpdate.password, 8);
+      toUpdate.password = hashedPassword;
     }
+    
+    updates.forEach(async (update) => {
+      await Review.updateReview({ _id: review._id }, { [update]: toUpdate[update] });
+    })
 
-    const isMatched = await bcrypt.compare(password, review.password);
-    console.log(isMatched);
+    const updatedReview = await Review.findByReviewId(review._id);
 
-    if (!isMatched) {
-        throw new Error("비밀번호가 일치하지 않습니다.");
-    }
-
-    return isMatched;
+    return updatedReview;
   }
-
-  // static async updateReview(review, toUpdate) {
-  //   const updatedReview = await Review.updateReview(review, toUpdate)
-  // }
 }
 
 module.exports = reviewService;
