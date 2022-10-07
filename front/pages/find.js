@@ -7,11 +7,8 @@ import {
     ZoomableGroup,
 } from 'react-simple-maps';
 
-
 import { useState } from 'react';
-
 import ReactTooltip from 'react-tooltip'
-
 import SeoulMap from '../dummy/seoul.json';
 import GMap from '../dummy/gb.json';
 

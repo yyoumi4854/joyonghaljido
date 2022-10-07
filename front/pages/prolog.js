@@ -4,7 +4,6 @@ import G1_YearbyGu from './stats/G1_YearbyGu';
 import G3_EachGu from './stats/G3_EachGu';
 import {useState} from 'react'
 
-
 const Prolog = () => {
     const [isDay, setIsDay] = useState(1)
     const dayNightToggle = () => {setIsDay(prevStatus => !prevStatus)}
