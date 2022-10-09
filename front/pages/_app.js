@@ -2,6 +2,8 @@ import Head from 'next/head';
 // import '../css/app.css'
 import GlobalStyles from '../css/globalStyles';
 import { ThemeProvider } from "styled-components";
+import theme from '../css/theme';
+
 
 import Header from '../components/header';
 
@@ -13,9 +15,9 @@ const app = ({ Component }) => {
             </Head>
 
             <GlobalStyles/>
-            <ThemeProvider>
+            <ThemeProvider theme={theme}>
                 <Header />
-                <div style={{ paddingTop: '100px', display: 'flex', justifyContent: 'center' }}>
+                <div>
                     <Component />
                 </div>
             </ThemeProvider>
