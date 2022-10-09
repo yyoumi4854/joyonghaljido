@@ -25,8 +25,8 @@ app.get("/", (req, res) => {
   res.send("Hello Team04");
 });
 
-app.use(pinRouter);
-app.use(markerRouter);
+app.use("/pins", pinRouter);
+app.use("/markers", markerRouter);
 
 app.listen(PORT, () => {
   console.log(`✅ Server is running on port ${PORT}`);

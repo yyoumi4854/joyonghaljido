@@ -4,25 +4,25 @@ const PinSchema = new Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
   },
-  address: String,
-  gu: {
-    type: String,
-    required: true,
-  },
-  dong: {
-    type: String,
-    required: true,
-  },
-  lng: {
+  longitude: {
     type: Number,
     required: true,
   },
-  lat: {
+  latitude: {
     type: Number,
     required: true,
   },
+  // guId: {
+  //   type: String,
+  //   required: true,
+  //   ref: "Gu",
+  // },
+  // reviewId: {
+  //   type: String,
+  //   required: true,
+  //   ref: "Review",
+  // },
 });
 
 const PinModel = model("Pin", PinSchema);

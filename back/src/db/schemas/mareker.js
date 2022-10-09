@@ -1,26 +1,26 @@
 const { Schema, model } = require("mongoose");
 
-// (가능하다면) schema에 reviewCount 넣는 방향으로 고민중
 const MarkerSchema = new Schema({
-  dong: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  gu: {
+  name: {
     type: String,
     required: true,
   },
-  lng: {
+  longitude: {
     type: Number,
     required: true,
   },
-  lat: {
+  latitude: {
     type: Number,
     required: true,
   },
-  // reviews: {
-  //   type: ObjectId,
+  // guId: {
+  //   type: String,
+  //   required: true,
+  //   ref: "Gu",
+  // },
+  // reviewId: {
+  //   type: String,
+  //   required: true,
   //   ref: "Review",
   // },
 });
