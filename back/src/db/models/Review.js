@@ -1,4 +1,5 @@
-const { ReviewModel } = require("..");
+const { ReviewModel, GuTestModel, DongTestModel } = require("..");
+const { Types } = require("mongoose");
 
 class Review {
   static async createReview(newReview) {
@@ -9,13 +10,51 @@ class Review {
   }
 
   static async getReviewsByGu(guId) {
-    const reviews = await ReviewModel.find({ guId });
+    const reviews = await GuTestModel.aggregate([
+      { $match: { _id: Types.ObjectId(guId) }},
+      {
+        $lookup: {
+          from: "reviews",
+          localField: "_id",
+          foreignField: "guId",
+          as: "reviews",
+        }
+      }, 
+      { $unwind: "$reviews" },
+      { 
+        $project: {
+          name: 1,
+          "reviews._id": 1,
+          "reviews.title": 1,
+          "reviews.description": 1,
+          "reviews.noiseLevel": 1,
+        }
+    }]);
 
     return reviews;
   }
 
   static async getReviewsByDong(dongId) {
-    const reviews = await ReviewModel.find({ dongId });
+    const reviews = await DongTestModel.aggregate([
+      { $match: { _id: Types.ObjectId(dongId) }},
+      {
+        $lookup: {
+          from: "reviews",
+          localField: "_id",
+          foreignField: "dongId",
+          as: "reviews",
+        }
+      }, 
+      { $unwind: "$reviews" },
+      { 
+        $project: {
+          name: 1,
+          "reviews._id": 1,
+          "reviews.title": 1,
+          "reviews.description": 1,
+          "reviews.noiseLevel": 1,
+        }
+    }]);
 
     return reviews;
   }

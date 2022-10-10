@@ -4,14 +4,12 @@ const { GuTestModel, DongTestModel } = require("../db");
 
 
 class reviewService {
-  static async addReview({ gu, dong, title, description, password, noiseLevel }) {
+  static async addReview({ guId, dongId, title, description, password, noiseLevel }) {
     const hashedPassword = await bcrypt.hash(password, 8);
-    const guData = await GuTestModel.findOne({ name: gu });
-    const dongData = await DongTestModel.findOne({ name: dong });
 
     const newReview = {
-      guId: guData._id,
-      dongId: dongData._id,
+      guId,
+      dongId,
       title,
       description,
       password: hashedPassword,

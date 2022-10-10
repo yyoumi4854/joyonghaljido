@@ -34,6 +34,7 @@ const ReviewSchema = Schema(
   }
 );
 
+
 //json으로 보낼 때 password 빼고 보냄
 ReviewSchema.methods.toJSON = function () {
   const review = this;

@@ -7,16 +7,16 @@ const router = Router();
 //create review
 router.post("/reviews", async (req, res, next) => {
   try {
-    const gu = req.body.gu;
-    const dong = req.body.dong;
+    const guId = req.body.guId;
+    const dongId = req.body.dongId;
     const title = req.body.title;
     const description = req.body.description;
     const password = req.body.password;
     const noiseLevel = req.body.noiseLevel;
 
     const newReview = await reviewService.addReview({
-      gu,
-      dong,
+      guId,
+      dongId,
       title,
       description,
       password,
@@ -33,35 +33,34 @@ router.post("/reviews", async (req, res, next) => {
   }
 });
 
-//get reviews by gu
-router.get("/reviews/:guId", async (req, res, next) => {
+//get reviews
+router.get("/reviews", async (req, res, next) => {
   try {
-    const guId = req.params.guId;
+    const guId = req.query.guId;
+    const dongId = req.query.dongId;
 
-    const reviews = await reviewService.getReviewsByGu(guId);
+    if (guId) {
+      const reviews = await reviewService.getReviewsByGu(guId);
 
-    if (reviews.errorMessage) {
-      throw new Error(reviews.errorMessage);
+      if (reviews.errorMessage) {
+        throw new Error(reviews.errorMessage);
+      }
+  
+      res.status(200).json(reviews);
     }
 
-    res.status(200).json(reviews);
-  } catch (error) {
-    next(error);
-  }
-})
+    if (dongId) {
+      const dongId = req.query.dongId;
 
-//get reviews by dong
-router.get("/reviews/:guId/:dongId", async (req, res, next) => {
-  try {
-    const dongId = req.params.dongId;
-
-    const reviews = await reviewService.getReviewsByDong(dongId);
-
-    if(reviews.errorMessage) {
-      throw new Error(reviews.errorMessage);
+      const reviews = await reviewService.getReviewsByDong(dongId);
+  
+      if(reviews.errorMessage) {
+        throw new Error(reviews.errorMessage);
+      }
+  
+      res.status(200).json(reviews);
     }
 
-    res.status(200).json(reviews);
   } catch (error) {
     next(error);
   }
