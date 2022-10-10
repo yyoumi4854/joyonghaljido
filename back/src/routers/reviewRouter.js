@@ -34,11 +34,11 @@ router.post("/reviews", async (req, res, next) => {
 });
 
 //get review by gu
-router.get("/reviews/:gu", async (req, res, next) => {
+router.get("/reviews/:guId", async (req, res, next) => {
   try {
-    const gu = req.params.gu;
+    const guId = req.params.guId;
 
-    const reviews = await reviewService.getReviewsByGu(gu);
+    const reviews = await reviewService.getReviewsByGu(guId);
 
     if (reviews.errorMessage) {
       throw new Error(reviews.errorMessage);

@@ -1,14 +1,21 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, Types } = require("mongoose");
 
 const ReviewSchema = Schema(
   {
-    gu: {
-      type: String,
+    // _id: {
+    //   type: String,
+    //   required: true,
+    //   default: String(new Types.ObjectId()),
+    // },
+    guId: {
+      type: Types.ObjectId,
       required: true,
+      ref: "GuTest",
     },
-    dong: {
-      type: String,
+    dongId: {
+      type: Types.ObjectId,
       required: true,
+      ref: "DongTest",
     },
     title: {
       type: String,
@@ -23,7 +30,7 @@ const ReviewSchema = Schema(
       required: true,
     },
     noiseLevel: {
-      type: String,
+      type: Number,
       required: true,
     },
   },

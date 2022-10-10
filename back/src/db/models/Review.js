@@ -1,5 +1,4 @@
-const { deleteReview } = require("../../services/reviewService");
-const ReviewModel = require("../schemas/review");
+const { ReviewModel } = require("..");
 
 class Review {
   static async createReview(newReview) {
@@ -9,8 +8,8 @@ class Review {
     return review;
   }
 
-  static async getReviewsByGu(gu) {
-    const reviews = await ReviewModel.find({ gu })
+  static async getReviewsByGu(guId) {
+    const reviews = await ReviewModel.find({ guId });
 
     return reviews;
   }
@@ -28,7 +27,7 @@ class Review {
   }
 
   static async deleteReview(reviewId) {
-    const deletedReview = await ReviewModel.findOneAndDelete({_id : reviewId});
+    const deletedReview = await ReviewModel.findOneAndDelete({ _id: reviewId });
 
     return deletedReview;
   }
