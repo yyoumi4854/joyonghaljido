@@ -3,8 +3,9 @@ dotenv.config();
 require("./src/db/index.js");
 const express = require("express");
 const morgan = require("morgan");
-const pinRouter = require("./src/routers/pinRouter");
-const dongRouter = require("./src/routers/dongRouter");
+const guRouter = require("./src/routers/guRouter");
+// const pinRouter = require("./src/routers/pinRouter");
+// const dongRouter = require("./src/routers/dongRouter");
 
 const app = express();
 
@@ -25,8 +26,9 @@ app.get("/", (req, res) => {
   res.send("Hello Team04");
 });
 
-app.use("/pins", pinRouter);
-app.use("/dongs", dongRouter);
+app.use("/gus", guRouter);
+// app.use("/pins", pinRouter);
+// app.use("/dongs", dongRouter);
 
 app.listen(PORT, () => {
   console.log(`✅ Server is running on port ${PORT}`);

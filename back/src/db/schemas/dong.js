@@ -1,6 +1,11 @@
 const { Schema, model } = require("mongoose");
 
 const DongSchema = new Schema({
+  guId: {
+    type: ObjectId,
+    required: true,
+    ref: "Gu",
+  },
   name: {
     type: String,
     required: true,
@@ -13,16 +18,6 @@ const DongSchema = new Schema({
     type: Number,
     required: true,
   },
-  // guId: {
-  //   type: String,
-  //   required: true,
-  //   ref: "Gu",
-  // },
-  // reviewId: {
-  //   type: String,
-  //   required: true,
-  //   ref: "Review",
-  // },
 });
 
 const DongModel = model("Dong", DongSchema);

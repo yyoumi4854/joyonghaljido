@@ -13,16 +13,16 @@ const PinSchema = new Schema({
     type: Number,
     required: true,
   },
-  // guId: {
-  //   type: String,
-  //   required: true,
-  //   ref: "Gu",
-  // },
-  // reviewId: {
-  //   type: String,
-  //   required: true,
-  //   ref: "Review",
-  // },
+  guId: {
+    type: ObjectId,
+    required: true,
+    ref: "Gu",
+  },
+  dongId: {
+    type: ObjectId,
+    required: true,
+    ref: "Dong",
+  },
 });
 
 const PinModel = model("Pin", PinSchema);
