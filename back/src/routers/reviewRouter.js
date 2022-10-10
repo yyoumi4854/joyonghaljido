@@ -70,7 +70,7 @@ router.get("/reviews", async (req, res, next) => {
 router.put("/reviews/:reviewId", passwordMiddleware, async (req, res, next) => {
   try {
     const reviewId = req.currentReview._id;
-    const updates = [ "gu", "dong", "title", "description", "password", "noiseLevel" ];
+    const updates = [ "guId", "dongId", "title", "description", "password", "noiseLevel" ];
     let toUpdate = {};
     
     updates.forEach((update) => {

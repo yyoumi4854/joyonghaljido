@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt");
 const Review = require("../db/models/Review");
-const { GuTestModel, DongTestModel } = require("../db");
 
 
 class reviewService {
@@ -54,20 +53,6 @@ class reviewService {
 
   static async updateReview(reviewId, toUpdate) {
     const updates = Object.keys(toUpdate);
-
-    if (toUpdate.gu) {
-      const guData = await GuTestModel.findOne({ name: toUpdate.gu });
-      const idx = updates.indexOf("gu");
-      updates.splice(idx, 1, "guId");
-      toUpdate.guId = guData._id;
-    }
-
-    if (toUpdate.dong) {
-      const dongData = await DongTestModel.findOne({ name: toUpdate.dong });
-      const idx = updates.indexOf("dong");
-      updates.splice(idx, 1, "dongId");
-      toUpdate.dongId = dongData._id;
-    }
     
     //password hashing
     if (toUpdate.password) {
