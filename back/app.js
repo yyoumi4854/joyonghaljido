@@ -4,8 +4,8 @@ require("./src/db/index.js");
 const express = require("express");
 const morgan = require("morgan");
 const guRouter = require("./src/routers/guRouter");
+const dongRouter = require("./src/routers/dongRouter");
 // const pinRouter = require("./src/routers/pinRouter");
-// const dongRouter = require("./src/routers/dongRouter");
 
 const app = express();
 
@@ -27,8 +27,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/gus", guRouter);
+app.use("/dongs", dongRouter);
 // app.use("/pins", pinRouter);
-// app.use("/dongs", dongRouter);
 
 app.listen(PORT, () => {
   console.log(`✅ Server is running on port ${PORT}`);
