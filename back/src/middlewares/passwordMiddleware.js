@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const Review = require("../db/models/Review");
 
 const passwordMiddleware = async (req, res, next) => {
-    const reviewId = req.params.id;
+    const reviewId = req.params.reviewId;
     const currentPassword = req.body.currentPassword;
 
     const review = await Review.findByReviewId(reviewId);

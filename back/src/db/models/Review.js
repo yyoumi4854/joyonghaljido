@@ -14,6 +14,12 @@ class Review {
     return reviews;
   }
 
+  static async getReviewsByDong(dongId) {
+    const reviews = await ReviewModel.find({ dongId });
+
+    return reviews;
+  }
+
   static async findByReviewId(reviewId) {
     const review = await ReviewModel.findById({ _id: reviewId });
 

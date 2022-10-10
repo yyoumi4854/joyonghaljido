@@ -33,7 +33,7 @@ router.post("/reviews", async (req, res, next) => {
   }
 });
 
-//get review by gu
+//get reviews by gu
 router.get("/reviews/:guId", async (req, res, next) => {
   try {
     const guId = req.params.guId;
@@ -50,8 +50,25 @@ router.get("/reviews/:guId", async (req, res, next) => {
   }
 })
 
+//get reviews by dong
+router.get("/reviews/:guId/:dongId", async (req, res, next) => {
+  try {
+    const dongId = req.params.dongId;
+
+    const reviews = await reviewService.getReviewsByDong(dongId);
+
+    if(reviews.errorMessage) {
+      throw new Error(reviews.errorMessage);
+    }
+
+    res.status(200).json(reviews);
+  } catch (error) {
+    next(error);
+  }
+})
+
 //update review
-router.put("/reviews/:id", passwordMiddleware, async (req, res, next) => {
+router.put("/reviews/:reviewId", passwordMiddleware, async (req, res, next) => {
   try {
     const reviewId = req.currentReview._id;
     const updates = [ "gu", "dong", "title", "description", "password", "noiseLevel" ];
@@ -73,7 +90,7 @@ router.put("/reviews/:id", passwordMiddleware, async (req, res, next) => {
 
 
 //delete review
-router.delete("/reviews/:id", passwordMiddleware, async (req, res, next) => {
+router.delete("/reviews/:reviewId", passwordMiddleware, async (req, res, next) => {
   try {
     const reviewId = req.currentReview._id;
 

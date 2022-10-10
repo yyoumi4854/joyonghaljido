@@ -2,11 +2,6 @@ const { Schema, model, Types } = require("mongoose");
 
 const ReviewSchema = Schema(
   {
-    // _id: {
-    //   type: String,
-    //   required: true,
-    //   default: String(new Types.ObjectId()),
-    // },
     guId: {
       type: Types.ObjectId,
       required: true,
