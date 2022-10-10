@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const MarkerSchema = new Schema({
+const DongSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -25,6 +25,6 @@ const MarkerSchema = new Schema({
   // },
 });
 
-const MarkerModel = model("Marker", MarkerSchema);
+const DongModel = model("Dong", DongSchema);
 
-module.exports = MarkerModel;
+module.exports = DongModel;
