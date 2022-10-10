@@ -1,8 +1,7 @@
 import Head from 'next/head';
-// import '../css/app.css'
-import GlobalStyles from '../css/globalStyles';
+import GlobalStyles from '../styles/globalStyles';
 import { ThemeProvider } from "styled-components";
-import theme from '../css/theme';
+import theme from '../styles/theme';
 
 
 import Header from '../components/header';
@@ -11,7 +10,7 @@ const app = ({ Component }) => {
     return (
         <>
             <Head>
-                <title>조용한 동네찾기</title>
+                <title>조용할지도</title>
             </Head>
 
             <GlobalStyles/>
