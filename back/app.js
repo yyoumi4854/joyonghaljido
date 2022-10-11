@@ -9,6 +9,7 @@ const pinRouter = require("./src/routers/pinRouter");
 
 const errorMiddleware = require("./src/middlewares/errorMiddleware");
 const reviewRouter = require("./src/routers/reviewRouter");
+const locationRouter = require("./src/routers/locationRouter.js");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
 app.use("/gus", guRouter);
 app.use("/dongs", dongRouter);
 app.use("/pins", pinRouter);
+app.use("/location", locationRouter);
 app.use(reviewRouter);
 app.use(errorMiddleware);
 
