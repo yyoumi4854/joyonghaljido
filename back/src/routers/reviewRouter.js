@@ -1,11 +1,12 @@
 const { Router } = require("express");
 const reviewService = require("../services/reviewService");
 const passwordMiddleware = require("../middlewares/passwordMiddleware");
+const postRequestLimiter = require("../middlewares/ipLimitMiddleware");
 
 const router = Router();
 
 //create review
-router.post("/reviews", async (req, res, next) => {
+router.post("/reviews", postRequestLimiter, async (req, res, next) => {
   try {
     const guId = req.body.guId;
     const dongId = req.body.dongId;
