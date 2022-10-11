@@ -5,7 +5,7 @@ const guRouter = Router();
 
 guRouter.get("/:guId", async (req, res) => {
   const { guId } = req.params;
-  const foundGu = await guModel.find({ _id: guId });
+  const foundGu = await guModel.findOne({ _id: guId });
   res.status(200).json(foundGu);
 });
 
