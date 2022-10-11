@@ -1,4 +1,4 @@
-const { ReviewModel, GuTestModel, DongTestModel } = require("..");
+const { ReviewModel, GuModel, DongModel } = require("..");
 const { Types } = require("mongoose");
 
 class Review {
@@ -10,8 +10,8 @@ class Review {
   }
 
   static async getReviewsByGu(guId) {
-    const reviews = await GuTestModel.aggregate([
-      { $match: { _id: Types.ObjectId(guId) }},
+    const reviews = await GuModel.aggregate([
+      { $match: { _id: guId }},
       {
         $lookup: {
           from: "reviews",
@@ -37,8 +37,8 @@ class Review {
   }
 
   static async getReviewsByDong(dongId) {
-    const reviews = await DongTestModel.aggregate([
-      { $match: { _id: Types.ObjectId(dongId) }},
+    const reviews = await DongModel.aggregate([
+      { $match: { _id: dongId }},
       {
         $lookup: {
           from: "reviews",
