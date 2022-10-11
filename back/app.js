@@ -5,7 +5,7 @@ const express = require("express");
 const morgan = require("morgan");
 const guRouter = require("./src/routers/guRouter");
 const dongRouter = require("./src/routers/dongRouter");
-// const pinRouter = require("./src/routers/pinRouter");
+const pinRouter = require("./src/routers/pinRouter");
 
 const errorMiddleware = require("./src/middlewares/errorMiddleware");
 const reviewRouter = require("./src/routers/reviewRouter");
@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 
 app.use("/gus", guRouter);
 app.use("/dongs", dongRouter);
-// app.use("/pins", pinRouter);
+app.use("/pins", pinRouter);
 app.use(reviewRouter);
 app.use(errorMiddleware);
 
