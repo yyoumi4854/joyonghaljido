@@ -147,7 +147,7 @@ const Ranking = () => {
     DB_ASC_OBJ2.forEach((obj,idx) => {DB_ASC2.push(
         <GU_list key={idx}>
             <GU_name>{obj['name']}</GU_name> 
-            <GU_info>{obj['DB']}DB</GU_info>
+            <GU_info>{obj['DB']}(dB)</GU_info>
         </GU_list>)});
     DB_DSC_OBJ1.forEach((obj,idx) => {DB_DSC1.push(
         <GU_list key={idx}>
