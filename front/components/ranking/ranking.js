@@ -21,8 +21,8 @@ import { IoIosArrowUp } from "react-icons/io";
 
 const Ranking = () => {
 
-    const [대분류, set대분류] = useState('소음') // 소음 vs 민원
-    const [소분류, set소분류] = useState('by수치') // by수치 vs by단어
+    const [대상분류, set대상분류] = useState('소음') // 소음 vs 민원
+    const [정렬선택, set정렬선택] = useState('by수치') // by수치 vs by단어
     const [수치정렬, set수치정렬] = useState('오름') // 오름 vs 내림 (by수치)
     const [단어정렬, set단어정렬] = useState('오름') // 오름 vs 내림 (by단어)
     const [선택버튼, set선택버튼] = useState('수치오름') // 수치오름, 수치내림, 단어오름, 단어내림
@@ -134,6 +134,7 @@ const Ranking = () => {
     let DB_ASC2 = []
     let DB_DSC1 = []
     let DB_DSC2 = []
+    
     DB_OBJ.forEach((obj,idx)     => {DB.push(
         <GU_list key={idx}>
             <GU_name>{obj['name']}</GU_name> 
@@ -164,72 +165,66 @@ const Ranking = () => {
         <>            
             <Container>
                 <Category_box>
-                    {대분류=='소음' && <>
-                        <Category_click onClick={()=>{set대분류('소음')}}> 소음(DB) </Category_click>
-                        <Category_basic onClick={()=>{set대분류('민원')}}> 민원(건) </Category_basic>
+                    {대상분류=='소음' && <>
+                        <Category_click onClick={()=>{set대상분류('소음')}}> 소음(dB) </Category_click>
+                        <Category_basic onClick={()=>{set대상분류('민원')}}> 민원(건) </Category_basic>
                     </>}
-
-                    {대분류=='민원' && <>
-                        <Category_basic onClick={()=>{set대분류('소음')}}> 소음(DB) </Category_basic>
-                        <Category_click onClick={()=>{set대분류('민원')}}> 민원(건) </Category_click>
+                    {대상분류=='민원' && <>
+                        <Category_basic onClick={()=>{set대상분류('소음')}}> 소음(dB) </Category_basic>
+                        <Category_click onClick={()=>{set대상분류('민원')}}> 민원(건) </Category_click>
                     </>}
                 </Category_box>
                 <OrderContainer>
                     <OrderBoxL>
-                        {대분류=='소음' && '소음'}
-                        {대분류=='민원' && '민원'}
+                        {대상분류=='소음' && '소음(dB)'}
+                        {대상분류=='민원' && '민원(건)'}
                     </OrderBoxL>
-                    
                     <OrderBoxR>
-                        {선택버튼 == '수치오름' && 
-                            <>
-                                수치 글자순 <br></br>
-                                <OrderButton1 onClick={()=>{set소분류('by수치'); set수치정렬('오름'); set선택버튼('수치오름');}}><IoIosArrowUp/></OrderButton1>
-                                <OrderButton0 onClick={()=>{set소분류('by수치'); set수치정렬('내림'); set선택버튼('수치내림');}}><IoIosArrowDown/></OrderButton0> &nbsp; &nbsp;
-                                <OrderButton0 onClick={()=>{set소분류('by단어'); set단어정렬('오름'); set선택버튼('단어오름');}}><IoIosArrowUp/></OrderButton0>
-                                <OrderButton0 onClick={()=>{set소분류('by단어'); set단어정렬('내림'); set선택버튼('단어내림');}}><IoIosArrowDown/></OrderButton0>
-                            </>
-                        }
-                        {선택버튼 == '수치내림' && 
-                            <>
-                                수치 글자순 <br></br>
-                                <OrderButton0 onClick={()=>{set소분류('by수치'); set수치정렬('오름'); set선택버튼('수치오름');}}><IoIosArrowUp/></OrderButton0>
-                                <OrderButton1 onClick={()=>{set소분류('by수치'); set수치정렬('내림'); set선택버튼('수치내림');}}><IoIosArrowDown/></OrderButton1> &nbsp; &nbsp;
-                                <OrderButton0 onClick={()=>{set소분류('by단어'); set단어정렬('오름'); set선택버튼('단어오름');}}><IoIosArrowUp/></OrderButton0>
-                                <OrderButton0 onClick={()=>{set소분류('by단어'); set단어정렬('내림'); set선택버튼('단어내림');}}><IoIosArrowDown/></OrderButton0>
-                            </>
-                        }
-                        {선택버튼 == '단어오름' && 
-                            <>
-                                수치 글자순 <br></br>
-                                <OrderButton0 onClick={()=>{set소분류('by수치'); set수치정렬('오름'); set선택버튼('수치오름');}}><IoIosArrowUp/></OrderButton0>
-                                <OrderButton0 onClick={()=>{set소분류('by수치'); set수치정렬('내림'); set선택버튼('수치내림');}}><IoIosArrowDown/></OrderButton0> &nbsp; &nbsp;
-                                <OrderButton1 onClick={()=>{set소분류('by단어'); set단어정렬('오름'); set선택버튼('단어오름');}}><IoIosArrowUp/></OrderButton1>
-                                <OrderButton0 onClick={()=>{set소분류('by단어'); set단어정렬('내림'); set선택버튼('단어내림');}}><IoIosArrowDown/></OrderButton0>
-                            </>
-                        }
-                        {선택버튼 == '단어내림' && 
-                            <>
-                                수치 글자순 <br></br>
-                                <OrderButton0 onClick={()=>{set소분류('by수치'); set수치정렬('오름'); set선택버튼('수치오름');}}><IoIosArrowUp/></OrderButton0>
-                                <OrderButton0 onClick={()=>{set소분류('by수치'); set수치정렬('내림'); set선택버튼('수치내림');}}><IoIosArrowDown/></OrderButton0> &nbsp; &nbsp;
-                                <OrderButton0 onClick={()=>{set소분류('by단어'); set단어정렬('오름'); set선택버튼('단어오름');}}><IoIosArrowUp/></OrderButton0>
-                                <OrderButton1 onClick={()=>{set소분류('by단어'); set단어정렬('내림'); set선택버튼('단어내림');}}><IoIosArrowDown/></OrderButton1>
-                            </>
-                        }
+                        {정렬선택=='by수치' && 수치정렬=='오름' && 단어정렬=='오름' && <>
+                            수치순<OrderButton1 onClick={()=>{set수치정렬('내림');}}><IoIosArrowUp/>  </OrderButton1>
+                            글자순<OrderButton0 onClick={()=>{set정렬선택('by단어');}}><IoIosArrowUp/>  </OrderButton0>
+                        </>}
+                        {정렬선택=='by수치' && 수치정렬=='오름' && 단어정렬=='내림' && <>
+                            수치순<OrderButton1 onClick={()=>{set수치정렬('내림');}}><IoIosArrowUp/>  </OrderButton1>
+                            글자순<OrderButton0 onClick={()=>{set정렬선택('by단어');}}><IoIosArrowDown/></OrderButton0>
+                        </>}
+                        {정렬선택=='by수치' && 수치정렬=='내림' && 단어정렬=='오름' && <>
+                            수치순<OrderButton1 onClick={()=>{set수치정렬('오름');}}><IoIosArrowDown/></OrderButton1>
+                            글자순<OrderButton0 onClick={()=>{set정렬선택('by단어');}}><IoIosArrowUp/>  </OrderButton0>
+                        </>}
+                        {정렬선택=='by수치' && 수치정렬=='내림' && 단어정렬=='내림' && <>
+                            수치순<OrderButton1 onClick={()=>{set수치정렬('오름');}}><IoIosArrowDown/></OrderButton1>
+                            글자순<OrderButton0 onClick={()=>{set정렬선택('by단어');}}><IoIosArrowDown/></OrderButton0>
+                        </>}
+                        
+                        {정렬선택=='by단어' && 수치정렬=='오름' && 단어정렬=='오름' && <>
+                            수치순<OrderButton0 onClick={()=>{set정렬선택('by수치');}}><IoIosArrowUp/>  </OrderButton0>
+                            글자순<OrderButton1 onClick={()=>{set단어정렬('내림');}}><IoIosArrowUp/>  </OrderButton1>
+                        </>}
+                        {정렬선택=='by단어' && 수치정렬=='오름' && 단어정렬=='내림' && <>
+                            수치순<OrderButton0 onClick={()=>{set정렬선택('by수치');}}><IoIosArrowUp/>  </OrderButton0>
+                            글자순<OrderButton1 onClick={()=>{set단어정렬('오름');}}><IoIosArrowDown/></OrderButton1>
+                        </>}
+                        {정렬선택=='by단어' && 수치정렬=='내림' && 단어정렬=='오름' && <>
+                            수치순<OrderButton0 onClick={()=>{set정렬선택('by수치');}}><IoIosArrowDown/></OrderButton0>
+                            글자순<OrderButton1 onClick={()=>{set단어정렬('내림');}}><IoIosArrowUp/>  </OrderButton1>
+                        </>}
+                        {정렬선택=='by단어' && 수치정렬=='내림' && 단어정렬=='내림' && <>
+                            수치순<OrderButton0 onClick={()=>{set정렬선택('by수치');}}><IoIosArrowDown/></OrderButton0>
+                            글자순<OrderButton1 onClick={()=>{set단어정렬('오름');}}><IoIosArrowDown/></OrderButton1>
+                        </>}
                     </OrderBoxR>
                 </OrderContainer>
                 <hr></hr>
-                
                 <GU_container>
-                    {(대분류=='민원' && 소분류=='by단어' && 단어정렬=='오름') ? MW_ASC2 : ''}
-                    {(대분류=='민원' && 소분류=='by단어' && 단어정렬=='내림') ? MW_DSC2 : ''}
-                    {(대분류=='민원' && 소분류=='by수치' && 수치정렬=='오름') ? MW_ASC1 : ''}
-                    {(대분류=='민원' && 소분류=='by수치' && 수치정렬=='내림') ? MW_DSC1 : ''}
-                    {(대분류=='소음' && 소분류=='by단어' && 단어정렬=='오름') ? DB_ASC2 : ''}
-                    {(대분류=='소음' && 소분류=='by단어' && 단어정렬=='내림') ? DB_DSC2 : ''}
-                    {(대분류=='소음' && 소분류=='by수치' && 수치정렬=='오름') ? DB_ASC1 : ''}
-                    {(대분류=='소음' && 소분류=='by수치' && 수치정렬=='내림') ? DB_DSC1 : ''}
+                    {(대상분류=='민원' && 정렬선택=='by단어' && 단어정렬=='오름') ? MW_ASC2 : ''}
+                    {(대상분류=='민원' && 정렬선택=='by단어' && 단어정렬=='내림') ? MW_DSC2 : ''}
+                    {(대상분류=='민원' && 정렬선택=='by수치' && 수치정렬=='오름') ? MW_ASC1 : ''}
+                    {(대상분류=='민원' && 정렬선택=='by수치' && 수치정렬=='내림') ? MW_DSC1 : ''}
+                    {(대상분류=='소음' && 정렬선택=='by단어' && 단어정렬=='오름') ? DB_ASC2 : ''}
+                    {(대상분류=='소음' && 정렬선택=='by단어' && 단어정렬=='내림') ? DB_DSC2 : ''}
+                    {(대상분류=='소음' && 정렬선택=='by수치' && 수치정렬=='오름') ? DB_ASC1 : ''}
+                    {(대상분류=='소음' && 정렬선택=='by수치' && 수치정렬=='내림') ? DB_DSC1 : ''}
                 </GU_container>
                 <Gu_footer>조용할지도</Gu_footer>
             </Container>

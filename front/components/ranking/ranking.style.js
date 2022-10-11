@@ -16,7 +16,6 @@ const Category_click = styled.button`
     border:solid #30C586;
     width:192px;
     height:68px;
-    border:solid #30C586;
     color:white;
 `
 const Category_basic = styled.button`
@@ -30,13 +29,15 @@ const OrderContainer = styled.div`
     display: flex;
     color:black;
     border:none;
+    line-height:68px;
+    font-size:18px;
 `
 const OrderBox = styled.div`
     text-align:center;
     line-height:68px;
+    height:68px;
     width:192px;
     color:black;
-    height:68px;
 `
 const OrderBoxL = styled.div`
     text-align:center;
@@ -69,9 +70,10 @@ const GU_list = styled.div`
     position:relative;
     background: #FFFFFF;
     border-bottom: 1px solid #E9E8E8;
+    
     &:hover{  
-        background-color : skyblue;
-        color : blue
+        background-color : #30c586;
+        color : white
     }
 `
 const GU_name = styled.div`
