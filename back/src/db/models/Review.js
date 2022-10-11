@@ -1,5 +1,4 @@
-const { ReviewModel, GuModel, DongModel } = require("..");
-const { Types } = require("mongoose");
+const { ReviewModel } = require("..");
 
 class Review {
   static async createReview(newReview) {
@@ -9,57 +8,74 @@ class Review {
     return review;
   }
 
-  static async getReviewsByGu(guId) {
-    const reviews = await GuModel.aggregate([
-      { $match: { _id: guId }},
+  static async getReviewsByGu(guId, skip, filter) {
+    const reviews = await ReviewModel.aggregate([
+      {
+        $match: filter ? { guId, noiseLevel: parseInt(filter) } : { guId },
+      },
       {
         $lookup: {
-          from: "reviews",
-          localField: "_id",
-          foreignField: "guId",
-          as: "reviews",
-        }
-      }, 
-      { $unwind: "$reviews" },
-      { 
+          from: "gus",
+          localField: "guId",
+          foreignField: "_id",
+          as: "gu",
+        },
+      },
+      {
+        $unwind: {
+          path: "$gu",
+        },
+      },
+      {
         $project: {
-          name: 1,
-          "reviews._id": 1,
-          "reviews.title": 1,
-          "reviews.description": 1,
-          "reviews.noiseLevel": 1,
-          "reviews.createdAt": 1,
-          "reviews.updatedAt": 1,
-        }
-    }]);
+          "gu._id": 0,
+          "gu.type": 0,
+          "gu.crs": 0,
+          "gu.features": 0,
+        },
+      },
+      {
+        $skip: parseInt(skip) * 10,
+      },
+      {
+        $limit: 10,
+      },
+    ]);
 
     return reviews;
   }
 
-  static async getReviewsByDong(dongId) {
-    const reviews = await DongModel.aggregate([
-      { $match: { _id: dongId }},
+  static async getReviewsByDong(dongId, skip, filter) {
+    const reviews = await ReviewModel.aggregate([
+      {
+        $match: filter ? { dongId, noiseLevel: parseInt(filter) } : { dongId },
+      },
       {
         $lookup: {
-          from: "reviews",
-          localField: "_id",
-          foreignField: "dongId",
-          as: "reviews",
-        }
-      }, 
-      { $unwind: "$reviews" },
-      { 
+          from: "dongs",
+          localField: "dongId",
+          foreignField: "_id",
+          as: "dong",
+        },
+      },
+      {
+        $unwind: {
+          path: "$dong",
+        },
+      },
+      {
         $project: {
-          name: 1,
-          guId: 1,
-          "reviews._id": 1,
-          "reviews.title": 1,
-          "reviews.description": 1,
-          "reviews.noiseLevel": 1,
-          "reviews.createdAt": 1,
-          "reviews.updatedAt": 1,
-        }
-    }]);
+          "dong._id": 0,
+          "dong.guId": 0,
+        },
+      },
+      {
+        $skip: parseInt(skip) * 10,
+      },
+      {
+        $limit: 10,
+      },
+    ]);
 
     return reviews;
   }
@@ -71,7 +87,11 @@ class Review {
   }
 
   static async updateReview(reviewId, toUpdate) {
-    const updatedReview = await ReviewModel.findOneAndUpdate( reviewId, toUpdate, { returnDocument: 'after' });
+    const updatedReview = await ReviewModel.findOneAndUpdate(
+      reviewId,
+      toUpdate,
+      { returnDocument: "after" }
+    );
 
     return updatedReview;
   }
