@@ -10,7 +10,7 @@ dongRouter.get("/:dongId", async (req, res) => {
   const foundDong = await dongModel.aggregate([
     {
       $match: {
-        _id: "63445ab0adb5727d4d008290",
+        _id: dongId,
       },
     },
     {
