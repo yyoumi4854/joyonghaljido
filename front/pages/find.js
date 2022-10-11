@@ -21,14 +21,20 @@ import Info from '../components/info';
 
 const Find = () => {
     return (
-        <div style={{ display: 'flex' }}>
-            <Map />
-            <div style={{ width: '300px', height: '80vh', background: 'whitesmoke', marginLeft: '20px' }}>
-                <Ranking />
+        <div style={{ paddingTop: '50px', display: 'flex', justifyContent: 'center' }}>
+            <div style={{ width: '30vw', height: 'calc(100vh - 50px)', background: 'white' }}>
+                {/* <Ranking /> */}
                 {/* <Review /> */}
-                {/* <Info /> */}
+                <Info />
             </div>
-        </div>
+            <div style={{
+                width: '70vw', height: 'calc(100vh - 50px)',
+                display: 'flex', flexDirection: 'column',
+                justifyContent: 'center', alignItems: 'center'
+            }}>
+                <Map />
+            </div>
+        </div >
     );
 }
 export default Find;

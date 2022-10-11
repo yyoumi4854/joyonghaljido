@@ -7,17 +7,21 @@ const Header = () => {
             position: 'fixed',
             top: '0px',
             justifyContent: 'space-between',
-            padding: '0.5em 1.0em 0.5em 1.0em',
+            alignItems: 'center',
 
             width: '100vw',
+            height: '50px',
+            padding: '0px 15px 0px 15px',
             boxSizing: 'border-box',
 
             fontSize: '20px',
-            color: 'white',
-            backgroundColor: 'salmon'
+            color: 'lightseagreen',
+            fontWeight: '700',
+            backgroundColor: 'white',
+            borderBottom: '1px solid lightgrey'
         }}>
             <div>
-                <Link href='/'><span>조용할 지도</span></Link>
+                <Link href='/'><span>조용할지도</span></Link>
             </div>
             <div>
                 <Link href='/prolog'><span>PROLOG</span></Link>
