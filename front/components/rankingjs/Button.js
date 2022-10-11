@@ -8,7 +8,7 @@ const Container = styled.div`
     color:black;
 `
 const 분류_box = styled.div`
-    display: flex;
+    display:flex;
     color:black;
 `
 const 분류_클릭 = styled.button`
