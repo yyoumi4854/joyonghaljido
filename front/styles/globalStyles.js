@@ -14,6 +14,11 @@ const GlobalStyles = createGlobalStyle`
   }
 
   span{display: inline-block}
+  button{
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+  }
 `;
 
 export default GlobalStyles;
