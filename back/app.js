@@ -7,8 +7,10 @@ const guRouter = require("./src/routers/guRouter");
 const dongRouter = require("./src/routers/dongRouter");
 // const pinRouter = require("./src/routers/pinRouter");
 
-const app = express();
+const errorMiddleware = require("./src/middlewares/errorMiddleware");
+const reviewRouter = require("./src/routers/reviewRouter");
 
+const app = express();
 const PORT = process.env.PORT || 5001;
 
 app.use((req, res, next) => {
@@ -29,6 +31,8 @@ app.get("/", (req, res) => {
 app.use("/gus", guRouter);
 app.use("/dongs", dongRouter);
 // app.use("/pins", pinRouter);
+app.use(reviewRouter);
+app.use(errorMiddleware);
 
 app.listen(PORT, () => {
   console.log(`✅ Server is running on port ${PORT}`);
