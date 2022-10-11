@@ -15,8 +15,6 @@ locationRouter.get("/gus", async (req, res) => {
   res.status(200).json(guList);
 });
 
-module.exports = locationRouter;
-
 locationRouter.get("/gus/:guId", async (req, res) => {
   const { guId } = req.params;
   const foundGu = await guModel.findOne({ _id: guId });
@@ -33,3 +31,19 @@ locationRouter.get("/gus/:guId", async (req, res) => {
 
   res.status(200).json(foundGuData);
 });
+
+locationRouter.get("/gus/:guId/dongs", async (req, res) => {
+  const { guId } = req.params;
+  const dongsData = await dongModel.find({ guId });
+  const dongs = [];
+  dongsData.map((dong) => {
+    const dongData = { _id: dong._id, name: dong.name };
+    dongs.push(dongData);
+  });
+
+  console.log(dongs);
+
+  res.status(200).json(dongs);
+});
+
+module.exports = locationRouter;
