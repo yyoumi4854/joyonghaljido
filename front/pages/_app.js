@@ -10,9 +10,7 @@ const app = ({ Component }) => {
                 <title>조용한 동네찾기</title>
             </Head>
             <Header />
-            <div style={{ paddingTop: '100px', display: 'flex', justifyContent: 'center' }}>
-                <Component />
-            </div>
+            <Component />
         </>
     );
 }

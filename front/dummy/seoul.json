@@ -62,6 +62,10 @@
                     "properties": {
                         "code": "11230",
                         "name": "강남구",
+                        "center": [
+                            127.027610,
+                            37.498095
+                        ],
                         "name_eng": "Gangnam-gu",
                         "base_year": "2013"
                     }
