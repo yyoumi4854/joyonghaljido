@@ -1,9 +1,9 @@
 import {useState} from 'react'
 import { 
     Container, 
-    분류_box, 
-    분류_클릭,
-    분류_기본,
+    Category_box, 
+    Category_click,
+    Category_basic,
     OrderContainer,
     OrderBoxL,
     OrderBoxR,
@@ -163,17 +163,17 @@ const Ranking = () => {
     return (
         <>            
             <Container>
-                <분류_box>
+                <Category_box>
                     {대분류=='소음' && <>
-                        <분류_클릭 onClick={()=>{set대분류('소음')}}> 소음(DB) </분류_클릭>
-                        <분류_기본 onClick={()=>{set대분류('민원')}}> 민원(건) </분류_기본>
+                        <Category_click onClick={()=>{set대분류('소음')}}> 소음(DB) </Category_click>
+                        <Category_basic onClick={()=>{set대분류('민원')}}> 민원(건) </Category_basic>
                     </>}
 
                     {대분류=='민원' && <>
-                        <분류_기본 onClick={()=>{set대분류('소음')}}> 소음(DB) </분류_기본>
-                        <분류_클릭 onClick={()=>{set대분류('민원')}}> 민원(건) </분류_클릭>
+                        <Category_basic onClick={()=>{set대분류('소음')}}> 소음(DB) </Category_basic>
+                        <Category_click onClick={()=>{set대분류('민원')}}> 민원(건) </Category_click>
                     </>}
-                </분류_box>
+                </Category_box>
                 <OrderContainer>
                     <OrderBoxL>
                         {대분류=='소음' && '소음'}

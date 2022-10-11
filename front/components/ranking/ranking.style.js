@@ -7,11 +7,11 @@ const Container = styled.div`
     background-color: whitesmoke;
     color:black;
 `
-const 분류_box = styled.div`
+const Category_box = styled.div`
     display:flex;
     color:black;
 `
-const 분류_클릭 = styled.button`
+const Category_click = styled.button`
     background-color: #30C586;
     border:solid #30C586;
     width:192px;
@@ -19,7 +19,7 @@ const 분류_클릭 = styled.button`
     border:solid #30C586;
     color:white;
 `
-const 분류_기본 = styled.button`
+const Category_basic = styled.button`
     background-color: #83DCB6;
     width:192px;
     height:68px;
@@ -116,9 +116,9 @@ const Gu_footer = styled.div`
 
 export { 
     Container, 
-    분류_box, 
-    분류_클릭,  
-    분류_기본,
+    Category_box, 
+    Category_click,  
+    Category_basic,
     OrderContainer,
     OrderBox,
     OrderBoxL,
