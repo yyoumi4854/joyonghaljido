@@ -11,11 +11,10 @@ const HeaderStyle= styled.header`
     padding: 0 1.5rem;
 
     nav {
-      font-size: ${({ theme }) => theme.fontSizes.bigFs};
       span + span{
         padding-left: 1rem;
         color: ${({ theme }) => theme.colors.main};
-        font-weight: 700;
+        font-weight: 500;
       }
     }
   }
