@@ -1,0 +1,56 @@
+<style>
+  .outer{
+    width:200px;
+    height:200px;
+    background-color: wheat;
+  }
+  .div1{
+    width:200px;
+    height:150px;
+    background-color: burlywood;
+    overflow:hidden;
+
+    overflow-Y:scroll;
+    overflow-X:hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .div1::-webkit-scrollbar{
+    display: none
+  }
+    
+
+
+
+
+  .contents{
+    width:200px;
+    border:solid black 1px;
+    background-color: salmon;
+
+  }
+  .div2{
+    width:200px;
+    height:50px;
+    background-color: wheat;
+  }
+</style>
+
+<body>
+  <div class="outer">
+    <div class="div1">
+      <div class="contents">contents</div>
+      <div class="contents">contents</div>
+      <div class="contents">contents</div>
+      <div class="contents">contents</div>
+      <div class="contents">contents</div>
+      <div class="contents">contents</div>
+      <div class="contents">contents</div>
+      <div class="contents">contents</div>
+      <div class="contents">contents</div>
+      <div class="contents">contents</div>
+      <div class="contents">contents</div>
+    </div>
+    <div class="div2">div2</div>
+  </div>
+</body>
