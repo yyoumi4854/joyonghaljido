@@ -2,15 +2,18 @@ const { Schema, model, Types } = require("mongoose");
 
 const ReviewSchema = Schema(
   {
-    guId: {
-      type: Types.ObjectId,
+    _id : {
+      type: String,
       required: true,
-      ref: "GuTest",
+      default: () => String(new Types.ObjectId()),
+    },
+    guId: {
+      type: String,
+      required: true,
     },
     dongId: {
-      type: Types.ObjectId,
+      type: String,
       required: true,
-      ref: "DongTest",
     },
     title: {
       type: String,

@@ -50,7 +50,6 @@ router.get("/reviews", async (req, res, next) => {
     }
 
     if (dongId) {
-      const dongId = req.query.dongId;
 
       const reviews = await reviewService.getReviewsByDong(dongId);
   

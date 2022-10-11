@@ -28,6 +28,8 @@ class Review {
           "reviews.title": 1,
           "reviews.description": 1,
           "reviews.noiseLevel": 1,
+          "reviews.createdAt": 1,
+          "reviews.updatedAt": 1,
         }
     }]);
 
@@ -49,10 +51,13 @@ class Review {
       { 
         $project: {
           name: 1,
+          guId: 1,
           "reviews._id": 1,
           "reviews.title": 1,
           "reviews.description": 1,
           "reviews.noiseLevel": 1,
+          "reviews.createdAt": 1,
+          "reviews.updatedAt": 1,
         }
     }]);
 
