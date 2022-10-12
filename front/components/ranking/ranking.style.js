@@ -15,13 +15,13 @@ const Category_click = styled.button`
     background-color: #30C586;
     border:solid #30C586;
     width:192px;
-    height:68px;
+    height:60px;
     color:white;
 `
 const Category_basic = styled.button`
     background-color: #83DCB6;
     width:192px;
-    height:68px;
+    height:60px;
     border:solid #83DCB6;
     color:white;
 `
@@ -62,12 +62,9 @@ const OrderButton1 = styled.button`
     border-color:white;
 `
 const GU_list = styled.div`
-
-    box-sizing: border-box;
     width: 336px;
     height: 50px;
     line-height:50px;
-    position:relative;
     background: #FFFFFF;
     border-bottom: 1px solid #E9E8E8;
     
@@ -86,7 +83,7 @@ const GU_info = styled.div`
     padding-right:30px;
 `
 const GU_container = styled.button`
-    height:869px;
+    height:70vh;
     margin-left:24px;
     border:solid 1px white;
     background-color:white;

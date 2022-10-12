@@ -1,4 +1,8 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
+import seoulMap from '../../dummy/seoul.json';
+import zoomMap from '../../dummy/zoom.json';
+import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowUp } from "react-icons/io";
 import { 
     Container, 
     Category_box, 
@@ -16,17 +20,41 @@ import {
     GU_container,
 } from "./ranking.style.js";
 
-import { IoIosArrowDown } from "react-icons/io";
-import { IoIosArrowUp } from "react-icons/io";
-
 const Ranking = () => {
 
-    const [대상분류, set대상분류] = useState('소음') // 소음 vs 민원
-    const [정렬선택, set정렬선택] = useState('by수치') // by수치 vs by단어
-    const [수치정렬, set수치정렬] = useState('오름') // 오름 vs 내림 (by수치)
-    const [단어정렬, set단어정렬] = useState('오름') // 오름 vs 내림 (by단어)
-    const [선택버튼, set선택버튼] = useState('수치오름') // 수치오름, 수치내림, 단어오름, 단어내림
+    const [대상분류, set대상분류] = useState('소음')     // 소음 vs 민원
+    const [정렬선택, set정렬선택] = useState('by수치')   // by수치 vs by단어
+    const [수치정렬, set수치정렬] = useState('오름')     // 오름 vs 내림 (by수치)
+    const [단어정렬, set단어정렬] = useState('오름')     // 오름 vs 내림 (by단어)
+    const [Gu, setGu] = useState('')     // 오름 vs 내림 (by단어)
+    
+    const handleGuSelect = (e) => {
+        setGu(() => e.target.children[0].innerHTML)
+    }
 
+    const [mapState, setMapState] = useState(
+        {
+            isZoom: false,
+            zoom: 2,       
+            zoomName: '', 
+            center: [126.986, 37.561], 
+            map: seoulMap,
+            name: '',
+        }
+    );
+
+    useEffect(()=>{
+        setMapState({
+            isZoom: true,
+            zoom: 3,
+            zoomName: Gu,  
+            center: [126.986, 37.561],
+            map: zoomMap,
+            name: '',
+        })
+    }, [Gu])
+
+    // map: seoulMap, // 지도 정보
     // 1. 민원(건) - 2020년 자료
     let MW_OBJ = [
         {name:'종로구', MW:2016},
@@ -67,34 +95,36 @@ const Ranking = () => {
     let MW_DSC1 = []
     let MW_DSC2 = []
 
-    MW_OBJ.forEach((obj,idx)     => {MW.push(    
-        <GU_list key={idx}>
+    MW_OBJ.forEach((obj,idx) => {MW.push(    
+        <GU_list key={idx} onClick={handleGuSelect}>
             <GU_name>{obj['name']}</GU_name>
             <GU_info>민원 수 {obj['MW']}건</GU_info>
         </GU_list>)});
+
     MW_ASC_OBJ1.forEach((obj,idx) => {MW_ASC1.push(    
-        <GU_list key={idx}>
+        <GU_list key={idx} onClick={handleGuSelect}>
             <GU_name>{obj['name']}</GU_name>
             <GU_info>민원 수 {obj['MW']}건</GU_info>
         </GU_list>)});
+
     MW_ASC_OBJ2.forEach((obj,idx) => {MW_ASC2.push(    
-        <GU_list key={idx}>
+        <GU_list key={idx} onClick={handleGuSelect}>
             <GU_name>{obj['name']}</GU_name>
             <GU_info>민원 수 {obj['MW']}건</GU_info>
         </GU_list>)});
+
     MW_DSC_OBJ1.forEach((obj,idx) => {MW_DSC1.push(    
-        <GU_list key={idx}>
+        <GU_list key={idx} onClick={handleGuSelect}>
             <GU_name>{obj['name']}</GU_name>
             <GU_info>민원 수 {obj['MW']}건</GU_info>
         </GU_list>)});
+
     MW_DSC_OBJ2.forEach((obj,idx) => {MW_DSC2.push(    
-        <GU_list key={idx}>
+        <GU_list key={idx} onClick={handleGuSelect}>
             <GU_name>{obj['name']}</GU_name>
             <GU_info>민원 수 {obj['MW']}건</GU_info>
         </GU_list>)});
     
-
-
     // 2. 소음(데시벨)
     let DB_OBJ = [
         {name:'광진구', DB: 0},
@@ -136,30 +166,35 @@ const Ranking = () => {
     let DB_DSC2 = []
     
     DB_OBJ.forEach((obj,idx)     => {DB.push(
-        <GU_list key={idx}>
+        <GU_list key={idx} onClick={handleGuSelect}>
             <GU_name>{obj['name']}</GU_name> 
             <GU_info>{obj['DB']}(dB)</GU_info>
         </GU_list>)});
+
     DB_ASC_OBJ1.forEach((obj,idx) => {DB_ASC1.push(
-        <GU_list key={idx}>
+        <GU_list key={idx} onClick={handleGuSelect}>
             <GU_name>{obj['name']}</GU_name> 
             <GU_info>{obj['DB']}(dB)</GU_info>
         </GU_list>)});
+
     DB_ASC_OBJ2.forEach((obj,idx) => {DB_ASC2.push(
-        <GU_list key={idx}>
+        <GU_list key={idx} onClick={handleGuSelect}>
             <GU_name>{obj['name']}</GU_name> 
             <GU_info>{obj['DB']}(dB)</GU_info>
         </GU_list>)});
+
     DB_DSC_OBJ1.forEach((obj,idx) => {DB_DSC1.push(
-        <GU_list key={idx}>
+        <GU_list key={idx} onClick={handleGuSelect}>
             <GU_name>{obj['name']}</GU_name> 
             <GU_info>{obj['DB']}(dB)</GU_info>
         </GU_list>)});
+
     DB_DSC_OBJ2.forEach((obj,idx) => {DB_DSC2.push(
-        <GU_list key={idx}>
+        <GU_list key={idx} onClick={handleGuSelect}>
             <GU_name>{obj['name']}</GU_name> 
             <GU_info>{obj['DB']}(dB)</GU_info>
         </GU_list>)});
+
 
     return (
         <>            
