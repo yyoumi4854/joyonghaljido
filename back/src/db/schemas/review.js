@@ -2,7 +2,7 @@ const { Schema, model, Types } = require("mongoose");
 
 const ReviewSchema = Schema(
   {
-    _id : {
+    _id: {
       type: String,
       required: true,
       default: () => String(new Types.ObjectId()),
@@ -37,8 +37,7 @@ const ReviewSchema = Schema(
   }
 );
 
-
-//json으로 보낼 때 password 빼고 보냄
+//send json without password
 ReviewSchema.methods.toJSON = function () {
   const review = this;
   const reviewObject = review.toObject();

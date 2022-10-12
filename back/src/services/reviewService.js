@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const Review = require("../db/models/Review");
 
 class reviewService {
+  //create review
   static async addReview({
     guId,
     dongId,
@@ -32,6 +33,7 @@ class reviewService {
     return createdReview;
   }
 
+  //get reivews
   static async getReviews(guId, dongId, skip, filter) {
     let reviews = [];
 
@@ -41,19 +43,20 @@ class reviewService {
       reviews = await Review.getReviewsByDong(dongId, skip, filter);
     }
 
-    if (reviews !== []) {
-      reviews.errorMessage = null;
+    if (reviews.length === 0) {
+      reviews.errorMessage = "리뷰가 존재하지 않습니다.";
     } else {
-      reviews.errorMessage = "리뷰를 불러오는데 실패했습니다.";
+      reviews.errorMessage = null;
     }
 
     return reviews;
   }
 
+  //update review
   static async updateReview(reviewId, toUpdate) {
     const updates = Object.keys(toUpdate);
 
-    //password hashing
+    //password hashing before update
     if (toUpdate.password) {
       const hashedPassword = await bcrypt.hash(toUpdate.password, 8);
       toUpdate.password = hashedPassword;
@@ -71,6 +74,7 @@ class reviewService {
     return updatedReview;
   }
 
+  //delete review
   static async deleteReview(reviewId) {
     const deletedReview = await Review.deleteReview(reviewId);
 

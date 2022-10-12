@@ -1,6 +1,7 @@
 const { ReviewModel } = require("..");
 
 class Review {
+  //create review
   static async createReview(newReview) {
     const review = new ReviewModel(newReview);
     await review.save();
@@ -8,6 +9,7 @@ class Review {
     return review;
   }
 
+  //get reviews by gu
   static async getReviewsByGu(guId, skip, filter) {
     const reviews = await ReviewModel.aggregate([
       {
@@ -45,6 +47,7 @@ class Review {
     return reviews;
   }
 
+  //get reviews by dong
   static async getReviewsByDong(dongId, skip, filter) {
     const reviews = await ReviewModel.aggregate([
       {
@@ -80,12 +83,14 @@ class Review {
     return reviews;
   }
 
+  //find review by review id
   static async findByReviewId(reviewId) {
     const review = await ReviewModel.findById({ _id: reviewId });
 
     return review;
   }
 
+  //update review
   static async updateReview(reviewId, toUpdate) {
     const updatedReview = await ReviewModel.findOneAndUpdate(
       reviewId,
@@ -96,6 +101,7 @@ class Review {
     return updatedReview;
   }
 
+  //delete review
   static async deleteReview(reviewId) {
     const deletedReview = await ReviewModel.findOneAndDelete({ _id: reviewId });
 
