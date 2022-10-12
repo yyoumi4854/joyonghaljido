@@ -7,28 +7,38 @@ import {
     FormContainer,
 } from "./reviewAddForm.style.js";
 
+import dummy from '../../dummy/reviews.json';
 
 const ReviewAddForm = () => {
 
     // review content
-    const [guSelect, setGuSelect] = useState('');
-    const [dongSelect, setDongSelect] = useState('');
+    const [gu, setGu] = useState('');
+    const [dong, setDong] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [password, setPassword] = useState('');
     const [noiseLevel, setNoiseLevel] = useState('');
+
     const [review, SetReview] = useState([]);
 
-    useEffect(()=>{
+    // 구
+    const handleGuChange = (e) => {
+        const guValue = e.target.value;
+        setGu(guValue);
+    }
 
-    }, [])
+    // 동
+    const handleDongChange = (e) => {
+        const dongValue = e.target.value;
+        setDong(dongValue);
+    }
 
-    const handleTitleChange = (e)=>{setTitle(e.target.value)}
-    const handleContentChange = (e)=>{setContent(e.target.value)}
-    const handlePasswordChange = (e)=>{setPassword(e.target.value)}
-    const handleNoiseLevelChange = (e)=>{setNoiseLevel(e.target.id)}
+    const handleTitleChange = (e) => {setTitle(e.target.value)}
+    const handleContentChange = (e) => {setContent(e.target.value)}
+    const handlePasswordChange = (e) => {setPassword(e.target.value)}
+    const handleNoiseLevelChange = (e) => {setNoiseLevel(e.target.id)}
 
-    const handleAddSubmit = (e)=>{
+    const handleAddSubmit = (e) => {
         // DUMMY : 
         e.preventDefault();
         const newReview = {
@@ -40,7 +50,7 @@ const ReviewAddForm = () => {
             noiseLevel: noiseLevel,
         };
         SetReview([...review, newReview]);
-                
+
         // REAL : 등록 버튼 눌렀을 때 이벤트 (api 연결)
         // POST
         // GET 
@@ -54,16 +64,23 @@ const ReviewAddForm = () => {
                 {/* onSubmit={ handleAddSubmit } */}
                 <form onSubmit={ handleAddSubmit }>  
                     <div>
-                        <label>지역 선택</label>
-                        <select name="gu">
-                            <option value="구1">구1</option>
-                            <option value="구2">구2</option>
+                        <select name="gu" id="" onChange={ handleGuChange }>
+                            <option value="">구를 선택해주세요.</option>
+                            {
+                                dummy.Gu.map(gu => {
+                                    return <option key={gu._id} value={gu.value} name={gu.name}>{gu.name}</option>
+                                })
+                            }
                         </select>
-                        <select name="dong">
-                            <option value="동1">동1</option>
-                            <option value="동2">동2</option>
-                            <option value="동3">동3</option>
-                            <option value="동4">동4</option>
+                        <select name="dong" id="" disabled={ !gu } onChange={ handleDongChange }>
+                            <option value="">동을 선택해주세요.</option>
+                            {
+                                dummy.Dong.map(dong => {
+                                    if (gu === dong.guName) {
+                                        return <option key={dong._id} value={dong.value}>{dong.value}</option>
+                                    }
+                                })
+                            }
                         </select><br></br><br></br>                             
                     </div>
                     <div>
