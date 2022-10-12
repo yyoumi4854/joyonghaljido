@@ -19,12 +19,17 @@ const ReviewAddForm = () => {
     const [password, setPassword] = useState('');
     const [noiseLevel, setNoiseLevel] = useState('');
 
+    const [dongList, setDongList] = useState([]);
+
     const [review, SetReview] = useState([]);
 
     // 구
     const handleGuChange = (e) => {
         const guValue = e.target.value;
         setGu(guValue);
+
+        const dongList = dummy.Dong.filter(element => element.guName === guValue);
+        setDongList(dongList);
     }
 
     // 동
@@ -75,10 +80,8 @@ const ReviewAddForm = () => {
                         <select name="dong" id="" disabled={ !gu } onChange={ handleDongChange }>
                             <option value="">동을 선택해주세요.</option>
                             {
-                                dummy.Dong.map(dong => {
-                                    if (gu === dong.guName) {
-                                        return <option key={dong._id} value={dong.value}>{dong.value}</option>
-                                    }
+                                dongList.map(dong => {
+                                    return <option key={dong._id} value={dong.value}>{dong.value}</option>
                                 })
                             }
                         </select><br></br><br></br>                             
@@ -121,9 +124,6 @@ const ReviewAddForm = () => {
                         <ColorDiv3 id='3' onClick={handleNoiseLevelChange}></ColorDiv3>
                         <FloatClear></FloatClear>
                     </div>
-
-
-                    
                     <div>
                         
                         <input type="button" value="취소"></input>
