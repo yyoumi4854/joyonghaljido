@@ -14,8 +14,8 @@ import seoulMap from '../dummy/seoul.json';
 import zoomMap from '../dummy/zoom.json';
 
 import Map from '../components/map';
-import Ranking from '../components/ranking/ranking';
-import Review from '../components/review';
+import Ranking from '../components/ranking/ranking.js';
+import Review from '../components/review/review.js';
 import Info from '../components/info';
 
 import Ranking2 from '../components/ranking/ranking2';
