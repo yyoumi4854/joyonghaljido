@@ -67,7 +67,6 @@ const GU_list = styled.div`
     line-height:50px;
     background: #FFFFFF;
     border-bottom: 1px solid #E9E8E8;
-    
     &:hover{  
         background-color : #30c586;
         color : white
@@ -130,4 +129,3 @@ export {
     GU_info,
     Gu_footer
 };
-
