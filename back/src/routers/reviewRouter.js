@@ -15,7 +15,7 @@ router.post("/reviews", postRequestLimiter, async (req, res, next) => {
     const password = req.body.password;
     const noiseLevel = req.body.noiseLevel;
 
-    const newReview = await reviewService.addReview({
+    const newReview = await reviewService.create({
       guId,
       dongId,
       title,
@@ -42,7 +42,7 @@ router.get("/reviews", async (req, res, next) => {
     const skip = req.query.skip ?? 0;
     const filter = req.query.filter ?? null;
 
-    const reviews = await reviewService.getReviews(guId, dongId, skip, filter);
+    const reviews = await reviewService.getList(guId, dongId, skip, filter);
 
     if (reviews.errorMessage) {
       throw new Error(reviews.errorMessage);
@@ -74,7 +74,7 @@ router.put("/reviews/:reviewId", passwordMiddleware, async (req, res, next) => {
       }
     });
 
-    const updatedReview = await reviewService.updateReview(reviewId, toUpdate);
+    const updatedReview = await reviewService.update(reviewId, toUpdate);
 
     res.status(200).json(updatedReview);
   } catch (error) {
@@ -90,7 +90,7 @@ router.delete(
     try {
       const reviewId = req.currentReview._id;
 
-      const deletedReview = await reviewService.deleteReview(reviewId);
+      const deletedReview = await reviewService.delete(reviewId);
 
       res.status(200).json(deletedReview);
     } catch (error) {

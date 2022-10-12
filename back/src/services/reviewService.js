@@ -3,7 +3,7 @@ const Review = require("../db/models/Review");
 
 class reviewService {
   //create review
-  static async addReview({
+  static async create({
     guId,
     dongId,
     title,
@@ -22,7 +22,7 @@ class reviewService {
       noiseLevel,
     };
 
-    const createdReview = await Review.createReview(newReview);
+    const createdReview = await Review.create(newReview);
 
     if (createdReview) {
       createdReview.errorMessage = null;
@@ -34,13 +34,13 @@ class reviewService {
   }
 
   //get reivews
-  static async getReviews(guId, dongId, skip, filter) {
+  static async getList(guId, dongId, skip, filter) {
     let reviews = [];
 
     if (!dongId) {
-      reviews = await Review.getReviewsByGu(guId, skip, filter);
+      reviews = await Review.getListByGu(guId, skip, filter);
     } else {
-      reviews = await Review.getReviewsByDong(dongId, skip, filter);
+      reviews = await Review.getListByDong(dongId, skip, filter);
     }
 
     if (reviews.length === 0) {
@@ -53,7 +53,7 @@ class reviewService {
   }
 
   //update review
-  static async updateReview(reviewId, toUpdate) {
+  static async update(reviewId, toUpdate) {
     const updates = Object.keys(toUpdate);
 
     //password hashing before update
@@ -63,20 +63,17 @@ class reviewService {
     }
 
     updates.forEach(async (update) => {
-      await Review.updateReview(
-        { _id: reviewId },
-        { [update]: toUpdate[update] }
-      );
+      await Review.update({ _id: reviewId }, { [update]: toUpdate[update] });
     });
 
-    const updatedReview = await Review.findByReviewId(reviewId);
+    const updatedReview = await Review.getByReviewId(reviewId);
 
     return updatedReview;
   }
 
   //delete review
-  static async deleteReview(reviewId) {
-    const deletedReview = await Review.deleteReview(reviewId);
+  static async delete(reviewId) {
+    const deletedReview = await Review.delete(reviewId);
 
     return deletedReview;
   }

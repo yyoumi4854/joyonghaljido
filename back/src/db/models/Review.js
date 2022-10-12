@@ -2,7 +2,7 @@ const { ReviewModel } = require("..");
 
 class Review {
   //create review
-  static async createReview(newReview) {
+  static async create(newReview) {
     const review = new ReviewModel(newReview);
     await review.save();
 
@@ -10,7 +10,7 @@ class Review {
   }
 
   //get reviews by gu
-  static async getReviewsByGu(guId, skip, filter) {
+  static async getListByGu(guId, skip, filter) {
     const reviews = await ReviewModel.aggregate([
       {
         $match: filter ? { guId, noiseLevel: parseInt(filter) } : { guId },
@@ -48,7 +48,7 @@ class Review {
   }
 
   //get reviews by dong
-  static async getReviewsByDong(dongId, skip, filter) {
+  static async getListByDong(dongId, skip, filter) {
     const reviews = await ReviewModel.aggregate([
       {
         $match: filter ? { dongId, noiseLevel: parseInt(filter) } : { dongId },
@@ -83,15 +83,15 @@ class Review {
     return reviews;
   }
 
-  //find review by review id
-  static async findByReviewId(reviewId) {
+  //get review by review id
+  static async getByReviewId(reviewId) {
     const review = await ReviewModel.findById({ _id: reviewId });
 
     return review;
   }
 
   //update review
-  static async updateReview(reviewId, toUpdate) {
+  static async update(reviewId, toUpdate) {
     const updatedReview = await ReviewModel.findOneAndUpdate(
       reviewId,
       toUpdate,
@@ -102,7 +102,7 @@ class Review {
   }
 
   //delete review
-  static async deleteReview(reviewId) {
+  static async delete(reviewId) {
     const deletedReview = await ReviewModel.findOneAndDelete({ _id: reviewId });
 
     return deletedReview;
