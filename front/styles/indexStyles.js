@@ -3,6 +3,7 @@ import styled from "styled-components";
 const IndexStyle = styled.div`
 
     font-size:22px;
+    font-family:notosans-kr;
 
     h1{
         position:relative;
@@ -84,3 +85,5 @@ const IndexStyle = styled.div`
 `;
 
 export default IndexStyle;
+
+
