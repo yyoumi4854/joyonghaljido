@@ -7,7 +7,7 @@ import {
     ZoomableGroup,
 } from 'react-simple-maps';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import ReactTooltip from 'react-tooltip'
 
@@ -15,9 +15,20 @@ import seoulMap from '../dummy/seoul.json';
 import zoomMap from '../dummy/zoom.json';
 
 import { scaleQuantize } from "d3-scale";
+import { csv } from "d3-fetch";
 
-const Map = () => {
-    let MW_OBJ = [
+const Map = ({ mapState, setMapState }) => {
+    const [pins, setPins] = useState('');
+    const [dongs, setDongs] = useState('');
+    useEffect(() => {
+        csv("/pin_data_master.csv").then(v => {
+            setPins(v);
+        });
+        csv("/geojsonbase_gu_dong_coordinates_master.csv").then(v => {
+            setDongs(v);
+        });
+    }, []);
+    const MW_OBJ = [
         { name: '종로구', MW: 2016 },
         { name: '중구', MW: 1060 },
         { name: '용산구', MW: 1625 },
@@ -44,9 +55,7 @@ const Map = () => {
         { name: '송파구', MW: 2099 },
         { name: '강동구', MW: 4327 }
     ];
-
-    // 2. 소음(데시벨)
-    let DB_OBJ = [
+    const DB_OBJ = [
         { name: '광진구', DB: 0 },
         { name: '강남구', DB: 57.42 },
         { name: '강동구', DB: 66.15 },
@@ -75,7 +84,7 @@ const Map = () => {
     ];
 
     const colorScale = scaleQuantize()
-        .domain([1, 10])
+        .domain([1000, 7500])
         .range([
             "#ffedea",
             "#ffcec5",
@@ -87,17 +96,6 @@ const Map = () => {
             "#9a311f",
             "#782618"
         ]);
-
-    const [mapState, setMapState] = useState(
-        {
-            isZoom: false,
-            zoom: 2,
-            zoomName: '',
-            map: seoulMap,
-            center: [126.986, 37.561],
-            name: '',
-        }
-    );
 
     return (
         <>
@@ -118,12 +116,10 @@ const Map = () => {
                 // border: '1px grey solid'
             }}>
                 <ComposableMap
-                    width={600}
-                    height={600}
-                    style={{ backgroundColor: 'whitesmoke' }}
                     projection="geoMercator"
                     projectionConfig={{ rotate: [-60, 0, 5], scale: 35000 }}
-                    data-tip="">
+                    data-tip=""
+                >
                     <ZoomableGroup
                         center={mapState.center}
                         zoom={mapState.zoom}
@@ -133,8 +129,12 @@ const Map = () => {
                         <Geographies geography={mapState.map}>
                             {({ geographies }) =>
                                 geographies.map((geo) => {
-                                    // const cur = data.find(s => s.id === geo.properties.name);
+                                    const cur = MW_OBJ.find(v => v.name === geo.properties.name)
                                     return <Geography
+                                        fill={
+                                            mapState.isZoom ? 'grey' : colorScale(cur ? cur.MW : "#EEE")}
+                                        stroke={'white'}
+                                        strokeWidth={mapState.isZoom ? 0.3 : 2}
                                         onClick={() => {
                                             //서울지도일때만 동작
                                             if (mapState.isZoom === false) {
@@ -166,52 +166,45 @@ const Map = () => {
                                         }}
                                         key={geo.rsmKey}
                                         geography={geo}
-                                    // fill={colorScale(cur ? cur.unemployment_rate : "#EEE")}
-                                    // style={{
-                                    //     default: {
-                                    //         stroke: "whitesmoke",
-                                    //         strokeWidth: 0,
-                                    //         outline: "none",
-                                    //     },
-                                    //     hover: {
-                                    //         fill: "#B1D6AE",
-                                    //         outline: "none",
-                                    //     },
-                                    //     pressed: {
-                                    //         fill: "fff",
-                                    //         outline: "#333",
-                                    //     },
-                                    // }}
+                                        style={{
+                                            default: {
+                                                outline: "none",
+                                            },
+                                            hover: {
+                                                fill: "#B1D6AE",
+                                                outline: "none",
+                                            },
+                                            pressed: {
+                                                fill: "fff",
+                                                outline: "#333",
+                                            },
+                                        }}
                                     />
                                 })
                             }
                         </Geographies>
-                        <Marker
-                            coordinates={[126.986, 37.561]}
-                        // onMouseEnter={() => {
-                        //     setName('서울 중앙');
-                        // }}
-                        // onMouseLeave={() => {
-                        //     setName("");
-                        // }}
-                        >
-                            {/* <text textAnchor="middle" fill="grey">
-                        서울중앙
-                    </text> */}
-                        </Marker>
-                        <Marker
-                            coordinates={[126.97962084516, 37.57002838826]}
-                        // onMouseEnter={() => {
-                        //     setName('종로구');
-                        // }}
-                        // onMouseLeave={() => {
-                        //     setName("");
-                        // }}
-                        >
-                            {/* <text textAnchor="middle" fill="grey">
-                        종로구
-                    </text> */}
-                        </Marker>
+                        {pins && pins.map(pin => {
+                            return <Marker
+                                key={pin._id}
+                                //longtitude, latitude
+                                coordinates={[pin.longitude, pin.latitude]}>
+                                <circle r={3} fill="red"
+                                //  stroke="#fff" 
+                                //  strokeWidth={0.5}
+                                />
+                            </Marker>
+                        })}
+                        {dongs && dongs.map(dong => {
+                            return <Marker
+                                key={dong._id}
+                                //longtitude, latitude
+                                coordinates={[dong.longitude, dong.latitude]}>
+                                <circle r={0.5} fill="yellow"
+                                // stroke="#fff" 
+                                // strokeWidth={0.5}
+                                />
+                            </Marker>
+                        })}
                     </ZoomableGroup>
                 </ComposableMap>
             </div>
@@ -220,3 +213,20 @@ const Map = () => {
 }
 
 export default Map;
+
+{/* {pins.map(pin => (
+                            <Marker
+
+                                // longtitude, latitude
+                                coordinates={[pin.lontitude, pin.latitude]}
+                            onMouseEnter={() => {
+                                setName('서울 중앙');
+                            }}
+                            onMouseLeave={() => {
+                                setName("");
+                            }}
+                            >
+                                <text textAnchor="middle" fill="grey">
+                        서울중앙
+                    </text>
+                            </Marker>)} */}
