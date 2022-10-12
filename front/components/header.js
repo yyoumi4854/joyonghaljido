@@ -1,30 +1,22 @@
 import Link from 'next/link';
+import Image from 'next/image';
+import HeaderStyle from '../styles/headerStyles';
+
+// img
+import logo from '../public/images/logo.svg'
 
 const Header = () => {
     return (
-        <header style={{
-            display: 'flex',
-            position: 'fixed',
-            top: '0px',
-            justifyContent: 'space-between',
-            padding: '0.5em 1.0em 0.5em 1.0em',
-
-            width: '100vw',
-            boxSizing: 'border-box',
-
-            fontSize: '20px',
-            color: 'white',
-            backgroundColor: 'salmon'
-        }}>
+        <HeaderStyle>
             <div>
-                <Link href='/'><span>조용할 지도</span></Link>
+                <Link href='/'><h1><Image src={logo} alt="조용할지도 로고" /></h1></Link>
+                <nav>
+                    <Link href='/info'><span>팀 소개</span></Link>
+                    <Link href='/find'><span>동네 찾기</span></Link>
+                    {/* <Link href='/prolog'><span>PROLOG</span></Link> */}
+                </nav>
             </div>
-            <div>
-                <Link href='/prolog'><span>PROLOG</span></Link>
-                <Link href='/find'><span style={{ paddingLeft: '1.0em' }}>FIND</span></Link>
-                <Link href='/info'><span style={{ paddingLeft: '1.0em' }}>INFO</span></Link>
-            </div>
-        </header>
+        </HeaderStyle>
     );
 }
 

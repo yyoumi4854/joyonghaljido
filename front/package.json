@@ -10,8 +10,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "d3-scale": "^4.0.2",
+    "chart.js": "^3.9.1",
     "next": "^12.3.1",
+    "react-chartjs-2": "^4.3.1",
+    "react-icons": "^4.4.0",
     "react-simple-maps": "^3.0.0",
-    "react-tooltip": "^4.2.21"
+    "react-tooltip": "^4.2.21",
+    "styled-components": "^5.3.6",
+    "styled-components": "^5.3.6",
+    "styled-reset": "^4.4.2"
   }
 }
