@@ -1,107 +1,121 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
+import { 
+    ColorDiv1,
+    ColorDiv2,
+    ColorDiv3,
+    FloatClear,
+    FormContainer,
+} from "./reviewAddForm.style.js";
+
 
 const ReviewAddForm = () => {
-    const [form, setForm] = useState({
-        gu: "",
-        dong: "",
-        title: "",
-        description: "",
-        password: "",
-        noiseLevel: "",
-    });
 
-    const [selected, setSeleted] = useState("");
+    // review content
+    const [guSelect, setGuSelect] = useState('');
+    const [dongSelect, setDongSelect] = useState('');
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const [password, setPassword] = useState('');
+    const [noiseLevel, setNoiseLevel] = useState('');
+    const [review, SetReview] = useState([]);
 
-    function handleChange(e) {
-        const { name, value } = e.target;
-        setForm((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    }
+    useEffect(()=>{
 
-    function handleSelect(e) {
-        setForm((prev) => ({
-            ...prev,
+    }, [])
 
-        }))
-    }
+    const handleTitleChange = (e)=>{setTitle(e.target.value)}
+    const handleContentChange = (e)=>{setContent(e.target.value)}
+    const handlePasswordChange = (e)=>{setPassword(e.target.value)}
+    const handleNoiseLevelChange = (e)=>{setNoiseLevel(e.target.id)}
 
-    function handleNoiseLevel(e) {
-        const { name, value } = e.target;
-        setForm((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    }
-
-    async function handleSubmit(e) {
+    const handleAddSubmit = (e)=>{
+        // DUMMY : 
         e.preventDefault();
-
-        // 등록 버튼 눌렀을 때의 이벤트 (api 연결)
-        // POST 요청
-
-        // & GET 요청
+        const newReview = {
+            gu: guSelect,
+            dong: dongSelect,
+            title: title,
+            content: content,
+            password: password,
+            noiseLevel: noiseLevel,
+        };
+        SetReview([...review, newReview]);
+                
+        // REAL : 등록 버튼 눌렀을 때 이벤트 (api 연결)
+        // POST
+        // GET 
     }
+
+    
 
     return (
-        <form onSubmit={ handleSubmit }>
-            <div>
-                <label>지역을 선택해 주세요.</label>
-                <select name="gu">
-                    <option value="gu">구 선택</option>
-                    <option value="lime">Lime</option>
-                </select>
-                <select name="dong">
-                    <option value="dong">동 선택</option>
-                    <option value="lime">Lime</option>
-                </select>                             
-            </div>
-            <div>
-                <label>소음에 대한 상세 설명을 작성해 주세요.</label>
-                <input
-                    type="text"
-                    placeholder="제목"
-                    name="title"
-                    value={ form.title }
-                    onChange={ handleChange }></input>                
-                <input
-                    type="text"
-                    placeholder="내용"
-                    name="description"
-                    value={ form.description }
-                    onChange={ handleChange }></input>
-            </div>
-            <div>
-                <label>비밀번호를 입력해 주세요.</label>
-                <input
-                    type="text"
-                    placeholder="비밀번호"
-                    name="password"
-                    value={ form.password }
-                    onChange={ handleChange }></input>
-            </div>
-            <div>
-                <label>내가 느낀 소음은 어느 정도였나요?</label>
-                <input
-                    type="button"
-                    name="bad"
-                    value="1"
-                    onClick={ handleNoiseLevel }></input>
-                <input
-                    type="button"
-                    name="soso"
-                    value="2"
-                    onClick={ handleNoiseLevel }></input>
-                <input
-                    type="button"
-                    name="good"
-                    value="3"
-                    onClick={ handleNoiseLevel }></input>
-            </div>
-            <input type="button" value="취소"></input>
-            <input type="submit" value="제출"></input>
-        </form>
+        <>
+            <FormContainer>
+                {/* onSubmit={ handleAddSubmit } */}
+                <form onSubmit={ handleAddSubmit }>  
+                    <div>
+                        <label>지역 선택</label>
+                        <select name="gu">
+                            <option value="구1">구1</option>
+                            <option value="구2">구2</option>
+                        </select>
+                        <select name="dong">
+                            <option value="동1">동1</option>
+                            <option value="동2">동2</option>
+                            <option value="동3">동3</option>
+                            <option value="동4">동4</option>
+                        </select><br></br><br></br>                             
+                    </div>
+                    <div>
+                        <label>소음에 대한 상세 설명을 작성해 주세요</label><br></br>
+                        <input
+                            type="text"
+                            placeholder="제목"
+                            name="title"
+                            value=''
+                            onChange={handleTitleChange}></input>                
+                        <input
+                            type="text"
+                            placeholder="내용"
+                            name="description"
+                            value=''
+                            onChange={ handleContentChange}></input>
+                    </div>
+                    <br></br>
+
+
+                    <div>
+                        <label>비밀번호를 입력해 주세요.</label><br></br>
+                        <input
+                            type="text"
+                            placeholder="비밀번호"
+                            name="password"
+                            value=''
+                            onChange={ handlePasswordChange }></input>
+                    </div>
+                    <br></br>
+
+                    <div>
+                        <label>내가 느낀 소음은 어느 정도였나요?</label>
+
+                        <div></div>
+                        <ColorDiv1 id='1' onClick={handleNoiseLevelChange}></ColorDiv1>
+                        <ColorDiv2 id='2' onClick={handleNoiseLevelChange}></ColorDiv2>
+                        <ColorDiv3 id='3' onClick={handleNoiseLevelChange}></ColorDiv3>
+                        <FloatClear></FloatClear>
+                    </div>
+
+
+                    
+                    <div>
+                        
+                        <input type="button" value="취소"></input>
+                        <input type="submit" value="제출"></input>
+                    </div>
+                </form>
+                <button onClick={()=>{alert(noiseLevel)}}>현재값</button>
+            </FormContainer>
+        </>
     )
 }
 
