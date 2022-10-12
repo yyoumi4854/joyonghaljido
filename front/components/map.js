@@ -17,7 +17,7 @@ import zoomMap from '../dummy/zoom.json';
 import { scaleQuantize } from "d3-scale";
 import { csv } from "d3-fetch";
 
-const Map = ({ mapState, setMapState }) => {
+const Map = ({ currentState, setCurrentState }) => {
     const [pins, setPins] = useState('');
     const [dongs, setDongs] = useState('');
     useEffect(() => {
@@ -28,6 +28,7 @@ const Map = ({ mapState, setMapState }) => {
             setDongs(v);
         });
     }, []);
+
     const MW_OBJ = [
         { name: '종로구', MW: 2016 },
         { name: '중구', MW: 1060 },
@@ -99,18 +100,18 @@ const Map = ({ mapState, setMapState }) => {
 
     return (
         <>
-            <ReactTooltip type='light'>{mapState.name}</ReactTooltip>
-            {mapState.isZoom === false ? <h2>찾고 싶은 지역을 선택해주세요.</h2> :
+            <ReactTooltip type='light'>{currentState.name}</ReactTooltip>
+            {currentState.clicked === 1 ? <h2>찾고 싶은 지역을 선택해주세요.</h2> :
                 <h2><span onClick={() => {
-                    setMapState({
-                        ...mapState,
-                        isZoom: false,
+                    setCurrentState({
+                        ...currentState,
+                        clicked: 1,
                         zoom: 2,
                         map: seoulMap,
-                        zoomName: '',
+                        clickedName: '',
                         center: [126.986, 37.561],
                     });
-                }}>서울시</span> &gt; {mapState.zoomName}</h2>}
+                }}>서울시</span> &gt; {currentState.clickedName}</h2>}
             <div style={{
                 height: '80vh', width: '80vh',
                 // border: '1px grey solid'
@@ -121,32 +122,31 @@ const Map = ({ mapState, setMapState }) => {
                     data-tip=""
                 >
                     <ZoomableGroup
-                        center={mapState.center}
-                        zoom={mapState.zoom}
-                        minZoom={mapState.zoom - 1}
-                        maxZoom={mapState.zoom + 1}
+                        center={currentState.center}
+                        zoom={currentState.zoom}
+                        minZoom={currentState.zoom - 1}
+                        maxZoom={currentState.zoom + 1}
                     >
-                        <Geographies geography={mapState.map}>
+                        <Geographies geography={currentState.map}>
                             {({ geographies }) =>
                                 geographies.map((geo) => {
                                     const cur = MW_OBJ.find(v => v.name === geo.properties.name)
                                     return <Geography
                                         fill={
-                                            mapState.isZoom ? 'grey' : colorScale(cur ? cur.MW : "#EEE")}
+                                            currentState.clicked >= 2 ? 'grey' : colorScale(cur ? cur.MW : "#EEE")}
                                         stroke={'white'}
-                                        strokeWidth={mapState.isZoom ? 0.3 : 2}
+                                        strokeWidth={currentState.isZoom ? 0.3 : 2}
                                         onClick={() => {
                                             //서울지도일때만 동작
-                                            if (mapState.isZoom === false) {
+                                            if (currentState.clicked === 1) {
                                                 const { name } = geo.properties;
                                                 const { center } = zoomMap[name];
-                                                console.log(center);
-                                                setMapState({
-                                                    ...mapState,
-                                                    isZoom: true,
+                                                setCurrentState({
+                                                    ...currentState,
+                                                    clicked: 2,
                                                     zoom: 7,
                                                     map: zoomMap[name],
-                                                    zoomName: name,
+                                                    clickedName: name,
                                                     center,
                                                 });
 
@@ -159,10 +159,10 @@ const Map = ({ mapState, setMapState }) => {
                                         }}
                                         onMouseEnter={() => {
                                             const { name } = geo.properties;
-                                            setMapState({ ...mapState, name })
+                                            setCurrentState({ ...currentState, name })
                                         }}
                                         onMouseLeave={() => {
-                                            setMapState({ ...mapState, name: '' })
+                                            setCurrentState({ ...currentState, name: '' })
                                         }}
                                         key={geo.rsmKey}
                                         geography={geo}
@@ -186,7 +186,13 @@ const Map = ({ mapState, setMapState }) => {
                         {pins && pins.map(pin => {
                             return <Marker
                                 key={pin._id}
-                                //longtitude, latitude
+                                onClick={() => {
+                                    setCurrentState({
+                                        ...currentState,
+                                        clicked: 4,
+                                        clickedName: pin.name
+                                    });
+                                }}
                                 coordinates={[pin.longitude, pin.latitude]}>
                                 <circle r={3} fill="red"
                                 //  stroke="#fff" 
@@ -194,12 +200,19 @@ const Map = ({ mapState, setMapState }) => {
                                 />
                             </Marker>
                         })}
+
                         {dongs && dongs.map(dong => {
                             return <Marker
                                 key={dong._id}
-                                //longtitude, latitude
+                                onClick={() => {
+                                    setCurrentState({
+                                        ...currentState,
+                                        clicked: 3,
+                                        clickedName: dong.name
+                                    });
+                                }}
                                 coordinates={[dong.longitude, dong.latitude]}>
-                                <circle r={0.5} fill="yellow"
+                                <circle r={1} fill="yellow"
                                 // stroke="#fff" 
                                 // strokeWidth={0.5}
                                 />
