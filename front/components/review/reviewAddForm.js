@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
 import { 
     ColorDiv1,
     ColorDiv2,
@@ -11,21 +12,29 @@ import dummy from '../../dummy/reviews.json';
 
 const ReviewAddForm = ({ setIsWriting, handler }) => {
     // review content
-    const [gu, setGu] = useState('');
-    const [dong, setDong] = useState('');
+    const [guId, setGuId] = useState('');
+    const [dongId, setDongId] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [password, setPassword] = useState('');
     const [noiseLevel, setNoiseLevel] = useState('');
 
+    // const [guList, setGuList] = useState([]);
     const [dongList, setDongList] = useState([]);
 
     const [review, SetReview] = useState([]);
 
+    useEffect(() => {
+        axios.get("http://localhost:5001/location/gus")
+            .then(res => {
+                console.log(res.data);
+            })
+    }, []);
+
     // 구
     const handleGuChange = (e) => {
         const guValue = e.target.value;
-        setGu(guValue);
+        setGuId(guValue);
 
         const dongList = dummy.Dong.filter(element => element.guName === guValue);
         setDongList(dongList);
@@ -34,7 +43,7 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
     // 동
     const handleDongChange = (e) => {
         const dongValue = e.target.value;
-        setDong(dongValue);
+        setDongId(dongValue);
     }
 
     const handleTitleChange = (e) => {setTitle(e.target.value)}
@@ -42,22 +51,27 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
     const handlePasswordChange = (e) => {setPassword(e.target.value)}
     const handleNoiseLevelChange = (e) => {setNoiseLevel(e.target.id)}
 
-    const handleAddSubmit = (e) => {
-        // DUMMY : 
+    const handleAddSubmit = async (e) => {
         e.preventDefault();
+
         const newReview = {
-            gu: gu,
-            dong: dong,
+            guId: guId,
+            dongId: dongId,
             title: title,
             description: description,
             password: password,
             noiseLevel: noiseLevel,
         };
         SetReview([...review, newReview]);
+
         // REAL : 등록 버튼 눌렀을 때 이벤트 (api 연결)
-        console.log(review);
-        // POST
-        // GET 
+        // const serverURL = "http://localhost:5001/reviews";
+        // // POST & GET
+        // try {
+        //     await axios.post(serverURL, JSON.stringify(review));
+        // } catch (e) {
+        //     console.log("POST 요청이 실패했습니다.", e);
+        // }
     }
 
     const modalRef = useRef();
@@ -82,15 +96,15 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
                 <form onSubmit={ handleAddSubmit }>  
                     <div>
                         <select name="gu" id="" onChange={ handleGuChange }>
-                            <option value="">구를 선택해주세요.</option>
+                            {/* <option value="">구를 선택해주세요.</option> */}
                             {
                                 dummy.Gu.map(gu => {
                                     return <option key={gu._id} value={gu.value} name={gu.name}>{gu.name}</option>
                                 })
                             }
                         </select>
-                        <select name="dong" id="" disabled={ !gu } onChange={ handleDongChange }>
-                            <option value="">동을 선택해주세요.</option>
+                        <select name="dong" id="" disabled={ !guId } onChange={ handleDongChange }>
+                            {/* <option value="">동을 선택해주세요.</option> */}
                             {
                                 dongList.map(dong => {
                                     return <option key={dong._id} value={dong.value}>{dong.value}</option>
