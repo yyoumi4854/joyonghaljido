@@ -23,11 +23,14 @@ ChartJS.register(
 );
 
 
-export default function PinGraphTest(props) {
+export default function PinGraphTest({time, colorIdx}) {
 
     const labels = ['9시', '12시', '16시', '20시', '23시', '새벽1시'];
+    
+    const colors1 = ["#E35753","#E78732","#F1D14D","#57CB6A","#377ED2","#7352DE"]
+    const colors2 = ["#EE9A98","#F1B784","#F8E8A6","#9AE0A5","#87B2E4","#AB97EB"]
 
-    const time = props.time.time
+    const timeArr = time;
     const options = {
         responsive: true,
         plugins: {
@@ -41,16 +44,15 @@ export default function PinGraphTest(props) {
         },
       };
 
-
     const data = {
         labels,
         datasets: [
           {
             fill: true,
             label: '소음 측정량 (dB)',
-            data:time,
-            borderColor: 'rgb(53, 162, 235)',
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
+            data:timeArr,
+            borderColor: colors1[colorIdx-1],
+            backgroundColor: colors2[colorIdx-1],
           },
         ],
       };
