@@ -21,10 +21,12 @@ const GlobalStyles = createGlobalStyle`
     background: transparent;
     border: 0;
     cursor: pointer;
+    outline: none;
   }
 
   svg{
-    display: block;
+    display: inline-block;
+    vertical-align: middle;
   }
 `;
 

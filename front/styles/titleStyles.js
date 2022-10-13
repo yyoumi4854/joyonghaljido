@@ -32,5 +32,31 @@ const Title = styled.div`
       margin-top: 12px;
       color: ${({ theme }) => theme.colors.main};
     }
-  }`;
+  }
+
+  // ranking 수치순, 글자순
+  .toggleList{
+    ${({ theme }) => theme.common.flexCenter}
+    li{
+      ${({ theme }) => theme.common.flexCenter}
+      &+li{margin-left: 16px;}
+
+      button{
+        width: 24px;
+        height: 24px;
+        margin-left: 8px;
+        background: ${({ theme }) => theme.colors.grey4};
+        border-radius: 2px;
+      }
+
+      &.active{
+        color: ${({ theme }) => theme.colors.main};
+        button{
+          background: ${({ theme }) => theme.colors.main};
+          color: #fff;
+        }
+      }
+    }
+  }
+  `;
 export default Title;

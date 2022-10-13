@@ -9,8 +9,11 @@ const RankingContent = styled.div`
       text-align: center;
       line-height: 60px;
       color: #fff;
-      &:nth-child(1){background: ${({ theme }) => theme.colors.main}}
-      &:nth-child(2){background: ${({ theme }) => theme.colors.mainLight1}}
+      background: ${({ theme }) => theme.colors.mainLight1};
+      cursor: pointer;
+      
+      &.active{background: ${({ theme }) => theme.colors.main}}
+      &:nth-child(2){}
     }
   }
 
