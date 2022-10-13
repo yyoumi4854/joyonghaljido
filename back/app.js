@@ -3,6 +3,7 @@ dotenv.config();
 require("./src/db/index.js");
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
 const guRouter = require("./src/routers/guRouter");
 const dongRouter = require("./src/routers/dongRouter");
 const pinRouter = require("./src/routers/pinRouter");
@@ -14,14 +15,8 @@ const locationRouter = require("./src/routers/locationRouter.js");
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-app.use((req, res, next) => {
-  if (process.nextTick.NODE_ENV === "production") {
-    morgan("combined")(req, res, next);
-  } else {
-    morgan("dev")(req, res, next);
-  }
-});
-
+app.use(morgan("dev"));
+app.use(cors({ credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
