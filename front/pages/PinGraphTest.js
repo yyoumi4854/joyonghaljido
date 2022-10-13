@@ -48,7 +48,7 @@ export const options = {
       {
         fill: true,
         label: '소음 측정량 (dB)',
-        data: dummy[0].time.map(e => e),
+        data: dummy[0].time,
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
