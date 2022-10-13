@@ -39,7 +39,9 @@ const Title = styled.div`
     ${({ theme }) => theme.common.flexCenter}
     li{
       ${({ theme }) => theme.common.flexCenter}
+      color: ${({ theme }) => theme.colors.grey1};
       &+li{margin-left: 16px;}
+      
 
       button{
         width: 24px;

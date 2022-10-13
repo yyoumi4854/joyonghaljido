@@ -13,7 +13,6 @@ const RankingContent = styled.div`
       cursor: pointer;
       
       &.active{background: ${({ theme }) => theme.colors.main}}
-      &:nth-child(2){}
     }
   }
 
