@@ -3,8 +3,6 @@
     "jsx": "react-jsx",
     "checkJs": true
   },
-  "exclude": ["node_modules", "**/node_modules/*", "*.png", "*.json"],
-  // "declare-module": ["*.png", "*.json"],
-  // "declareModule": ["*.png", "*.json"],
+  "exclude": ["node_modules", "**/node_modules/*",],
 }
 
