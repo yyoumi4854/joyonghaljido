@@ -23,6 +23,14 @@ const FloatClear = styled.div`
 `
 
 const FormContainer = styled.div`
+    z-index: 999;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: 15px;
+
     background-color:whitesmoke;
     border: solid 1px black;
 ` 

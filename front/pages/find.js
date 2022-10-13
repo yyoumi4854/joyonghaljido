@@ -15,7 +15,7 @@ import zoomMap from '../dummy/zoom.json';
 
 import Map from '../components/map';
 import Ranking from '../components/ranking/ranking';
-import Review from '../components/review/review';
+import ReviewPage from '../components/review/reviewPage';
 import Info from '../components/info';
 
 const Find = () => {
@@ -23,7 +23,7 @@ const Find = () => {
         <div style={{display: 'flex', justifyContent: 'center' }}>
             <div style={{ width: '30vw', height: 'calc(100vh - 50px)', background: 'white' }}>
                 <Ranking />
-                <Review />
+                <ReviewPage />
                 {/* <Info /> */}
             </div>
             <div style={{

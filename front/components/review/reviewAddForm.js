@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { 
     ColorDiv1,
     ColorDiv2,
@@ -9,7 +9,7 @@ import {
 
 import dummy from '../../dummy/reviews.json';
 
-const ReviewAddForm = ({ handler }) => {
+const ReviewAddForm = ({ setIsWriting, handler }) => {
     // review content
     const [gu, setGu] = useState('');
     const [dong, setDong] = useState('');
@@ -60,12 +60,25 @@ const ReviewAddForm = ({ handler }) => {
         // GET 
     }
 
-    
+    const modalRef = useRef();
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleOutsideClick);
+
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    });
+
+    const handleOutsideClick = (e) => {
+        if (modalRef.current && !modalRef.current.contains(e.target)) {
+            setIsWriting(false);
+        }
+    };
 
     return (
-        <>
+        <div ref={modalRef}>
             <FormContainer>
-                {/* onSubmit={ handleAddSubmit } */}
                 <form onSubmit={ handleAddSubmit }>  
                     <div>
                         <select name="gu" id="" onChange={ handleGuChange }>
@@ -129,9 +142,8 @@ const ReviewAddForm = ({ handler }) => {
                         <input type="submit" value="제출"></input>
                     </div>
                 </form>
-                {/* <button onClick={()=>{alert(noiseLevel)}}>현재값</button> */}
             </FormContainer>
-        </>
+        </div>
     )
 }
 

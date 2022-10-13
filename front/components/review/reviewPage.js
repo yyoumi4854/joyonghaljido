@@ -4,29 +4,34 @@ import {
     ReviewList
 } from "./reviewPage.style.js";
 
+import dummy from "../../dummy/reviews.json";
+
 const ReviewPage = () => {
 
-    const [isWriting, setIsWriting] = useState('off');
+    const [isWriting, setIsWriting] = useState(false);
     
     const handler = (e) => {
-        if(e.target.id == 'on'){setIsWriting(()=>'on')}
-        if(e.target.value == '취소'){setIsWriting(()=>'off')}
+        if(e.target.id == 'on'){setIsWriting(true)}
+        if(e.target.id == 'off'){setIsWriting(false)}
     }
 
     return (
         <>
             <button id='on' onClick={ handler }>글 작성</button>
-            <button id='off' onClick={handler}>글 게시</button>
-
-            <ReviewList>리뷰1</ReviewList>
-            <ReviewList>리뷰2</ReviewList>
-            <ReviewList>리뷰3</ReviewList>
-
-            {isWriting=='on' && <ReviewAddForm handler={ handler }></ReviewAddForm>}
+            {dummy.reviews.map(review => (
+                <ReviewList key={ review._id }>
+                    { review.noiseLevel }
+                    { review.title }
+                    { review.description }
+                    { review.dong }동
+                    <button>수정</button>
+                    <button>삭제</button>
+                    <br></br>                    
+                </ReviewList>
+            ))}
+            {isWriting==true && <ReviewAddForm setIsWriting={ setIsWriting } handler={ handler }></ReviewAddForm>}
         </>
     );
 }
 
 export default ReviewPage;
-
-// setIsWriting(()=>1)
