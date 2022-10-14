@@ -27,8 +27,8 @@ export default function PinGraphTest({time, colorIdx}) {
 
     const labels = ['9시', '12시', '16시', '20시', '23시', '새벽1시'];
     
-    const colors1 = ["#E35753","#E78732","#F1D14D","#57CB6A","#377ED2","#7352DE"]
-    const colors2 = ["#EE9A98","#F1B784","#F8E8A6","#9AE0A5","#87B2E4","#AB97EB"]
+    const colors1 = ["#7352DE","#377ED2","#57CB6A","#F1D14D", "#E78732","#E35753",]
+    const colors2 = ["#AB97EB","#87B2E4","#9AE0A5","#F8E8A6", "#F1B784","#EE9A98",]
 
     const timeArr = time;
     const options = {

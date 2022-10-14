@@ -11,6 +11,9 @@ import PinSelectLayout from './pinSelect.style';
 import {noiseDegree, noiseEffect} from './noiseInfo';
 
 const PinSelect = () => {
+
+    const ImgArr = [PinImg1, PinImg2, PinImg3, PinImg4, PinImg5, PinImg6]
+
     // dummy data
     const dummy = {
         pinID:'',
@@ -36,15 +39,14 @@ const PinSelect = () => {
         if(noiseEffect[i].dB == val){ noiseEffectMessage = noiseEffect[i].MSG}
     }
 
-    let imgSrc = -1
-    if(avg <= 50){imgSrc = 6}
-    else if(avg > 50 && avg <= 55){imgSrc = 5}
-    else if(avg > 55 && avg <= 60){imgSrc = 4}
-    else if(avg > 60 && avg <= 65){imgSrc = 3}
-    else if(avg > 65 && avg <= 70){imgSrc = 2}
-    else if(avg > 70 && avg <= 75){imgSrc = 1}
+    let ImgSrcNum = 4
+    if(avg <= 25){ImgSrcNum = 1} // 보라
+    else if(avg > 25 && avg <= 35){ImgSrcNum = 2} // 파랑
+    else if(avg > 35 && avg <= 45){ImgSrcNum = 3} // 초록
+    else if(avg > 45 && avg <= 55){ImgSrcNum = 4} // 노랑
+    else if(avg > 55 && avg <= 65){ImgSrcNum = 5} // 주황
+    else if(avg > 65){ImgSrcNum = 6} // 빨강
 
-    // render thi
     return (
         <PinSelectLayout>
             <div>
@@ -63,12 +65,13 @@ const PinSelect = () => {
                     <h3>어느 정도의 소음인가요?</h3>
                 </div>
                 <div className='Lside'>
-                    {imgSrc==6 && (<p><Image src={PinImg1} alt='PinImg1'></Image></p>)}
-                    {imgSrc==5 && (<p><Image src={PinImg2} alt='PinImg2'></Image></p>)}
-                    {imgSrc==4 && (<p><Image src={PinImg3} alt='PinImg3'></Image></p>)}
-                    {imgSrc==3 && (<p><Image src={PinImg4} alt='PinImg4'></Image></p>)}
-                    {imgSrc==2 && (<p><Image src={PinImg5} alt='PinImg5'></Image></p>)}
-                    {imgSrc==1 && (<p><Image src={PinImg6} alt='PinImg6'></Image></p>)}
+                    
+                    {ImgArr.map((x, i)=>{
+                        if(i+1 == ImgSrcNum){
+                            return (<p><Image src={x}></Image></p>)
+                        }
+                    })}
+
                     <p className='average'>{avg}</p>
                 </div>
                 <div className='Rside'>
@@ -83,7 +86,7 @@ const PinSelect = () => {
                 <div className='section3'>
                     <h3>시간대별 소음 그래프</h3>
                     <div className='graph'>
-                        <G4_PinGraph time={dummy.time} colorIdx= {imgSrc}/>
+                        <G4_PinGraph time={dummy.time} colorIdx= {ImgSrcNum}/>
                     </div>
                     <div>
                         <button type="button" className="toReview" data-toggle="modal" data-target="">
@@ -91,7 +94,6 @@ const PinSelect = () => {
                         </button>
                     </div>
                 </div>
-
             </div>
         </PinSelectLayout>
     );
