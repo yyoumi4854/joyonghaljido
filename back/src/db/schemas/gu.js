@@ -10,7 +10,6 @@ const GuSchema = new Schema({
     type: String,
     required: true,
   },
-
   crs: {
     type: {
       type: String,
@@ -18,6 +17,10 @@ const GuSchema = new Schema({
     properties: {
       name: String,
     },
+  },
+  center: {
+    type: [Number],
+    required: true,
   },
   features: {
     type: [
@@ -29,7 +32,7 @@ const GuSchema = new Schema({
         properties: {
           EMD_CD: String,
           EMD_ENG_NM: String,
-          EMD_KOR_NM: String,
+          name: String,
         },
         geometry: {
           type: {

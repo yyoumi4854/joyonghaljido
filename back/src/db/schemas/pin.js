@@ -1,6 +1,10 @@
 const { Schema, model } = require("mongoose");
 
 const PinSchema = new Schema({
+  _id: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
@@ -14,14 +18,16 @@ const PinSchema = new Schema({
     required: true,
   },
   guId: {
-    type: ObjectId,
+    type: String,
     required: true,
-    ref: "Gu",
   },
   dongId: {
-    type: ObjectId,
+    type: String,
     required: true,
-    ref: "Dong",
+  },
+  timeDecibels: {
+    type: [Number],
+    required: true,
   },
 });
 
