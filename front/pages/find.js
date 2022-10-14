@@ -23,17 +23,18 @@ import Info from '../components/info';
 import FindLayout from '../styles/findLayoutStyles';
 import FooterStyle from '../styles/footerStyles';
 
-
 const Find = () => {
     return (
-        <div style={{display: 'flex', justifyContent: 'center' }}>
-            <div style={{ width: '30vw', height: 'calc(100vh - 50px)', background: 'white' }}>
-                <Ranking />
-                <ReviewPage />
+        <FindLayout>
+            <div className='view'>
+                {/* <Ranking /> */}
+                {/* <Review /> */}
                 {/* <Info /> */}
 
-                <Ranking />
+                {/* 임시 이렇게 사용하세요. */}
+                <Ranking/>
                 <FooterStyle>&copy; 2022 조용할지도</FooterStyle>
+                {/* 임시 */}
             </div>
 
             <div className='map'>
