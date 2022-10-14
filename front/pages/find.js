@@ -16,7 +16,7 @@ import zoomMap from '../dummy/zoom.json';
 // components
 import Map from '../components/map';
 import Ranking from '../components/ranking/ranking';
-import ReviewPage from '../components/review/reviewPage';
+import Review from '../components/review/reviewPage';
 import Info from '../components/info';
 
 // styled
