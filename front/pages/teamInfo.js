@@ -1,4 +1,4 @@
-const Info = () => {
+const TeamInfo = () => {
     return (
         <div>
             <h1>기타 정보가 표현될 화면 입니다.</h1>
@@ -7,4 +7,4 @@ const Info = () => {
     );
 }
 
-export default Info;
+export default TeamInfo;

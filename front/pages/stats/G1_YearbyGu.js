@@ -1,71 +1,26 @@
-// import React from "react";
-// import {
-//   Chart as ChartJS,
-//   CategoryScale,
-//   LinearScale,
-//   BarElement,
-//   Title,
-//   Tooltip,
-//   Legend,
-// } from 'chart.js';
-// import { Bar } from 'react-chartjs-2';
+// import React from 'react';
 
-// ChartJS.register(
-//   CategoryScale,
-//   LinearScale,
-//   BarElement,
-//   Title,
-//   Tooltip,
-//   Legend
-// );
-
-// const labels = [2005,	2006,	2007,	2008,	2009,	2010,	2011,	2012,	2013,	2014,	2015,	2016,	2017,	2018,	2019,	2020]
-// const noise = [12770,	12213,	13196,	16496,	15922,	23396,	21745,	20166,	27558,	31275,	41286,	52557,	55743,	52173,	52868,	60386]
-
-
-// export const options = {
-//   responsive: true,
-//   plugins: {
-//     legend: {
-//       position: 'top'
-//     },
-//     title: {
-//       display: true,
-//       text: '',
-//     },
-//   },
-// };
-
-// export const data = {
-//   labels,
-//   datasets: [
-//     {
-//       type:'bar',
-//       label: '서울시 연도별 소음민원 발생량',
-//       data: noise,
-//       backgroundColor: '#F8859D',
-//     },
-//   ],
-// };
-
-// export default function G1_YearbyGu() {
-//     return <Bar 
-//       data={data}
-//       options={options} 
-//     />;
-// }
-
-import React from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  BarElement,
+  // BarElement,
   Title,
   Tooltip,
   Legend,
 } from 'chart.js';
+
 import { Bar } from 'react-chartjs-2';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  // PointElement,
+  // LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const G1_YearbyGu = () => {
   const year = [2005,	2006,	2007,	2008,	2009,	2010,	2011,	2012,	2013,	2014,	2015,	2016,	2017,	2018,	2019,	2020];
@@ -74,15 +29,7 @@ const G1_YearbyGu = () => {
   const options = {
     plugins: {
       legend: { // 범례 스타일링
-        position: 'bottom',
-        labels:{
-          usePointStyle: true, // false 직사각형, true 원
-          padding: 10, // 범례 간 간격 지정, 상하x
-          font: {
-            family: "'Noto Sans KR', sans-serif",
-            size: '14px',
-          }
-        }
+        display: false,
       },
 
       tooltip:{ // 툴팁 스타일
@@ -100,15 +47,21 @@ const G1_YearbyGu = () => {
 
     scales: { // x축과 y축 설정
       x: {
-        grid: { // 축을 기준으로 그려지는 선(세로선) 설정
-          display: false, // true하면 세로줄이 그려짐
+        grid: {
+          display: false,
+        },
+        ticks: {
+          color: '#C4C4C4',
         }
       },
 
       y: {
         grid: {
-          // color: '#30C586',
+          color: '#E4E5E9',
         },
+        ticks: {
+          color: '#C4C4C4',
+        }
       },
     }
   }

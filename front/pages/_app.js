@@ -4,7 +4,7 @@ import { ThemeProvider } from "styled-components";
 import theme from '../styles/theme';
 
 
-import Header from '../components/header';
+import Header from '../components/header/header';
 
 const app = ({ Component }) => {
     return (

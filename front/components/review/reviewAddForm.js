@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { 
+import {
     ColorDiv1,
     ColorDiv2,
     ColorDiv3,
@@ -31,30 +31,27 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
 
     // 구
     const handleGuChange = async (e) => {
-        const selectedGuId = e.target.id;
-        // const guName = e.target.value;
-        console.log(selectedGuId);
+        const selectedGuId = e.target.value;
 
         setGuId(selectedGuId);
 
         // 선택한 구 ID 이용해 해당 구에 속한 동 리스트 불러오기
-        // await axios.get(`http://localhost:5001/location/gus/${selectedGuId}/dongs`)
-        //     .then((res) => {
-        //         console.log(res.data);
-        //     });
+        await axios.get(`http://localhost:5001/location/gus/${selectedGuId}/dongs`)
+            .then((res) => {
+                setDongList(res.data.dongs);
+            });
     }
 
     // 동
     const handleDongChange = (e) => {
-        const dongId = e.target.id;
-        // const dongId = e.target.value;
-        setDongId(dongValue);
+        const dongId = e.target.value;
+        setDongId(dongId);
     }
 
-    const handleTitleChange = (e) => {setTitle(e.target.value)}
-    const handleDescriptionChange = (e) => {setDescription(e.target.value)}
-    const handlePasswordChange = (e) => {setPassword(e.target.value)}
-    const handleNoiseLevelChange = (e) => {setNoiseLevel(e.target.id)}
+    const handleTitleChange = (e) => { setTitle(e.target.value) }
+    const handleDescriptionChange = (e) => { setDescription(e.target.value) }
+    const handlePasswordChange = (e) => { setPassword(e.target.value) }
+    const handleNoiseLevelChange = (e) => { setNoiseLevel(e.target.id) }
 
     const handleAddSubmit = async (e) => {
         e.preventDefault();
@@ -67,15 +64,15 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
             password: password,
             noiseLevel: noiseLevel,
         };
-        SetReview([...review, newReview]);
+        SetReview(newReview);
 
-        // REAL : 등록 버튼 눌렀을 때 이벤트 (api 연결)
-        // const serverURL = "http://localhost:5001/reviews";
-        // // POST & GET
+        // 등록 버튼 눌렀을 때 이벤트 (api 연결)
+        // POST & GET
         // try {
-        //     await axios.post(serverURL, JSON.stringify(review));
+        //     await axios.post("http://localhost:5001/reviews", JSON.stringify(review));
         // } catch (e) {
         //     console.log("POST 요청이 실패했습니다.", e);
+        //     console.log(review);
         // }
     }
 
@@ -98,24 +95,24 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
     return (
         <div ref={modalRef}>
             <FormContainer>
-                <form onSubmit={ handleAddSubmit }>  
+                <form onSubmit={handleAddSubmit}>
                     <div>
-                        <select name="gu" id="" onChange={ handleGuChange }>
+                        <select name="gu" id="" onChange={handleGuChange}>
                             {/* <option value="">구를 선택해주세요.</option> */}
                             {
                                 guList.map(gu => {
-                                    return <option key={gu._id} id={gu._id} value={gu.name}>{gu.name}</option>
+                                    return <option key={gu._id} value={gu._id}>{gu.name}</option>
                                 })
                             }
                         </select>
-                        <select name="dong" id="" disabled={ !guId } onChange={ handleDongChange }>
+                        <select name="dong" id="" disabled={!guId} onChange={handleDongChange}>
                             {/* <option value="">동을 선택해주세요.</option> */}
                             {
                                 dongList.map(dong => {
-                                    return <option key={dong._id} id={dong._id} value={dong.name}>{dong.name}</option>
+                                    return <option key={dong._id} value={dong._id}>{dong.name}</option>
                                 })
                             }
-                        </select><br></br><br></br>                             
+                        </select><br></br><br></br>
                     </div>
                     <div>
                         <label>소음에 대한 상세 설명을 작성해 주세요</label><br></br>
@@ -123,14 +120,14 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
                             type="text"
                             placeholder="제목"
                             name="title"
-                            value={ review.title }
-                            onChange={handleTitleChange}></input>                
+                            value={review.title}
+                            onChange={handleTitleChange}></input>
                         <input
                             type="text"
                             placeholder="내용"
                             name="description"
-                            value={ review.description }
-                            onChange={ handleDescriptionChange}></input>
+                            value={review.description}
+                            onChange={handleDescriptionChange}></input>
                     </div>
                     <br></br>
 
@@ -141,8 +138,8 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
                             type="text"
                             placeholder="비밀번호"
                             name="password"
-                            value={ review.password }
-                            onChange={ handlePasswordChange }></input>
+                            value={review.password}
+                            onChange={handlePasswordChange}></input>
                     </div>
                     <br></br>
 
@@ -156,8 +153,8 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
                         <FloatClear></FloatClear>
                     </div>
                     <div>
-                        
-                        <input type="button" id="off" value="취소" onClick={ handler }></input>
+
+                        <input type="button" id="off" value="취소" onClick={handler}></input>
                         <input type="submit" value="제출"></input>
                     </div>
                 </form>
