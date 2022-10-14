@@ -1,3 +1,5 @@
+import theme from '../styles/theme';
+
 import {
     ComposableMap,
     Geographies,
@@ -14,12 +16,16 @@ import ReactTooltip from 'react-tooltip'
 import seoulMap from '../dummy/seoul.json';
 import zoomMap from '../dummy/zoom.json';
 
+import Image from 'next/image';
+import redPin from '../public/images/logo.svg';
+
 import { scaleQuantize } from "d3-scale";
 import { csv } from "d3-fetch";
 
 const Map = ({ currentState, setCurrentState }) => {
     const [pins, setPins] = useState('');
     const [dongs, setDongs] = useState('');
+
     useEffect(() => {
         csv("/pin_data_master.csv").then(v => {
             setPins(v);
@@ -93,19 +99,17 @@ const Map = ({ currentState, setCurrentState }) => {
             "#ff8a75",
             "#ff5533",
             "#e2492d",
-            "#be3d26",
-            "#9a311f",
-            "#782618"
+            "#be3d26"
         ]);
 
     return (
         <>
             <ReactTooltip type='light'>{currentState.name}</ReactTooltip>
-            {currentState.clicked === 1 ? <h2>찾고 싶은 지역을 선택해주세요.</h2> :
+            {currentState.currentView === 'ranking' ? <h2 style={{ fontSize: '26px', fontWeight: '700' }}>찾고 싶은 지역을 선택해주세요.</h2> :
                 <h2><span onClick={() => {
                     setCurrentState({
                         ...currentState,
-                        clicked: 1,
+                        currentView: 'ranking',
                         zoom: 2,
                         map: seoulMap,
                         clickedName: '',
@@ -113,8 +117,7 @@ const Map = ({ currentState, setCurrentState }) => {
                     });
                 }}>서울시</span> &gt; {currentState.clickedName}</h2>}
             <div style={{
-                height: '80vh', width: '80vh',
-                // border: '1px grey solid'
+                height: '90%', width: '100%',
             }}>
                 <ComposableMap
                     projection="geoMercator"
@@ -133,17 +136,17 @@ const Map = ({ currentState, setCurrentState }) => {
                                     const cur = MW_OBJ.find(v => v.name === geo.properties.name)
                                     return <Geography
                                         fill={
-                                            currentState.clicked >= 2 ? 'grey' : colorScale(cur ? cur.MW : "#EEE")}
+                                            currentState.currentView !== 'ranking' ? theme.colors.grey3 : colorScale(cur ? cur.MW : "#EEE")}
                                         stroke={'white'}
                                         strokeWidth={currentState.isZoom ? 0.3 : 2}
                                         onClick={() => {
                                             //서울지도일때만 동작
-                                            if (currentState.clicked === 1) {
+                                            if (currentState.currentView === 'ranking') {
                                                 const { name } = geo.properties;
                                                 const { center } = zoomMap[name];
                                                 setCurrentState({
                                                     ...currentState,
-                                                    clicked: 2,
+                                                    currentView: 'gu',
                                                     zoom: 7,
                                                     map: zoomMap[name],
                                                     clickedName: name,
@@ -171,7 +174,6 @@ const Map = ({ currentState, setCurrentState }) => {
                                                 outline: "none",
                                             },
                                             hover: {
-                                                fill: "#B1D6AE",
                                                 outline: "none",
                                             },
                                             pressed: {
@@ -183,41 +185,37 @@ const Map = ({ currentState, setCurrentState }) => {
                                 })
                             }
                         </Geographies>
-                        {pins && pins.map(pin => {
-                            return <Marker
-                                key={pin._id}
-                                onClick={() => {
-                                    setCurrentState({
-                                        ...currentState,
-                                        clicked: 4,
-                                        clickedName: pin.name
-                                    });
-                                }}
-                                coordinates={[pin.longitude, pin.latitude]}>
-                                <circle r={3} fill="red"
-                                //  stroke="#fff" 
-                                //  strokeWidth={0.5}
-                                />
-                            </Marker>
-                        })}
-
-                        {dongs && dongs.map(dong => {
-                            return <Marker
-                                key={dong._id}
-                                onClick={() => {
-                                    setCurrentState({
-                                        ...currentState,
-                                        clicked: 3,
-                                        clickedName: dong.name
-                                    });
-                                }}
-                                coordinates={[dong.longitude, dong.latitude]}>
-                                <circle r={1} fill="yellow"
-                                // stroke="#fff" 
-                                // strokeWidth={0.5}
-                                />
-                            </Marker>
-                        })}
+                        {currentState.currentView !== 'ranking' ?
+                            pins && pins.map(pin => {
+                                return <Marker
+                                    key={pin._id}
+                                    onClick={() => {
+                                        setCurrentState({
+                                            ...currentState,
+                                            currentView: 'info',
+                                            clickedName: pin.name
+                                        });
+                                    }}
+                                    coordinates={[pin.longitude, pin.latitude]}>
+                                    {/* <Image src={redPin} alt="빨간 핀" /> */}
+                                    <circle r={3} fill={theme.colors.red} />
+                                </Marker>
+                            }) : null}
+                        {currentState.currentView !== 'ranking' ?
+                            dongs && dongs.map(dong => {
+                                return <Marker
+                                    key={dong._id}
+                                    onClick={() => {
+                                        setCurrentState({
+                                            ...currentState,
+                                            currentView: 'dong',
+                                            clickedName: dong.name
+                                        });
+                                    }}
+                                    coordinates={[dong.longitude, dong.latitude]}>
+                                    <circle r={1} fill={theme.colors.main} />
+                                </Marker>
+                            }) : null}
                     </ZoomableGroup>
                 </ComposableMap>
             </div>
@@ -226,20 +224,3 @@ const Map = ({ currentState, setCurrentState }) => {
 }
 
 export default Map;
-
-{/* {pins.map(pin => (
-                            <Marker
-
-                                // longtitude, latitude
-                                coordinates={[pin.lontitude, pin.latitude]}
-                            onMouseEnter={() => {
-                                setName('서울 중앙');
-                            }}
-                            onMouseLeave={() => {
-                                setName("");
-                            }}
-                            >
-                                <text textAnchor="middle" fill="grey">
-                        서울중앙
-                    </text>
-                            </Marker>)} */}

@@ -15,17 +15,16 @@ import zoomMap from '../dummy/zoom.json';
 
 import Map from '../components/map';
 import Ranking from '../components/ranking/ranking';
-import ReviewGu from '../components/reviewGu';
-import ReviewDong from '../components/reviewDong';
+import Review from '../components/review';
 import Info from '../components/info';
 
 const Find = () => {
     const [currentState, setCurrentState] = useState(
         {
-            clicked: 1,
-            //상태(1 : 랭킹컴포넌트, 2 : 리뷰(구), 3: 리뷰(동), 4: 정보(핀))에 따라 컴포넌트가 좌측에 나타납니다. 
-            rankingClicked: 1,
-            //ranking.js에서 클릭된 탭에 따라 서울지도에서의 구 색상 기준이 변경됩니다. (1: 민원, 2: 소음수치)
+            currentView: 'ranking',
+            //'ranking', 'gu', 'dong', 'info'
+            rankingTab: 'mw',
+            //'mw' or 'noise'
 
             zoom: 2,
             clickedName: '',
@@ -38,19 +37,19 @@ const Find = () => {
     return (
         <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div style={{ width: '30vw', height: 'calc(100vh - 50px)', background: 'white' }}>
-                {currentState.clicked === 1 ?
+                {currentState.currentView === 'ranking' ?
                     <Ranking
                         currentState={currentState}
                         setCurrentState={setCurrentState} /> : null}
-                {currentState.clicked === 2 ?
-                    <ReviewGu
+                {currentState.currentView === 'gu' ?
+                    <Review
                         currentState={currentState}
                         setCurrentState={setCurrentState} /> : null}
-                {currentState.clicked === 3 ?
-                    <ReviewDong
+                {currentState.currentView === 'dong' ?
+                    <Review
                         currentState={currentState}
                         setCurrentState={setCurrentState} /> : null}
-                {currentState.clicked === 4 ?
+                {currentState.currentView === 'info' ?
                     <Info
                         currentState={currentState}
                         setCurrentState={setCurrentState} /> : null}
