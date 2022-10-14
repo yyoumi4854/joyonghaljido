@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import {createGlobalStyle} from 'styled-components';
 import reset from 'styled-reset'
 
 const GlobalStyles = createGlobalStyle`
@@ -6,8 +6,8 @@ const GlobalStyles = createGlobalStyle`
   *{
     box-sizing: border-box;
   }
+  
   body{
-    backgound-color : F5F5F5;
     color: #333;
     line-height: 1;
     letter-spacing: -0.0125em;
@@ -15,10 +15,18 @@ const GlobalStyles = createGlobalStyle`
   }
 
   span{display: inline-block}
+  
   button{
     padding: 0;
+    background: transparent;
     border: 0;
     cursor: pointer;
+    outline: none;
+  }
+
+  svg{
+    display: inline-block;
+    vertical-align: middle;
   }
 `;
 

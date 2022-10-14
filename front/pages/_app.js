@@ -13,7 +13,7 @@ const app = ({ Component }) => {
                 <title>조용할지도</title>
             </Head>
 
-            <GlobalStyles />
+            <GlobalStyles/>
             <ThemeProvider theme={theme}>
                 <Header />
                 <div>

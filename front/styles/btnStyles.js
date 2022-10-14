@@ -17,7 +17,20 @@ const LongBtn = styled.button`
   border: 2px solid ${({check}) => check === 'more' || '#30C586'};
   border-radius: 4px;
   color: ${({ theme }) => theme.colors.main};
-
 `;
 
-export {SmallBtn, LongBtn};
+// topBtn
+const TopBtn = styled.button`
+  width: 100%;
+  height: 61px;
+  background: ${({ theme }) => theme.colors.main};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.mainLight1};
+  
+  svg{
+    color: #fff;
+    width: auto;
+    height: 28px;
+  }
+`;
+
+export {SmallBtn, LongBtn, TopBtn};
