@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const Info = () => {
+const PinInfo = () => {
     return (
         <>
             <div style={{ width: '100%', height: '100%' }}>
@@ -58,4 +58,4 @@ const Info = () => {
     );
 }
 
-export default Info;
+export default PinInfo;

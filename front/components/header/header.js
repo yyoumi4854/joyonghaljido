@@ -12,7 +12,6 @@ const Header = () => {
                 <nav>
                     <Link href='/info'><span>팀 소개</span></Link>
                     <Link href='/find'><span>동네 찾기</span></Link>
-                    <Link href='/pinSelect'><span>PinSelect</span></Link>
                 </nav>
             </div>
         </HeaderStyle>

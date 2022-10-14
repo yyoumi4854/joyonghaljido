@@ -17,7 +17,8 @@ import zoomMap from '../dummy/zoom.json';
 import Map from '../components/map';
 import Ranking from '../components/ranking/ranking';
 import ReviewPage from '../components/review/reviewPage';
-import Info from '../components/info';
+import PinInfo from '../components/pinInfo/pinInfo';
+import PinSelect from '../components/pinInfo/pinSelect';
 
 // styled
 import FindLayout from './findLayoutStyles';
@@ -28,8 +29,9 @@ const Find = () => {
         <FindLayout>
             <div className='view'>
                 {/* <Review /> */}
-                {/* <Info /> */}
-                <Ranking/>
+                {/* <PinInfo /> */}
+                <PinSelect/>
+                {/* <Ranking/> */}
                 <FooterStyle>&copy; 2022 조용할지도</FooterStyle>
             </div>
 

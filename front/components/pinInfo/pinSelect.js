@@ -1,17 +1,16 @@
-import G4_PinGraph from './stats/G4_PinGraph';
+import G4_PinGraph from './G4_PinGraph';
 import Image from 'next/image';
-import PinImg1 from '../public/images/pin1.svg'
-import PinImg2 from '../public/images/pin2.svg'
-import PinImg3 from '../public/images/pin3.svg'
-import PinImg4 from '../public/images/pin4.svg'
-import PinImg5 from '../public/images/pin5.svg'
-import PinImg6 from '../public/images/pin6.svg'
-import LeftArrow from '../public/images/LeftArrow.svg'
+import PinImg1 from '../../public/images/pin1.svg'
+import PinImg2 from '../../public/images/pin2.svg'
+import PinImg3 from '../../public/images/pin3.svg'
+import PinImg4 from '../../public/images/pin4.svg'
+import PinImg5 from '../../public/images/pin5.svg'
+import PinImg6 from '../../public/images/pin6.svg'
+import LeftArrow from '../../public/images/LeftArrow.svg'
 import PinSelectLayout from './pinSelect.style';
 import {noiseDegree, noiseEffect} from './noiseInfo';
 
 const PinSelect = () => {
-
     // dummy data
     const dummy = {
         pinID:'',
