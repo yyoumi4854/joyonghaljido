@@ -6,12 +6,13 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start -p 80",
+    "start": "next start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.1.2",
     "chart.js": "^3.9.1",
     "d3-scale": "^4.0.2",
     "next": "^12.3.1",
