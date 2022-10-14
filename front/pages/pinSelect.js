@@ -9,10 +9,11 @@ import PinImg6 from '../public/images/pin6.svg'
 import LeftArrow from '../public/images/LeftArrow.svg'
 import PinSelectLayout from './pinSelect.style';
 import {noiseDegree, noiseEffect} from './noiseInfo';
+import axios from "axios";
 
 const PinSelect = () => {
 
-    // dummy data
+    // get data from dummy
     const dummy = {
         pinID:'',
         pinName:'스타벅스 앞', 
@@ -20,6 +21,20 @@ const PinSelect = () => {
         DongName:'1동', 
         time:[88,77,44,66,55,77]
     }
+
+    // get data from API
+    // const backendPortNumber = "5001";
+    // const serverUrl =
+    // "http://" + window.location.hostname + ":" + backendPortNumber + "/";
+    // async function get2(endpoint, params = "") {
+    //     console.log(`%cGET 요청 ${serverUrl + endpoint + params}`, "color: #a25cd1;");
+    //     return axios.get(serverUrl + endpoint + params, {
+    //       // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
+    //       headers: {
+    //         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+    //       },
+    //     });
+    //   }
 
     // calculating figures
     let sum = 0;
