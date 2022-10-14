@@ -13,7 +13,7 @@ import ReactTooltip from 'react-tooltip'
 import seoulMap from '../dummy/seoul.json';
 import zoomMap from '../dummy/zoom.json';
 
-import Map from '../components/map';
+import Map from '../components/map/map';
 import Ranking from '../components/ranking/ranking';
 import Review from '../components/review/review';
 import PinSelect from '../components/pinInfo/pinSelect';

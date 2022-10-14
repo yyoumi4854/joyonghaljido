@@ -23,32 +23,29 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
     const [review, SetReview] = useState([]);
 
     useEffect(() => {
-        // axios.get("http://localhost:5001/location/gus")
-        //     .then((res) => {
-        //         setGuList(res.data);
-        //     })
+        axios.get("http://localhost:5001/location/gus")
+            .then((res) => {
+                setGuList(res.data);
+            })
     }, []);
 
     // 구
     const handleGuChange = async (e) => {
-        const selectedGuId = e.target.id;
-        // const guName = e.target.value;
-        console.log(selectedGuId);
+        const selectedGuId = e.target.value;
 
         setGuId(selectedGuId);
 
         // 선택한 구 ID 이용해 해당 구에 속한 동 리스트 불러오기
-        // await axios.get(`http://localhost:5001/location/gus/${selectedGuId}/dongs`)
-        //     .then((res) => {
-        //         console.log(res.data);
-        //     });
+        await axios.get(`http://localhost:5001/location/gus/${selectedGuId}/dongs`)
+            .then((res) => {
+                setDongList(res.data.dongs);
+            });
     }
 
     // 동
     const handleDongChange = (e) => {
-        const dongId = e.target.id;
-        // const dongId = e.target.value;
-        setDongId(dongValue);
+        const dongId = e.target.value;
+        setDongId(dongId);
     }
 
     const handleTitleChange = (e) => { setTitle(e.target.value) }
@@ -67,15 +64,15 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
             password: password,
             noiseLevel: noiseLevel,
         };
-        SetReview([...review, newReview]);
+        SetReview(newReview);
 
-        // REAL : 등록 버튼 눌렀을 때 이벤트 (api 연결)
-        // const serverURL = "http://localhost:5001/reviews";
-        // // POST & GET
+        // 등록 버튼 눌렀을 때 이벤트 (api 연결)
+        // POST & GET
         // try {
-        //     await axios.post(serverURL, JSON.stringify(review));
+        //     await axios.post("http://localhost:5001/reviews", JSON.stringify(review));
         // } catch (e) {
         //     console.log("POST 요청이 실패했습니다.", e);
+        //     console.log(review);
         // }
     }
 
@@ -104,7 +101,7 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
                             {/* <option value="">구를 선택해주세요.</option> */}
                             {
                                 guList.map(gu => {
-                                    return <option key={gu._id} id={gu._id} value={gu.name}>{gu.name}</option>
+                                    return <option key={gu._id} value={gu._id}>{gu.name}</option>
                                 })
                             }
                         </select>
@@ -112,7 +109,7 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
                             {/* <option value="">동을 선택해주세요.</option> */}
                             {
                                 dongList.map(dong => {
-                                    return <option key={dong._id} id={dong._id} value={dong.name}>{dong.name}</option>
+                                    return <option key={dong._id} value={dong._id}>{dong.name}</option>
                                 })
                             }
                         </select><br></br><br></br>
