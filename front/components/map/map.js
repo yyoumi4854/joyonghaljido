@@ -25,6 +25,9 @@ import { csv } from "d3-fetch";
 // styled
 import MapContent from './mapStyles';
 
+// react-icons
+import { BsForwardFill } from "react-icons/bs";
+
 const Map = ({ currentState, setCurrentState }) => {
     const [pins, setPins] = useState('');
     const [dongs, setDongs] = useState('');
@@ -137,7 +140,7 @@ const Map = ({ currentState, setCurrentState }) => {
                                 clickedName: '',
                                 center: [126.986, 37.561],
                             });
-                        }}>서울시</span> &gt; {currentState.clickedName}</h2>}
+                        }}>서울시</span> <BsForwardFill/> <span>{currentState.clickedName}</span></h2>}
             </div>
 
 
@@ -159,7 +162,7 @@ const Map = ({ currentState, setCurrentState }) => {
                                     const cur = MW_OBJ.find(v => v.name === geo.properties.name)
                                     return <Geography
                                         fill={
-                                            currentState.currentView !== 'ranking' ? theme.colors.grey3 : colorScale(cur ? cur.MW : "#EEE")}
+                                            currentState.currentView !== 'ranking' ? theme.colors.grey3 : colorScale(cur ? cur.MW : "#E4E5E9")}
                                         stroke={'#F5F5F5'}
                                         strokeWidth={currentState.isZoom ? 0 : 0.4}
                                         onClick={() => {

@@ -10,7 +10,26 @@ const MapContent = styled.div`
     transform: translateY(-50%);
     font-size: ${({ theme }) => theme.fontSizes.titleFs};
     font-weight: 700;
-    /* background: red; */
+
+    span{
+      transition: .2s;
+      cursor: pointer;
+
+      &:nth-child(1){
+        color: ${({ theme }) => theme.colors.grey2};
+      }
+
+      &:hover{
+        color: ${({ theme }) => theme.colors.main};
+      }
+    }
+
+    svg{
+      width: auto;
+      height: 36px;
+      vertical-align: top;
+      color: ${({ theme }) => theme.colors.mainLight1};
+    }
   }
 
   .mapCon{
