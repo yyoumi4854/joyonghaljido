@@ -4,8 +4,8 @@ import styled from "styled-components";
 const SmallBtn = styled.button`
   width: 100px;
   height: 40px;
-  background: ${({check}) => check === 'yes' ? '#30C586' : '#F5F5F5'};
-  color: ${({check}) => check !== 'yes' || '#fff'};
+  background: ${({ check }) => check === 'yes' ? '#30C586' : '#F5F5F5'};
+  color: ${({ check }) => check !== 'yes' || '#fff'};
   border-radius: 4px;
 `;
 
@@ -41,4 +41,4 @@ const TopBtn = styled.button`
   }
 `;
 
-export {SmallBtn, ReviewBtn, TopBtn};
+export { SmallBtn, ReviewBtn, TopBtn };

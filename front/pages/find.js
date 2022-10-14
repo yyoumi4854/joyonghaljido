@@ -65,7 +65,7 @@ const Find = () => {
                     </>)
                     : null}
                 {currentState.currentView === 'dong' ?
-                    <Review 
+                    <Review
                         currentState={currentState}
                         setCurrentState={setCurrentState} /> : null}
                 {currentState.currentView === 'info' ?

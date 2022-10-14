@@ -5,7 +5,7 @@ import { SmallBtn } from '../../styles/btnStyles';
 
 import geoId from './geoid.json';
 
-const ReviewAddForm = ({ currentState,  toggleIsWriting }) => {
+const ReviewAddForm = ({ currentState, toggleIsWriting }) => {
     // review content
     const [noiseLevel, setNoiseLevel] = useState('');
 
@@ -70,14 +70,14 @@ const ReviewAddForm = ({ currentState,  toggleIsWriting }) => {
     };
 
     return (
-        <FormContent ref={modalRef} onChange={ handleReviewChange }>
+        <FormContent ref={modalRef} onChange={handleReviewChange}>
             <div className="formCon">
-                <form onSubmit={ handleAddSubmit }>
+                <form onSubmit={handleAddSubmit}>
                     <h3>소음 리뷰 <span>작성하기</span></h3>
                     <div className="content">
                         <p className="title">지역 선택을 선택해주세요.</p>
                         <div className="selectBox">
-                            <select name="guId" onChange={ handleGuChange }>
+                            <select name="guId" onChange={handleGuChange}>
                                 <option value="">구를 선택해주세요.</option>
                                 {
                                     geoId.map(gu => {
@@ -85,7 +85,7 @@ const ReviewAddForm = ({ currentState,  toggleIsWriting }) => {
                                     })
                                 }
                             </select>
-                            <select name="dongId" id="" disabled={ !review.guId }>
+                            <select name="dongId" id="" disabled={!review.guId}>
                                 <option value="">동을 선택해주세요.</option>
                                 {
                                     dongList.map(dong => {
@@ -106,7 +106,7 @@ const ReviewAddForm = ({ currentState,  toggleIsWriting }) => {
                                 value={review.title}
                             />
 
-                            <textarea 
+                            <textarea
                                 name="description"
                                 value={review.description}
                                 placeholder="내용을 입력해주세요."
@@ -130,19 +130,19 @@ const ReviewAddForm = ({ currentState,  toggleIsWriting }) => {
                     <div className="content">
                         <p className="title">내가 느낀 소음은 어느 정도였나요?</p>
 
-                        <ul className="radioBox"> 
+                        <ul className="radioBox">
                             <li className="good">
-                                <input id="good" type="radio" name="noiseLevel" value='3' checked={ noiseLevel === "3" } onClick={ handleNoiseLevelClick }/>
+                                <input id="good" type="radio" name="noiseLevel" value='3' checked={noiseLevel === "3"} onClick={handleNoiseLevelClick} />
                                 <label for="good">좋음</label>
                                 <p>좋음</p>
                             </li>
                             <li className="soso">
-                                <input id="soso" type="radio" name="noiseLevel" value='2' checked={ noiseLevel === "2" } onClick={ handleNoiseLevelClick }/>
+                                <input id="soso" type="radio" name="noiseLevel" value='2' checked={noiseLevel === "2"} onClick={handleNoiseLevelClick} />
                                 <label for='soso'>보통</label>
                                 <p>보통</p>
                             </li>
                             <li className="bad">
-                                <input id="bad" type="radio" name="noiseLevel" value='1' checked={ noiseLevel === "1" } onClick={ handleNoiseLevelClick }/>
+                                <input id="bad" type="radio" name="noiseLevel" value='1' checked={noiseLevel === "1"} onClick={handleNoiseLevelClick} />
                                 <label for='bad'>나쁨</label>
                                 <p>나쁨</p>
                             </li>
@@ -150,7 +150,7 @@ const ReviewAddForm = ({ currentState,  toggleIsWriting }) => {
                     </div>
 
                     <div className="btnBox content">
-                        <SmallBtn onClick={ toggleIsWriting }>취소</SmallBtn>
+                        <SmallBtn onClick={toggleIsWriting}>취소</SmallBtn>
                         <SmallBtn type="submit" check='yes'>확인</SmallBtn>
                     </div>
                 </form>

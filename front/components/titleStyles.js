@@ -4,13 +4,13 @@ const Title = styled.div`
   ${({ theme }) => theme.common.flexCenter};
   justify-content: space-between;
 
-  height: ${({alignItem}) => alignItem === 'flexStart'? '100px' : '68px' };
+  height: ${({ alignItem }) => alignItem === 'flexStart' ? '100px' : '68px'};
   padding: 0 24px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.grey1};
 
   .title{
     ${({ theme }) => theme.common.flexCenter}
-    align-items:  ${({alignItem}) => alignItem !== 'flexStart' || 'flex-start'};
+    align-items:  ${({ alignItem }) => alignItem !== 'flexStart' || 'flex-start'};
 
     .back{
       margin-right: 12px;

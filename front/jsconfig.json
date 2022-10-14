@@ -3,6 +3,8 @@
     "jsx": "react-jsx",
     "checkJs": true
   },
-  "exclude": ["node_modules", "**/node_modules/*",],
+  "exclude": [
+    "node_modules",
+    "**/node_modules/*",
+  ],
 }
-

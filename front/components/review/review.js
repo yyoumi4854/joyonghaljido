@@ -41,7 +41,7 @@ const ReviewTest = ({ currentState }) => {
   }
     , []);
 
-  
+
   useEffect(() => {
     console.log(list);
   }, [list])
@@ -79,7 +79,7 @@ const ReviewTest = ({ currentState }) => {
         </div>
       </Title>
 
-      <ReviewList list={list} limit={limit} toggleEllipsis={toggleEllipsis} onClickMore={onClickMore}/>
+      <ReviewList list={list} limit={limit} toggleEllipsis={toggleEllipsis} onClickMore={onClickMore} />
       {/* <ReviewNone/> */}
     </>
   );
