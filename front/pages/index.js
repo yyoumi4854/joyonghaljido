@@ -1,13 +1,10 @@
-import Image from 'next/image';
-// import MainImg1 from '../public/images/1.png'
-import MainImg2 from '../public/images/2.png'
-// import MainImg3 from '../public/images/3.png'
+import Link from 'next/link';
 
 // style
 import IndexStyles from '../styles/indexStyles'
 import FooterStyle from '../styles/footerStyles';
 
-// grape
+// graph
 import G1_YearbyGu from './stats/G1_YearbyGu';
 import G2_Seoul_VS_Else from './stats/G2_Seoul_VS_Else';
 import G3_EachGu from './stats/G3_EachGu';
@@ -16,23 +13,26 @@ import G3_EachGu from './stats/G3_EachGu';
 const Index = () => {
     return (
         <IndexStyles>
-            <div className='banner'>
+            <section className='banner'>
                 <div>
                     <div className='textCon'>
                         <p>혹시 어제도 시끄러우셨나요?</p>
                         <h2 className='bannerTitle'>당신에게 알맞은 조용한 동네를 찾아보세요!</h2>
                     </div>
 
-                    <button className='findBtn'>조용한 동네 찾으러 가기</button>
+                    <Link href='/find'>
+                        <button className='findBtn'>조용한 동네 찾으러 가기</button>
+                    </Link>
                 </div>
-            </div>
+            </section>
 
             <section className='questions'>
                 <h2>조용한 동네가 없을까?</h2>
                 <div className='imgBox'></div>
             </section>
 
-            <section>
+
+            <section className='sec'>
                 <h2>최근 소음 공해가 큰 문제가 되고 있습니다.</h2>
                 
                 <div className='textBox'>
@@ -51,11 +51,21 @@ const Index = () => {
 
                 <div className='graph'>
                     <p>서울시 연도별 소음민원 발생량</p>
-                    <G1_YearbyGu></G1_YearbyGu>
+                    <div className='graphBox'>
+                        <G1_YearbyGu></G1_YearbyGu>
+                    </div>
+
+                    <div className='label'>
+                        <dl>
+                            <dt></dt>
+                            <dd>소음민원 권수</dd>
+                        </dl>
+                    </div>
                 </div>
             </section>
 
-            <section className='dayNight'>
+
+            <section className='sec bg'>
                 <h2 className='twoLines'>특히 서울은<br />다른 지역보다 소음 수치가 높습니다</h2>
 
                 <div className='textBox'>
@@ -69,11 +79,29 @@ const Index = () => {
 
                 <div className='graph'>
                     <p>지역별 평균 소음 측정량 (데시벨)</p>
-                    <G2_Seoul_VS_Else></G2_Seoul_VS_Else>
+
+                    <div className='graphCon'>
+                        <div className='bg'></div>
+                        <div className='graphBox posi'>
+                            <G2_Seoul_VS_Else></G2_Seoul_VS_Else>
+                        </div>
+                    </div>
+
+                    <div className='label graph2'>
+                        <dl>
+                            <dt></dt>
+                            <dd>서울 평균 소음 (db)</dd>
+                        </dl>
+                        <dl>
+                            <dt></dt>
+                            <dd>기타지역 평균 소음 (db)</dd>
+                        </dl>
+                    </div>
                 </div>
             </section>
 
-            <section>
+
+            <section className='sec'>
                 <h2 className='twoLines'>서울 내에도<br />어느정도 소음이 덜한 곳은 존재합니다.</h2>
 
                 <div className='textBox'>
@@ -88,19 +116,35 @@ const Index = () => {
 
                 <div className='graph'>
                     <p>구 별 소음민원 발생량 및 인구 수</p>
-                    <G3_EachGu></G3_EachGu>
+                    <div className='graphBox'>
+                        <G3_EachGu></G3_EachGu>
+                    </div>
+
+                    <div className='label graph3'>
+                        <dl>
+                            <dt></dt>
+                            <dd>구 별 소음민원 발생량</dd>
+                        </dl>
+                        <dl>
+                            <dt></dt>
+                            <dd>구 별 인구 수</dd>
+                        </dl>
+                    </div>
                 </div>
             </section>
 
-            <div className='banner'>
+
+            <section className='banner'>
                 <div>
                     <div className='textCon'>
                         <h2 className='twoLines'>그럼 저희와 함께<br />어떤 동네가 조용한지 살펴볼까요?</h2>
                     </div>
 
-                    <button className='findBtn'>조용한 동네 찾으러 가기</button>
+                    <Link href='/find'>
+                        <button className='findBtn'>조용한 동네 찾으러 가기</button>
+                    </Link>
                 </div>
-            </div>
+            </section>
 
             <FooterStyle>&copy; 2022 조용할지도</FooterStyle>
         </IndexStyles>

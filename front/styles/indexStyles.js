@@ -42,7 +42,22 @@ const IndexStyle = styled.div`
         }
     }
 
-    section{
+    .questions{
+        padding: 120px 0;
+        h2{
+            font-size: 48px;
+            font-weight: 700;
+            color: ${({ theme }) => theme.colors.main};
+        }
+        .imgBox{
+            height: 435px;
+            margin-top: 80px;
+            background: url('/images/questionsBg.png') no-repeat center;
+            background-size: contain;
+        }
+    }
+
+    section.sec{
         padding: 120px 0;
         h2{
             font-size: 32px;
@@ -58,25 +73,74 @@ const IndexStyle = styled.div`
         }
 
         .graph{
-            margin: 40px auto 0 auto;
-            width: 1000px;
-        }
-        &.dayNight{
-            background: ${({ theme }) => theme.colors.mainLight2};;
-        }
-    }
+            width: 800px;
+            margin: 100px auto 0 auto;
 
-    .questions{
-        h2{
-            font-size: 48px;
-            font-weight: 700;
-            color: ${({ theme }) => theme.colors.main};
+            p{
+                color: ${({ theme }) => theme.colors.grey2};
+            }
+
+            .graphBox{
+                width: 100%;
+                margin-top: 8px;
+                z-index: 20;
+            }
+            .label{
+                margin-top: 16px;
+                dl{
+                    ${({ theme }) => theme.common.flexCenter};
+                    justify-content: flex-end;
+                    dt{
+                        width: 28px;
+                        height: 10px;
+                        background: rgba(245, 80, 115, 0.8);
+                    }
+                    dd{
+                        margin-left: 8px;
+                        font-weight: 300;
+                        font-size: 14px;
+                        color: ${({ theme }) => theme.colors.grey1};
+                    }
+
+                    &+dl{
+                        margin-top: 8px;
+                    }
+                }
+
+                &.graph2{
+                    dl:nth-child(1) dt{background: #F55073;}
+                    dl:nth-child(2) dt{background: #5BB8FB;}
+                }
+                &.graph3{
+                    dl:nth-child(1) dt{background: #F55073;}
+                    dl:nth-child(2) dt{background: #5BB8FB;}
+                }
+            }
+
+            // 배경
+            .graphCon{
+                position: relative;
+                height: 400px;
+            }
+
+            .bg{
+                position: absolute;
+                top: 19px;
+                left: 28px;
+                width: 757px;
+                height: 360px;
+                background: #fff;
+                z-index: 10;
+            }
+            .posi{
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
         }
-        .imgBox{
-            height: 435px;
-            margin-top: 80px;
-            background: url('/images/2.png') no-repeat center;
-            background-size: contain;
+
+        &.bg{
+            background: ${({ theme }) => theme.colors.mainLight2};;
         }
     }
 `;

@@ -26,8 +26,8 @@ import FooterStyle from '../styles/footerStyles';
 
 const Find = () => {
     return (
-        <div style={{display: 'flex', justifyContent: 'center' }}>
-            <div style={{ width: '30vw', height: 'calc(100vh - 50px)', background: 'white' }}>
+        <FindLayout >
+            <div className='view'>
                 <Ranking />
                 <ReviewPage />
                 {/* <Info /> */}
