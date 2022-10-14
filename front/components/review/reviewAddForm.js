@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { 
+import {
     ColorDiv1,
     ColorDiv2,
     ColorDiv3,
@@ -23,10 +23,10 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
     const [review, SetReview] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:5001/location/gus")
-            .then((res) => {
-                setGuList(res.data);
-            })
+        // axios.get("http://localhost:5001/location/gus")
+        //     .then((res) => {
+        //         setGuList(res.data);
+        //     })
     }, []);
 
     // 구
@@ -51,10 +51,10 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
         setDongId(dongValue);
     }
 
-    const handleTitleChange = (e) => {setTitle(e.target.value)}
-    const handleDescriptionChange = (e) => {setDescription(e.target.value)}
-    const handlePasswordChange = (e) => {setPassword(e.target.value)}
-    const handleNoiseLevelChange = (e) => {setNoiseLevel(e.target.id)}
+    const handleTitleChange = (e) => { setTitle(e.target.value) }
+    const handleDescriptionChange = (e) => { setDescription(e.target.value) }
+    const handlePasswordChange = (e) => { setPassword(e.target.value) }
+    const handleNoiseLevelChange = (e) => { setNoiseLevel(e.target.id) }
 
     const handleAddSubmit = async (e) => {
         e.preventDefault();
@@ -98,9 +98,9 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
     return (
         <div ref={modalRef}>
             <FormContainer>
-                <form onSubmit={ handleAddSubmit }>  
+                <form onSubmit={handleAddSubmit}>
                     <div>
-                        <select name="gu" id="" onChange={ handleGuChange }>
+                        <select name="gu" id="" onChange={handleGuChange}>
                             {/* <option value="">구를 선택해주세요.</option> */}
                             {
                                 guList.map(gu => {
@@ -108,14 +108,14 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
                                 })
                             }
                         </select>
-                        <select name="dong" id="" disabled={ !guId } onChange={ handleDongChange }>
+                        <select name="dong" id="" disabled={!guId} onChange={handleDongChange}>
                             {/* <option value="">동을 선택해주세요.</option> */}
                             {
                                 dongList.map(dong => {
                                     return <option key={dong._id} id={dong._id} value={dong.name}>{dong.name}</option>
                                 })
                             }
-                        </select><br></br><br></br>                             
+                        </select><br></br><br></br>
                     </div>
                     <div>
                         <label>소음에 대한 상세 설명을 작성해 주세요</label><br></br>
@@ -123,14 +123,14 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
                             type="text"
                             placeholder="제목"
                             name="title"
-                            value={ review.title }
-                            onChange={handleTitleChange}></input>                
+                            value={review.title}
+                            onChange={handleTitleChange}></input>
                         <input
                             type="text"
                             placeholder="내용"
                             name="description"
-                            value={ review.description }
-                            onChange={ handleDescriptionChange}></input>
+                            value={review.description}
+                            onChange={handleDescriptionChange}></input>
                     </div>
                     <br></br>
 
@@ -141,8 +141,8 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
                             type="text"
                             placeholder="비밀번호"
                             name="password"
-                            value={ review.password }
-                            onChange={ handlePasswordChange }></input>
+                            value={review.password}
+                            onChange={handlePasswordChange}></input>
                     </div>
                     <br></br>
 
@@ -156,8 +156,8 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
                         <FloatClear></FloatClear>
                     </div>
                     <div>
-                        
-                        <input type="button" id="off" value="취소" onClick={ handler }></input>
+
+                        <input type="button" id="off" value="취소" onClick={handler}></input>
                         <input type="submit" value="제출"></input>
                     </div>
                 </form>
