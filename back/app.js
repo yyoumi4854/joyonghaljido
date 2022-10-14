@@ -7,7 +7,6 @@ const cors = require("cors");
 const guRouter = require("./src/routers/guRouter");
 const dongRouter = require("./src/routers/dongRouter");
 const pinRouter = require("./src/routers/pinRouter");
-
 const errorMiddleware = require("./src/middlewares/errorMiddleware");
 const reviewRouter = require("./src/routers/reviewRouter");
 const locationRouter = require("./src/routers/locationRouter.js");
@@ -28,7 +27,8 @@ app.use("/gus", guRouter);
 app.use("/dongs", dongRouter);
 app.use("/pins", pinRouter);
 app.use("/location", locationRouter);
-app.use(reviewRouter);
+app.use("/reviews", reviewRouter);
+
 app.use(errorMiddleware);
 
 app.listen(PORT, () => {
