@@ -9,7 +9,7 @@ import PinImg6 from '../public/images/pin6.svg'
 import LeftArrow from '../public/images/LeftArrow.svg'
 import PinSelectLayout from './pinSelect.style';
 import {noiseDegree, noiseEffect} from './noiseInfo';
-import axios from "axios";
+
 
 const PinSelect = () => {
 
@@ -22,19 +22,7 @@ const PinSelect = () => {
         time:[88,77,44,66,55,77]
     }
 
-    // get data from API
-    // const backendPortNumber = "5001";
-    // const serverUrl =
-    // "http://" + window.location.hostname + ":" + backendPortNumber + "/";
-    // async function get2(endpoint, params = "") {
-    //     console.log(`%cGET 요청 ${serverUrl + endpoint + params}`, "color: #a25cd1;");
-    //     return axios.get(serverUrl + endpoint + params, {
-    //       // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
-    //       headers: {
-    //         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-    //       },
-    //     });
-    //   }
+
 
     // calculating figures
     let sum = 0;
@@ -60,7 +48,6 @@ const PinSelect = () => {
     else if(avg > 65 && avg <= 70){imgSrc = 2}
     else if(avg > 70 && avg <= 75){imgSrc = 1}
 
-    // render thi
     return (
         <PinSelectLayout>
             <div>
