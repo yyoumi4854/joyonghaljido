@@ -6,6 +6,7 @@ const GlobalStyles = createGlobalStyle`
   *{
     box-sizing: border-box;
   }
+  
   body{
     color: #333;
     line-height: 1;
@@ -14,10 +15,18 @@ const GlobalStyles = createGlobalStyle`
   }
 
   span{display: inline-block}
+  
   button{
     padding: 0;
+    background: transparent;
     border: 0;
     cursor: pointer;
+    outline: none;
+  }
+
+  svg{
+    display: inline-block;
+    vertical-align: middle;
   }
 `;
 

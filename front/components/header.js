@@ -2,7 +2,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import HeaderStyle from '../styles/headerStyles';
 
-// img
 import logo from '../public/images/logo.svg'
 
 const Header = () => {
@@ -13,7 +12,7 @@ const Header = () => {
                 <nav>
                     <Link href='/info'><span>팀 소개</span></Link>
                     <Link href='/find'><span>동네 찾기</span></Link>
-                    {/* <Link href='/prolog'><span>PROLOG</span></Link> */}
+                    <Link href='/pinSelect'><span>PinSelect</span></Link>
                 </nav>
             </div>
         </HeaderStyle>
