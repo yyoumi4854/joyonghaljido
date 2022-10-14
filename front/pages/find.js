@@ -16,7 +16,7 @@ import zoomMap from '../dummy/zoom.json';
 // components
 import Map from '../components/map/map';
 import Ranking from '../components/ranking/ranking';
-import Review from '../components/review/review';
+import ReviewPage from '../components/review/reviewPage';
 import PinSelect from '../components/pinInfo/pinSelect';
 import RankingInfo from '../components/sideInfo/rankingInfo';
 import PinMarkerInfo from '../components/sideInfo/pinMarkerInfo';
@@ -48,20 +48,20 @@ const Find = () => {
                     (<>
                         <Ranking
                             currentState={currentState}
-                            setCurrentState={setCurrentState} /> 
-                        <RankingInfo/>
+                            setCurrentState={setCurrentState} />
+                        <RankingInfo />
                     </>)
-                : null}
+                    : null}
                 {currentState.currentView === 'gu' ?
                     (<>
-                        <Review
+                        <ReviewPage
                             currentState={currentState}
-                            setCurrentState={setCurrentState} /> 
-                        <PinMarkerInfo/>
+                            setCurrentState={setCurrentState} />
+                        <PinMarkerInfo />
                     </>)
-                : null}
+                    : null}
                 {currentState.currentView === 'dong' ?
-                    <Review
+                    <ReviewPage
                         currentState={currentState}
                         setCurrentState={setCurrentState} /> : null}
                 {currentState.currentView === 'info' ?
