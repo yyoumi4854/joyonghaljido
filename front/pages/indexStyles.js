@@ -6,6 +6,7 @@ const inner = css`
 `;
 
 const IndexStyle = styled.div`
+    margin-top: 64px;
     text-align: center;
 
     .banner{

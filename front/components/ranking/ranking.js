@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {MW_OBJ, DB_OBJ} from './rankData';
 
 // styled
-import Title from '../../styles/titleStyles';
-import RankingContent from '../../styles/rankingStyles';
+import Title from '../titleStyles';
+import RankingContent from './rankingStyles';
 // import { TopBtn } from '../../styles/btnStyles';
 
 // react-icons

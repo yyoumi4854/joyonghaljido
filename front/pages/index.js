@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 // style
-import IndexStyles from '../styles/indexStyles'
+import IndexStyles from './indexStyles'
 import FooterStyle from '../styles/footerStyles';
 
 // graph

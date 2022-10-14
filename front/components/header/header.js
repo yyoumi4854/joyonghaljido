@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import HeaderStyle from '../styles/headerStyles';
+import HeaderStyle from './headerStyles';
 
-import logo from '../public/images/logo.svg'
+import logo from '../../public/images/logo.svg'
 
 const Header = () => {
     return (
