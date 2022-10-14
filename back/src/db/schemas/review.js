@@ -1,16 +1,19 @@
 const { Schema, model, Types } = require("mongoose");
 
-const ReviewSchema = Schema(
+const ReviewSchema = new Schema(
   {
-    guId: {
-      type: Types.ObjectId,
+    _id: {
+      type: String,
       required: true,
-      ref: "GuTest",
+      default: () => String(new Types.ObjectId()),
+    },
+    guId: {
+      type: String,
+      required: true,
     },
     dongId: {
-      type: Types.ObjectId,
+      type: String,
       required: true,
-      ref: "DongTest",
     },
     title: {
       type: String,
@@ -34,8 +37,7 @@ const ReviewSchema = Schema(
   }
 );
 
-
-//json으로 보낼 때 password 빼고 보냄
+//send json without password
 ReviewSchema.methods.toJSON = function () {
   const review = this;
   const reviewObject = review.toObject();

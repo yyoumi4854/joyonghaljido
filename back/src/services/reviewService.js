@@ -1,9 +1,16 @@
 const bcrypt = require("bcrypt");
 const Review = require("../db/models/Review");
 
-
 class reviewService {
-  static async addReview({ guId, dongId, title, description, password, noiseLevel }) {
+  //create review
+  static async create({
+    guId,
+    dongId,
+    title,
+    description,
+    password,
+    noiseLevel,
+  }) {
     const hashedPassword = await bcrypt.hash(password, 8);
 
     const newReview = {
@@ -15,62 +22,58 @@ class reviewService {
       noiseLevel,
     };
 
-      const createdReview = await Review.createReview(newReview);
-      
-      if (createdReview) {
-        createdReview.errorMessage = null;
-      } else {
-        createdReview.errorMessage = "리뷰 등록에 실패했습니다.";
-      }
+    const createdReview = await Review.create(newReview);
+
+    if (createdReview) {
+      createdReview.errorMessage = null;
+    } else {
+      createdReview.errorMessage = "리뷰 등록에 실패했습니다.";
+    }
 
     return createdReview;
   }
 
-  static async getReviewsByGu(guId) {
-    const reviews = await Review.getReviewsByGu(guId);
+  //get reivews
+  static async getList(guId, dongId, skip, filter) {
+    let reviews = [];
 
-    if (reviews) {
-      reviews.errorMessage = null;
+    if (!dongId) {
+      reviews = await Review.getListByGu(guId, skip, filter);
     } else {
-      reviews.errorMessage = "리뷰를 불러오는데 실패했습니다.";
+      reviews = await Review.getListByDong(dongId, skip, filter);
+    }
+
+    if (reviews.length === 0) {
+      reviews.errorMessage = "리뷰가 존재하지 않습니다.";
+    } else {
+      reviews.errorMessage = null;
     }
 
     return reviews;
   }
 
-  static async getReviewsByDong(dongId) {
-    const reviews = await Review.getReviewsByDong(dongId);
-
-    if (reviews) {
-      reviews.errorMessage = null;
-    } else {
-      reviews.errorMessage = "리뷰를 불러오는데 실패했습니다.";
-    }
-
-    return reviews;
-  }
-
-
-  static async updateReview(reviewId, toUpdate) {
+  //update review
+  static async update(reviewId, toUpdate) {
     const updates = Object.keys(toUpdate);
-    
-    //password hashing
+
+    //password hashing before update
     if (toUpdate.password) {
       const hashedPassword = await bcrypt.hash(toUpdate.password, 8);
       toUpdate.password = hashedPassword;
     }
-    
-    updates.forEach(async (update) => {
-      await Review.updateReview({ _id: reviewId }, { [update]: toUpdate[update] });
-    })
 
-    const updatedReview = await Review.findByReviewId(reviewId);
+    updates.forEach(async (update) => {
+      await Review.update({ _id: reviewId }, { [update]: toUpdate[update] });
+    });
+
+    const updatedReview = await Review.getByReviewId(reviewId);
 
     return updatedReview;
   }
 
-  static async deleteReview(reviewId) {
-    const deletedReview = await Review.deleteReview(reviewId);
+  //delete review
+  static async delete(reviewId) {
+    const deletedReview = await Review.delete(reviewId);
 
     return deletedReview;
   }

@@ -52,6 +52,15 @@ pinRouter.get("/:pinId", async (req, res) => {
         guName: "$guName.name",
       },
     },
+    {
+      $project: {
+        _id: 1,
+        name: 1,
+        guName: 1,
+        dongName: 1,
+        timeDecibels: 1,
+      },
+    },
   ]);
 
   const foundPinData = foundPin[0];

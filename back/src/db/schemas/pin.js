@@ -25,6 +25,10 @@ const PinSchema = new Schema({
     type: String,
     required: true,
   },
+  timeDecibels: {
+    type: [Number],
+    required: true,
+  },
 });
 
 const PinModel = model("Pin", PinSchema);
