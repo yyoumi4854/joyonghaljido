@@ -8,8 +8,6 @@ import {
     FormContainer,
 } from "./reviewAddForm.style.js";
 
-import dummy from '../../dummy/reviews.json';
-
 const ReviewAddForm = ({ setIsWriting, handler }) => {
     // review content
     const [guId, setGuId] = useState('');
@@ -19,30 +17,37 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
     const [password, setPassword] = useState('');
     const [noiseLevel, setNoiseLevel] = useState('');
 
-    // const [guList, setGuList] = useState([]);
+    const [guList, setGuList] = useState([]);
     const [dongList, setDongList] = useState([]);
 
     const [review, SetReview] = useState([]);
 
     useEffect(() => {
         axios.get("http://localhost:5001/location/gus")
-            .then(res => {
-                console.log(res.data);
+            .then((res) => {
+                setGuList(res.data);
             })
     }, []);
 
     // 구
-    const handleGuChange = (e) => {
-        const guValue = e.target.value;
-        setGuId(guValue);
+    const handleGuChange = async (e) => {
+        const selectedGuId = e.target.id;
+        // const guName = e.target.value;
+        console.log(selectedGuId);
 
-        const dongList = dummy.Dong.filter(element => element.guName === guValue);
-        setDongList(dongList);
+        setGuId(selectedGuId);
+
+        // 선택한 구 ID 이용해 해당 구에 속한 동 리스트 불러오기
+        // await axios.get(`http://localhost:5001/location/gus/${selectedGuId}/dongs`)
+        //     .then((res) => {
+        //         console.log(res.data);
+        //     });
     }
 
     // 동
     const handleDongChange = (e) => {
-        const dongValue = e.target.value;
+        const dongId = e.target.id;
+        // const dongId = e.target.value;
         setDongId(dongValue);
     }
 
@@ -98,8 +103,8 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
                         <select name="gu" id="" onChange={ handleGuChange }>
                             {/* <option value="">구를 선택해주세요.</option> */}
                             {
-                                dummy.Gu.map(gu => {
-                                    return <option key={gu._id} value={gu.value} name={gu.name}>{gu.name}</option>
+                                guList.map(gu => {
+                                    return <option key={gu._id} id={gu._id} value={gu.name}>{gu.name}</option>
                                 })
                             }
                         </select>
@@ -107,7 +112,7 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
                             {/* <option value="">동을 선택해주세요.</option> */}
                             {
                                 dongList.map(dong => {
-                                    return <option key={dong._id} value={dong.value}>{dong.value}</option>
+                                    return <option key={dong._id} id={dong._id} value={dong.name}>{dong.name}</option>
                                 })
                             }
                         </select><br></br><br></br>                             
