@@ -1,4 +1,4 @@
-import theme from '../styles/theme';
+import theme from '../../styles/theme';
 
 import {
     ComposableMap,
@@ -13,14 +13,17 @@ import { useState, useEffect } from 'react';
 
 import ReactTooltip from 'react-tooltip'
 
-import seoulMap from '../dummy/seoul.json';
-import zoomMap from '../dummy/zoom.json';
+import seoulMap from '../../dummy/seoul.json';
+import zoomMap from '../../dummy/zoom.json';
 
 import Image from 'next/image';
-import redPin from '../public/images/logo.svg';
+import redPin from '../../public/images/logo.svg';
 
 import { scaleQuantize } from "d3-scale";
 import { csv } from "d3-fetch";
+
+// styled
+import MapContent from './mapStyles';
 
 const Map = ({ currentState, setCurrentState }) => {
     const [pins, setPins] = useState('');
@@ -93,19 +96,35 @@ const Map = ({ currentState, setCurrentState }) => {
     const colorScale = scaleQuantize()
         .domain([1000, 7500])
         .range([
-            "#ffedea",
-            "#ffcec5",
-            "#ffad9f",
-            "#ff8a75"
+            // 소음색
+            // "rgba(245, 80, 115, 0.1)",
+            // "rgba(245, 80, 115, 0.2)",
+            // "rgba(245, 80, 115, 0.3)",
+            // "rgba(245, 80, 115, 0.4)",
+            // "rgba(245, 80, 115, 0.5)",
+            // "rgba(245, 80, 115, 0.6)",
+            // "rgba(245, 80, 115, 0.7)",
+            // "rgba(245, 80, 115, 0.8)",
+            // "rgba(245, 80, 115, 0.9)",
+            // "rgba(245, 80, 115, 1)",
+            
+            // 민원색
+            'rgba(91, 184, 251, 0.1)',
+            'rgba(91, 184, 251, 0.2)',
+            'rgba(91, 184, 251, 0.3)',
+            'rgba(91, 184, 251, 0.4)',
+            'rgba(91, 184, 251, 0.5)',
+            'rgba(91, 184, 251, 0.6)',
+            'rgba(91, 184, 251, 0.7)',
+            'rgba(91, 184, 251, 0.8)',
+            'rgba(91, 184, 251, 0.9)',
+            'rgba(91, 184, 251, 1)',
         ]);
 
     return (
-        <>
+        <MapContent>
             <ReactTooltip type='light'>{currentState.name}</ReactTooltip>
-            <div style={{
-                width: '100%', textAlign: 'center', padding: '10px'
-                , fontSize: '26px', fontWeight: '700'
-            }}>
+            <div className='locationText'>
                 {currentState.currentView === 'ranking' ?
                     <h2 >찾고 싶은 지역을 선택해주세요.</h2> :
                     <h2 ><span
@@ -122,10 +141,7 @@ const Map = ({ currentState, setCurrentState }) => {
             </div>
 
 
-            <div style={{
-                overflow: 'hidden',
-                height: '80%', width: '100%'
-            }}>
+            <div className='mapCon'>
                 <ComposableMap
                     projection="geoMercator"
                     projectionConfig={{ rotate: [-60, 0, 5], scale: 35000 }}
@@ -144,8 +160,8 @@ const Map = ({ currentState, setCurrentState }) => {
                                     return <Geography
                                         fill={
                                             currentState.currentView !== 'ranking' ? theme.colors.grey3 : colorScale(cur ? cur.MW : "#EEE")}
-                                        stroke={'white'}
-                                        strokeWidth={currentState.isZoom ? 0 : 1}
+                                        stroke={'#F5F5F5'}
+                                        strokeWidth={currentState.isZoom ? 0 : 0.4}
                                         onClick={() => {
                                             //서울지도일때만 동작
                                             if (currentState.currentView === 'ranking') {
@@ -227,7 +243,7 @@ const Map = ({ currentState, setCurrentState }) => {
                 </ComposableMap>
             </div>
 
-        </>);
+        </MapContent>);
 }
 
 export default Map;

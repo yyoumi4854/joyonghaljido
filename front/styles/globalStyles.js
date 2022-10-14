@@ -5,6 +5,7 @@ const GlobalStyles = createGlobalStyle`
   ${reset}
   *{
     box-sizing: border-box;
+    outline: none;
   }
   
   body{
@@ -21,7 +22,6 @@ const GlobalStyles = createGlobalStyle`
     background: transparent;
     border: 0;
     cursor: pointer;
-    outline: none;
   }
 
   svg{
