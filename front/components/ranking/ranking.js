@@ -25,17 +25,17 @@ const Ranking2 = ({ currentState, setCurrentState }) => {
     let newObj = { ...toggle }
     newObj[sortBtns] = !newObj[sortBtns]
     setToggle(newObj);
-  }
+  };
 
   const handlerNameClick = () => {
     setSortBtns('name');
     let newObj = { ...toggle }
     newObj[sortBtns] = !newObj[sortBtns]
     setToggle(newObj);
-  }
+  };
 
   const rankingSort = (type, sortType, list) => {
-    if (type === 'name') {
+    if (type === "name") {
       if (!sortType) {
         return list.sort((a, b) => a[type].localeCompare(b[type]));
       } else {
@@ -48,7 +48,7 @@ const Ranking2 = ({ currentState, setCurrentState }) => {
     } else {
       return list.sort((a, b) => b[type] - a[type]);
     }
-  }
+  };
 
   return (
     <RankingContent>
@@ -70,21 +70,17 @@ const Ranking2 = ({ currentState, setCurrentState }) => {
           <h3>{tabChange[currentState.rankingTab][0]} <span>순위</span></h3>
         </div>
 
-        <ul className='toggleList'>
-          <li className={sortBtns === 'value' && 'active'}>
+        <ul className="toggleList">
+          <li className={sortBtns === "value" && "active"}>
             <p>수치순</p>
-            <button value='value' onClick={handlerValueClick}>
-              {
-                toggle['value'] ? <BiChevronUp /> : <BiChevronDown />
-              }
+            <button value="value" onClick={handlerValueClick}>
+              {toggle["value"] ? <BiChevronUp /> : <BiChevronDown />}
             </button>
           </li>
-          <li className={sortBtns === 'name' && 'active'}>
+          <li className={sortBtns === "name" && "active"}>
             <p>글자순</p>
-            <button name='aaa' onClick={handlerNameClick}>
-              {
-                toggle['name'] ? <BiChevronUp /> : <BiChevronDown />
-              }
+            <button name="aaa" onClick={handlerNameClick}>
+              {toggle["name"] ? <BiChevronUp /> : <BiChevronDown />}
             </button>
           </li>
         </ul>

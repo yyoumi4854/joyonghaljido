@@ -28,123 +28,111 @@ const PinSelect = () => {
   const avg = Math.floor(sum / 6);
   const val = avg - (avg % 10) + "";
 
-  let noiseDegreeMessage = "";
-  let noiseEffectMessage = "";
+  const val = result.avg - (result.avg % 10) + "";
 
   for (let i = 0; i < noiseDegree.length; i++) {
     if (noiseDegree[i].dB == val) {
-      noiseDegreeMessage = noiseDegree[i].MSG;
+      result.noiseDegreeMessage = noiseDegree[i].MSG;
     }
   }
   for (let i = 0; i < noiseEffect.length; i++) {
     if (noiseEffect[i].dB == val) {
-      noiseEffectMessage = noiseEffect[i].MSG;
+      result.noiseEffectMessage = noiseEffect[i].MSG;
     }
   }
 
-  let imgSrc = -1;
-  if (avg <= 50) {
-    imgSrc = 6;
-  } else if (avg > 50 && avg <= 55) {
-    imgSrc = 5;
-  } else if (avg > 55 && avg <= 60) {
-    imgSrc = 4;
-  } else if (avg > 60 && avg <= 65) {
-    imgSrc = 3;
-  } else if (avg > 65 && avg <= 70) {
-    imgSrc = 2;
-  } else if (avg > 70 && avg <= 75) {
-    imgSrc = 1;
-  }
+  if (result.avg <= 25) {
+    result.imgSrcState = 1;
+  } // 보라
+  else if (result.avg > 25 && result.avg <= 35) {
+    result.imgSrcState = 2;
+  } // 파랑
+  else if (result.avg > 35 && result.avg <= 45) {
+    result.imgSrcState = 3;
+  } // 초록
+  else if (result.avg > 45 && result.avg <= 55) {
+    result.imgSrcState = 4;
+  } // 노랑
+  else if (result.avg > 55 && result.avg <= 65) {
+    result.imgSrcState = 5;
+  } // 주황
+  else if (result.avg > 65) {
+    result.imgSrcState = 6;
+  } // 빨강
 
-  return (
-    <PinSelectLayout>
-      <div>
-        <div className="section1">
-          <div className="Lside">
-            <h2>
-              <Image
-                src={LeftArrow}
-                alt="LeftArrow"
-                onClick={() => {
-                  alert();
-                }}
-              ></Image>
-            </h2>
-          </div>
-          <div className="Rside">
-            <h2>{dummy.pinName}</h2>
-            <h4>
-              {dummy.GuName} {dummy.DongName}
-            </h4>
-          </div>
-        </div>
-        <hr></hr>
-        <div className="section2">
-          <div>
-            <h3>어느 정도의 소음인가요?</h3>
-          </div>
-          <div className="Lside">
-            {imgSrc == 6 && (
-              <p>
-                <Image src={PinImg1} alt="PinImg1"></Image>
-              </p>
-            )}
-            {imgSrc == 5 && (
-              <p>
-                <Image src={PinImg2} alt="PinImg2"></Image>
-              </p>
-            )}
-            {imgSrc == 4 && (
-              <p>
-                <Image src={PinImg3} alt="PinImg3"></Image>
-              </p>
-            )}
-            {imgSrc == 3 && (
-              <p>
-                <Image src={PinImg4} alt="PinImg4"></Image>
-              </p>
-            )}
-            {imgSrc == 2 && (
-              <p>
-                <Image src={PinImg5} alt="PinImg5"></Image>
-              </p>
-            )}
-            {imgSrc == 1 && (
-              <p>
-                <Image src={PinImg6} alt="PinImg6"></Image>
-              </p>
-            )}
-            <p className="average">{avg}</p>
-          </div>
-          <div className="Rside">
-            <p className="bold"> 소음 정도 </p>
-            <p className="gray"> {noiseDegreeMessage}</p>
-            <p className="bold"> 소음 영향 </p>
-            <p className="gray"> {noiseEffectMessage}</p>
-          </div>
-        </div>
+  return result;
+};
 
-        <hr></hr>
-        <div className="section3">
-          <h3>시간대별 소음 그래프</h3>
-          <div className="graph">
-            <G4_PinGraph time={dummy.time} colorIdx={imgSrc} />
-          </div>
-          <div>
-            <button
-              type="button"
-              className="toReview"
-              data-toggle="modal"
-              data-target=""
-            >
-              소음 리뷰 쓰러가기
-            </button>
-          </div>
+return (
+  <PinSelectLayout>
+    <div>
+      <div className="section1">
+        <div className="Lside">
+          <h2>
+            <Image
+              src={LeftArrow}
+              alt="LeftArrow"
+              onClick={() => {
+                alert();
+              }}
+            ></Image>
+          </h2>
+        </div>
+        <div className="Rside">
+          <h2>{pinState.name}</h2>
+          <h4>
+            {pinState.gu} {pinState.dong}
+          </h4>
         </div>
       </div>
-    </PinSelectLayout>
-  );
+      <hr></hr>
+      <div className="section2">
+        <div>
+          <h3>어느 정도의 소음인가요?</h3>
+        </div>
+        <div className="Lside">
+          {ImgArr.map((x, i) => {
+            if (i + 1 == pinState.imgSrcNum) {
+              return (
+                <p>
+                  <Image src={x} alt={x}></Image>
+                </p>
+              );
+            }
+          })}
+          <div className="average">{pinState.avg}</div>
+        </div>
+        <div className="Rside">
+          <p className="bold"> 소음 정도 </p>
+          <p className="gray"> {pinState.noiseDegreeMessage}</p>
+          <p className="bold"> 소음 영향 </p>
+          <p className="gray"> {pinState.noiseEffectMessage}</p>
+        </div>
+      </div>
+
+      <hr></hr>
+      <div className="section3">
+        <h3>시간대별 소음 그래프</h3>
+        <div className="graph">
+          <G4_PinGraph
+            time={pinState.timeDecibels}
+            colorIdx={pinState.imgSrcNum}
+          />
+        </div>
+        <div>
+          <button
+            type="button"
+            className="toReview"
+            data-toggle="modal"
+            data-target=""
+          >
+            소음 리뷰 쓰러가기
+          </button>
+        </div>
+      </div>
+    </div>
+  </PinSelectLayout>
+);
 };
 
 export default PinSelect;
