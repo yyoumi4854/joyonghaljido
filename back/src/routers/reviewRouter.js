@@ -45,7 +45,7 @@ router.get("/reviews", async (req, res, next) => {
       if (reviews.errorMessage) {
         throw new Error(reviews.errorMessage);
       }
-  
+
       res.status(200).json(reviews);
     }
 
@@ -53,53 +53,61 @@ router.get("/reviews", async (req, res, next) => {
       const dongId = req.query.dongId;
 
       const reviews = await reviewService.getReviewsByDong(dongId);
-  
-      if(reviews.errorMessage) {
+
+      if (reviews.errorMessage) {
         throw new Error(reviews.errorMessage);
       }
-  
+
       res.status(200).json(reviews);
     }
-
   } catch (error) {
     next(error);
   }
-})
+});
 
 //update review
 router.put("/reviews/:reviewId", passwordMiddleware, async (req, res, next) => {
   try {
     const reviewId = req.currentReview._id;
-    const updates = [ "guId", "dongId", "title", "description", "password", "noiseLevel" ];
+    const updates = [
+      "guId",
+      "dongId",
+      "title",
+      "description",
+      "password",
+      "noiseLevel",
+    ];
     let toUpdate = {};
-    
+
     updates.forEach((update) => {
       if (req.body[update]) {
         toUpdate[update] = req.body[update];
       }
-    })
+    });
 
-    const updatedReview = await reviewService.updateReview(reviewId, toUpdate)
+    const updatedReview = await reviewService.updateReview(reviewId, toUpdate);
 
     res.status(200).json(updatedReview);
-  } catch(error) {
+  } catch (error) {
     next(error);
   }
-})
-
+});
 
 //delete review
-router.delete("/reviews/:reviewId", passwordMiddleware, async (req, res, next) => {
-  try {
-    const reviewId = req.currentReview._id;
+router.delete(
+  "/reviews/:reviewId",
+  passwordMiddleware,
+  async (req, res, next) => {
+    try {
+      const reviewId = req.currentReview._id;
 
-    const deletedReview = await reviewService.deleteReview(reviewId);
+      const deletedReview = await reviewService.deleteReview(reviewId);
 
-    res.status(200).json(deletedReview);
-  } catch(error) {
-    next(error);
-
+      res.status(200).json(deletedReview);
+    } catch (error) {
+      next(error);
+    }
   }
-})
+);
 
 module.exports = router;
