@@ -45,14 +45,16 @@ export const data = {
     {
       label: "서울",
       data: 서울,
-      borderColor: "#FF0000",
-      backgroundColor: "#FA8072",
+      borderColor: "#F55073",
+      backgroundColor: "#F55073",
+
     },
     {
       label: "기타 광역시 평균",
       data: 평균,
-      borderColor: "#9ab973",
-      backgroundColor: "#abd98c",
+      borderColor: "#5BB8FB",
+      backgroundColor: "#5BB8FB",
+
     },
   ],
 };
