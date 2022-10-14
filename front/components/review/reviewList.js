@@ -1,17 +1,25 @@
 import React from 'react';
-
+import {useState} from 'react';
 import nameId from '../../Id_book/nameId.json'
+import ReviewAddForm from './reviewAddForm'
 
 // styled
 import ReviewListContent from './reviewListStyles';
 import {SmallBtn, ReviewBtn} from '../../styles/btnStyles';
+import TripleDotsModal from './tripleDotsModal';
 
 // react-icons
 import { AiOutlineMore } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
 
 
-const ReviewList = ({list, limit, toggleEllipsis, onClickMore}) => {
+const ReviewList = ({list, limit, toggleEllipsis, onClickMore, setModal, modal}) => {
+
+    // (...) 클릭 시 수정, 삭제가 나타나도록 구현할 예정
+    // 지금은 그냥 수정, 삭제가 그냥 보임
+    // const [IfDotsClicked, setIfDotsClicked] = useState(false)
+    const [isWriting, setIsWriting] = useState(false)
+
   return (
     <ReviewListContent>
       <div className='noiseAvgCon'>
@@ -46,7 +54,7 @@ const ReviewList = ({list, limit, toggleEllipsis, onClickMore}) => {
             list && list.map((x) => {
               return (
                 <li>
-                  <div className={`noiseLevel${x.noiseLevel}`}>{/* 리뷰의 소음레벨에따라 "3:good, 2:soso:, 1:bad" className에 채워지기 */}
+                  <div className={`noiseLevel${x.noiseLevel}`}>{/* 리뷰 소음레벨 : "3:good, 2:soso:, 1:bad" className에 채워지기 */}
                     <span className='level'>{`noiseLevel${x.noiseLevel}`}</span>{/* 여기에 3:good, 2:soso, 1:bad 내용넣기 */}
                   </div>
 
@@ -54,6 +62,12 @@ const ReviewList = ({list, limit, toggleEllipsis, onClickMore}) => {
                     <div className='textTop'>
                       <p>{x.title}</p>
                       <span>{x.createdAt.slice(2, 10) + ',  ' + x.createdAt.slice(11, 16)}</span>{/* 날짜데이터넣기 */}
+                      
+                      <TripleDotsModal 
+                      setModal={setModal} 
+                      modal={modal}
+                      reviewObj={x}/>
+
                     </div>
                     <div className='textBottom'>
                       <p>
@@ -74,11 +88,22 @@ const ReviewList = ({list, limit, toggleEllipsis, onClickMore}) => {
         <button className='reviewAddBtn'>소음 리뷰 10개 더보기 <BiChevronDown/></button>{/* 남은 리뷰가 10개 미만일 경우 -> 소음 리뷰 5개 더보기*/}
       </div>
 
+      {isWriting && <ReviewAddForm 
+        setIsWriting={setIsWriting} 
+        // currentState={undefined} 
+        // toggleIsWriting={undefined} 
+        // setModal={undefined} 
+        // modal={undefined}
+        />}
       <ReviewBtn>
-        <button>소음 리뷰 쓰러가기</button>
+        <button onClick={()=>{setIsWriting(true)}}>소음 리뷰 쓰러가기</button>
+
       </ReviewBtn>
-    </ReviewListContent>
+
+        </ReviewListContent>
   );
 };
+
+
 
 export default ReviewList;

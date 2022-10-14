@@ -42,7 +42,9 @@ const Find = () => {
             center: [126.986, 37.561],
         }
     );
-    // console.log(currentState);
+
+    const [modal, setModal] = useState('none') 
+    // 모달종류 : pw, chk, deny, pw_delete, pw_update, none
 
     return (
         <FindLayout>
@@ -59,14 +61,20 @@ const Find = () => {
                     (<>
                         <Review
                             currentState={currentState}
-                            setCurrentState={setCurrentState} />
+                            setCurrentState={setCurrentState}
+                            modal={modal}
+                            setModal={setModal}
+                            />
                         {/* <PinMarkerInfo /> */}
                     </>)
                     : null}
                 {currentState.currentView === 'dong' ?
                     <Review
                         currentState={currentState}
-                        setCurrentState={setCurrentState} /> : null}
+                        setCurrentState={setCurrentState}
+                        modal={modal}
+                        setModal={setModal}
+                         /> : null}
                 {currentState.currentView === 'info' ?
                     <PinSelect
                         currentState={currentState}

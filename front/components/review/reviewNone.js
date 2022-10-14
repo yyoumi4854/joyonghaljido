@@ -7,7 +7,7 @@ import {ReviewBtn} from '../../styles/btnStyles';
 // react-icon
 import { FaSurprise } from "react-icons/fa";
 
-const ReviewNone = () => {
+const ReviewNone = ({setModal, modal}) => {
   return (
     <ReviewNoneContent>
       <div className='noneCon'>

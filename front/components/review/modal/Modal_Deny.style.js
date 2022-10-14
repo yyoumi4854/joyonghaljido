@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 const Modal_Deny_Layouot = styled.div`
   .modal {
+    z-index:9;
     position: fixed;
     left : calc(50% - 224px);
     top :  calc(50% - 96px);

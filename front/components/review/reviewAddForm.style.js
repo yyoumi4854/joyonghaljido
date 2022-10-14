@@ -2,9 +2,12 @@ import styled from "styled-components";
 
 const FormContent = styled.div`
     position: absolute;
-    width: 100vw;
-    height: 100vh;
-    margin-top: -64px;
+    // width: 100vw;
+    // height: 100vh;
+    // margin-top: -64px;
+    
+    left:50%;
+    top:50%;
     background: rgba(0, 0, 0, 0.6);
     z-index: 999;
 

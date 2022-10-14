@@ -1,96 +1,161 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
+const pin1 = css`
+    background: url('/images/pin1.svg') no-repeat center;
+    background-size: contain; 
+`;
+
+const pin2 = css`
+    background: url('/images/pin2.svg') no-repeat center;
+    background-size: contain; 
+`;
+
+const pin3 = css`
+    background: url('/images/pin3.svg') no-repeat center;
+    background-size: contain; 
+`;
+
+const pin4 = css`
+    background: url('/images/pin4.svg') no-repeat center;
+    background-size: contain; 
+`;
+
+const pin5 = css`
+    background: url('/images/pin5.svg') no-repeat center;
+    background-size: contain; 
+`;
+
+const pin6 = css`
+    background: url('/images/pin6.svg') no-repeat center;
+    background-size: contain; 
+`;
 
 const PinSelectLayout = styled.div`
+    .pinInfoCon{
+        // 높이 지정하기
+        height: calc(100vh - 64px - 100px - 64px - 48px);
 
-*{
-    position: relative;
-    width: 384px;
-}
-hr{ border:solid lightgrey 0.5px;}
 
-.section1{
-    padding-top:15px;
-    padding-bottom:15px;
-    display:flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    h2{
-        font-size: 24px;
-        font-weight:bold;
-        margin-bottom:10px;
-    }
-    .Lside{
-        width:40px;
-        height
-        background-color: aliceblue;
-        padding-left:10px;
-        h2{font-size: 24px;}
-    }
-    .Rside{
-        width:344px;
-        line-height:25px;
-        h4{
-            color : #30C586;
-            font-size: 16px;
-            line-height: 16px
+        h5.title{
+            font-weight: 700;
+            font-size: 18px;
+            color: ${({ theme }) => theme.colors.main};
         }
 
-    }
-}
-
-.section2{
-    display:flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    height:168px;
-    padding-top:10px;
-    .bold{
-        font-weight:bold;
-    }
-
-    h3{
-        color : #30C586;
-        font-size: 18px;
-        line-height: 18px;
-        font-weight: 700;
-        left:10px;
-    }
-    .Lside{
-        width:70px;
-        height
-        background-color: aliceblue;
-        padding-left:10px;
-        .average{left:14px;}
-    }
-    .Rside{
-        padding-left:10px;
-        width:314px;
-        line-height:25px;
-        .gray{
-            color:gray
+        & > div{
+            padding: 20px 24px;
+            border-bottom: 1px solid ${({ theme }) => theme.colors.grey1};
         }
-    }
-}
 
-.section3{
-    h3{
-        color : #30C586;
-        font-size: 18px;
-        line-height: 18px;
-        font-weight: 700;
-        left:10px;
-    }
-}
+        // 어느 정도 소음
+        .textCon{
+            .title{margin-bottom: 16px;}
+            
+            .textBox{
+                ${({ theme }) => theme.common.flexCenter};
 
-.toReview{
-    margin-top:20px;
-    margin-bottom:20px;
-    margin-left:24px;
-    width:336px;
-    border:solid 3px #30C586;
-    color : #30C586;
-    
-}
+                div[class^='pin']{
+                    span{
+                        width: 50px;
+                        height: 60px;
+                        text-indent: -9999px;
+                    }
+
+                    p{
+                        margin-top: 4px;
+                        font-weight: 700;
+                        text-align: center;
+                    }
+
+                    &.pin1{
+                        span{
+                            ${pin1}
+                        }
+                        p{color: ${({ theme }) => theme.colors.purple};}
+                    }
+                    &.pin2{
+                        span{
+                            ${pin2}
+                        }
+                        p{color: ${({ theme }) => theme.colors.blue};}
+                    }
+                    &.pin3{
+                        span{
+                            ${pin3}
+                        }
+                        p{color: ${({ theme }) => theme.colors.green};}
+                    }
+                    &.pin4{
+                        span{
+                            ${pin4}
+                        }
+                        p{color: ${({ theme }) => theme.colors.yellow};}
+                    }
+                    &.pin5{
+                        span{
+                            ${pin5}
+                        }
+                        p{color: ${({ theme }) => theme.colors.orange};}
+                    }
+                    &.pin6{
+                        span{
+                            ${pin6}
+                        }
+                        p{color: ${({ theme }) => theme.colors.red};}
+                    }
+                }
+
+                .infoBox{
+                    margin-left: 20px;
+            
+                    dl{
+                        dt{font-weight: 500;}
+                        dd{
+                            margin-top: 8px;
+                            color: ${({ theme }) => theme.colors.grey2};
+                            font-weight: 300;
+                        }
+
+                        &+dl{margin-top: 16px}
+                    }
+                }
+            }
+        }
+
+        // 시간별 소음 그래프
+        .graphCon{
+            .graphBox{
+            }
+
+            div[class^='graphPin']{
+                margin-top: 8px;
+                dl{
+                    ${({ theme }) => theme.common.flexCenter};
+                    justify-content: flex-end;
+                    dt{
+                        width: 28px;
+                        height: 10px;
+                    }
+                    dd{
+                        margin-left: 8px;
+                        font-weight: 300;
+                        font-size: 14px;
+                        color: ${({ theme }) => theme.colors.grey1};
+                    }
+
+                    &+dl{
+                        margin-top: 8px;
+                    }
+                }
+
+                &.graphPin1 dl dt{background: ${({ theme }) => theme.colors.purple};}
+                &.graphPin2 dl dt{background: ${({ theme }) => theme.colors.blue};}
+                &.graphPin3 dl dt{background: ${({ theme }) => theme.colors.green};}
+                &.graphPin4 dl dt{background: ${({ theme }) => theme.colors.yellow};}
+                &.graphPin5 dl dt{background: ${({ theme }) => theme.colors.orange};}
+                &.graphPin6 dl dt{background: ${({ theme }) => theme.colors.red};}
+            }
+        }
 `;
 
 export default PinSelectLayout;

@@ -11,7 +11,6 @@ const Header = () => {
                 <nav>
                     <Link href='/find'><span className='hoverUp'>동네 찾기</span></Link>
                     <Link href='/info'><span className='hoverUp'>팀 소개</span></Link>
-                    <Link href='/pagination_test'><span className='hoverUp'>PaginationTest</span></Link>
                     <Link href='/modal_test'><span className='hoverUp'>ModalTest</span></Link>
                 </nav>
             </div>
