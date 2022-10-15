@@ -13,11 +13,15 @@ import ReactTooltip from 'react-tooltip'
 import seoulMap from '../dummy/seoul.json';
 import zoomMap from '../dummy/zoom.json';
 
+// components
 import Map from '../components/map/map';
 import Ranking from '../components/ranking/ranking';
 import Review from '../components/review/review';
 import PinSelect from '../components/pinInfo/pinSelect';
+import RankingInfo from '../components/sideInfo/rankingInfo';
+import PinMarkerInfo from '../components/sideInfo/pinMarkerInfo';
 
+// styled
 import FindLayout from './findLayoutStyles';
 import FooterStyle from '../styles/footerStyles';
 
@@ -41,13 +45,21 @@ const Find = () => {
         <FindLayout>
             <div >
                 {currentState.currentView === 'ranking' ?
-                    <Ranking
-                        currentState={currentState}
-                        setCurrentState={setCurrentState} /> : null}
+                    (<>
+                        <Ranking
+                            currentState={currentState}
+                            setCurrentState={setCurrentState} /> 
+                        <RankingInfo/>
+                    </>)
+                : null}
                 {currentState.currentView === 'gu' ?
-                    <Review
-                        currentState={currentState}
-                        setCurrentState={setCurrentState} /> : null}
+                    (<>
+                        <Review
+                            currentState={currentState}
+                            setCurrentState={setCurrentState} /> 
+                        <PinMarkerInfo/>
+                    </>)
+                : null}
                 {currentState.currentView === 'dong' ?
                     <Review
                         currentState={currentState}
@@ -67,4 +79,5 @@ const Find = () => {
         </FindLayout>
     );
 }
+
 export default Find;
