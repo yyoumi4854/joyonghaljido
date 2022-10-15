@@ -4,28 +4,17 @@ import axios from "axios";
 import { 
     ReviewList
 } from "./reviewPage.style.js";
+import geoId from '../../../data/geoid.json';
 
 const ReviewPage = ({ currentState }) => {
 
     const [isWriting, setIsWriting] = useState(false);
     const [reviewList, setReviewList] = useState([]);
-    const [guId, setGuId] = useState();
-    const [dongId, setDongId] = useState();
 
     if (currentState.currentView === 'gu') {
         const guName = currentState.clickedName;
-
-        useEffect(() => {
-            axios.get("http://localhost:5001/location/gus")
-                .then((res) => {
-                    const gus = res.data;
-                    gus.forEach((el) => {
-                        if (el.name === guName) {
-                            setGuId(el._id);
-                        }
-                    })
-                })
-        }, [])
+        const gu = geoId.filter(element => element.name === guName)[0];
+        const guId = gu._id;
 
         useEffect(() => {
             axios.get(`http://localhost:5001/reviews?guId=${guId}`)
@@ -33,21 +22,12 @@ const ReviewPage = ({ currentState }) => {
                     console.log(res.data);
                     setReviewList(res.data);
                 })
-        }, [])        
+        }, [])
+
     } else if (currentState.currentView === 'dong') {
         const dongName = currentState.clickedName;
-
-        useEffect(() => {
-            axios.get(`http://localhost:5001/location/gus/${guId}/dongs`)
-                .then((res) => {
-                    const dongs = res.data.dongs;
-                    dongs.forEach((el) => {
-                        if (el.name === dongName) {
-                            setDongId(el._id);
-                        }
-                    })
-                })
-        }, [])
+        const dongList = geoId.find(element => element.dongs.find(dong => dong.name === dongName)).dongs;
+        const dongId = dongList.filter(el => el.name === dongName)[0]._id;
 
         useEffect(() => {
             axios.get(`http://localhost:5001/reviews?dongId=${dongId}`)
