@@ -60,5 +60,22 @@ const Title = styled.div`
       }
     }
   }
+
+  // 전체리뷰 확인 버튼
+  .reviewAll{
+    ${({ theme }) => theme.common.flexCenter};
+    flex-direction: column;
+
+    button{
+      svg{
+        width: 40px;
+        height: 32px;
+        color: ${({ theme }) => theme.colors.main};
+      }
+    }
+    span {
+      color: ${({ theme }) => theme.colors.main};
+    }
+  }
   `;
 export default Title;
