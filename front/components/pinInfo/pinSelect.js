@@ -41,7 +41,7 @@ const PinSelect = ({currentState}) => {
 
     const ImgArr = [PinImg1, PinImg2, PinImg3, PinImg4, PinImg5, PinImg6]
 
-    // API
+    // GET API
     const backendPortNumber = "5001";
     const serverUrl = "http://" + window.location.hostname + ":" + backendPortNumber + "/";
     async function get(endpoint, params = "") {
@@ -102,7 +102,7 @@ const PinSelect = ({currentState}) => {
                 <div className='Lside'>
                     {ImgArr.map((x, i)=>{
                         if(i+1 == ImgSrcNum){
-                            return (<p><Image  src={x}></Image></p>)
+                            return (<p><Image src={x} alt={x}></Image></p>)
                         }
                     })}
                     <div className='average'>{avg}</div>
