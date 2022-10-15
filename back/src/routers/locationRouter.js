@@ -22,7 +22,10 @@ locationRouter.get("/gus/:guId", async (req, res) => {
 
   const dongsData = await dongModel.find({ guId });
   const dongs = [];
-  dongsData.map((dong) => {
+  const filteredDongsData = dongsData.filter(
+    (dong) => dong.name.slice(-1) === "동"
+  );
+  filteredDongsData.map((dong) => {
     const dongData = {
       _id: dong._id,
       name: dong.name,
