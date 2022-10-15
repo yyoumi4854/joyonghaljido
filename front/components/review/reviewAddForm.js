@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import {
-    ColorDiv1,
-    ColorDiv2,
-    ColorDiv3,
-    FloatClear,
-    FormContainer,
-} from "./reviewAddForm.style.js";
+// import {
+//     ColorDiv1,
+//     ColorDiv2,
+//     ColorDiv3,
+//     FloatClear,
+//     FormContainer,
+// } from "./reviewAddForm.style.js";
+import FormContent from "./reviewAddForm.style";
+import {SmallBtn} from '../../styles/btnStyles';
 
 const ReviewAddForm = ({ setIsWriting, handler }) => {
     // review content
@@ -51,7 +53,8 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
     const handleTitleChange = (e) => { setTitle(e.target.value) }
     const handleDescriptionChange = (e) => { setDescription(e.target.value) }
     const handlePasswordChange = (e) => { setPassword(e.target.value) }
-    const handleNoiseLevelChange = (e) => { setNoiseLevel(e.target.id) }
+    // const handleNoiseLevelChange = (e) => { setNoiseLevel(e.target.id) }
+    const handleNoiseLevelChange = (e) => { setNoiseLevel(e.target.value) }
 
     const handleAddSubmit = async (e) => {
         e.preventDefault();
@@ -93,73 +96,106 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
     };
 
     return (
-        <div ref={modalRef}>
-            <FormContainer>
+        <FormContent ref={modalRef}>
+            <div className="formCon">
                 <form onSubmit={handleAddSubmit}>
-                    <div>
-                        <select name="gu" id="" onChange={handleGuChange}>
-                            {/* <option value="">구를 선택해주세요.</option> */}
-                            {
-                                guList.map(gu => {
-                                    return <option key={gu._id} value={gu._id}>{gu.name}</option>
-                                })
-                            }
-                        </select>
-                        <select name="dong" id="" disabled={!guId} onChange={handleDongChange}>
-                            {/* <option value="">동을 선택해주세요.</option> */}
-                            {
-                                dongList.map(dong => {
-                                    return <option key={dong._id} value={dong._id}>{dong.name}</option>
-                                })
-                            }
-                        </select><br></br><br></br>
+                    <h3>소음 리뷰 <span>작성하기</span></h3>
+                    <div className="content">
+                        <p className="title">지역 선택을 선택해주세요.</p>
+                        <div className="selectBox">
+                            <select name="gu" onChange={handleGuChange}>
+                                <option value="">구를 선택해주세요.</option>
+                                {
+                                    guList.map(gu => {
+                                        return <option key={gu._id} value={gu._id}>{gu.name}</option>
+                                    })
+                                }
+                            </select>
+                            <select name="dong" id="" disabled={!guId} onChange={handleDongChange}>
+                                <option value="">동을 선택해주세요.</option>
+                                {
+                                    dongList.map(dong => {
+                                        return <option key={dong._id} value={dong._id}>{dong.name}</option>
+                                    })
+                                }
+                            </select>
+                        </div>
                     </div>
-                    <div>
-                        <label>소음에 대한 상세 설명을 작성해 주세요</label><br></br>
-                        <input
-                            type="text"
-                            placeholder="제목"
-                            name="title"
-                            value={review.title}
-                            onChange={handleTitleChange}></input>
-                        <input
-                            type="text"
-                            placeholder="내용"
-                            name="description"
-                            value={review.description}
-                            onChange={handleDescriptionChange}></input>
+
+                    <div className="content">
+                        <p className="title">소음에 대한 상세 설명을 작성해주세요.</p>
+                        <div className="inputBox">
+                            <input
+                                type="text"
+                                placeholder="제목을 입력해 주세요."
+                                name="title"
+                                value={review.title}
+                                onChange={handleTitleChange}/>
+                            {/* <input
+                                type="text"
+                                placeholder="내용"
+                                name="description"
+                                value={review.description}
+                                onChange={handleDescriptionChange}/> */}
+                            <textarea 
+                                name="description"
+                                value={review.description}
+                                placeholder="내용을 입력해주세요."
+                                onChange={handleDescriptionChange}
+                            ></textarea>
+                        </div>
                     </div>
                     <br></br>
 
 
-                    <div>
-                        <label>비밀번호를 입력해 주세요.</label><br></br>
+                    <div className="content">
+                        <p className="title">비밀번호를 입력해 주세요.</p>
                         <input
                             type="text"
-                            placeholder="비밀번호"
+                            placeholder="비밀번호를 입력해주세요."
                             name="password"
                             value={review.password}
-                            onChange={handlePasswordChange}></input>
+                            onChange={handlePasswordChange}/>
                     </div>
                     <br></br>
 
-                    <div>
-                        <label>내가 느낀 소음은 어느 정도였나요?</label>
+                    <div className="content">
+                        <p className="title">내가 느낀 소음은 어느 정도였나요?</p>
 
-                        <div></div>
-                        <ColorDiv1 id='1' onClick={handleNoiseLevelChange}></ColorDiv1>
-                        <ColorDiv2 id='2' onClick={handleNoiseLevelChange}></ColorDiv2>
-                        <ColorDiv3 id='3' onClick={handleNoiseLevelChange}></ColorDiv3>
-                        <FloatClear></FloatClear>
+                        <ul className="radioBox"> 
+                            <li>
+                                <input id="bad" type="radio" name='state' value='1' onClick={handleNoiseLevelChange}/>
+                                <label for='bad'>나쁨</label>
+                                <p>나쁨</p>
+                            </li>
+                            <li>
+                                <input id="soso" type="radio" name='state' value='2' onClick={handleNoiseLevelChange}/>
+                                <label for='soso'>보통</label>
+                                <p>보통</p>
+                            </li>
+                            <li>
+                                <input id="good" type="radio" name='state' value='3' onClick={handleNoiseLevelChange}/>
+                                <label for="good">좋음</label>
+                                <p>좋음</p>
+                            </li>
+                        </ul>
+
+                        {/* <div></div>
+                        <div id='1' onClick={handleNoiseLevelChange}></div>
+                        <div id='2' onClick={handleNoiseLevelChange}></div>
+                        <div id='3' onClick={handleNoiseLevelChange}></div>
+                        <div></div> */}
                     </div>
-                    <div>
 
-                        <input type="button" id="off" value="취소" onClick={handler}></input>
-                        <input type="submit" value="제출"></input>
+                    <div className="btnBox content">
+                        <SmallBtn onClick={handler}>취소</SmallBtn>
+                        <SmallBtn type="submit" check='yes'>확인</SmallBtn>
+                        {/* <input type="button" id="off" value="취소" onClick={handler}/>
+                        <input type="submit" value="제출"></input> */}
                     </div>
                 </form>
-            </FormContainer>
-        </div>
+            </div>
+        </FormContent>
     )
 }
 
