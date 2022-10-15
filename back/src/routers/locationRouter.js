@@ -40,6 +40,8 @@ locationRouter.get("/gus/:guId", async (req, res) => {
       name: pin.name,
       longitude: pin.longitude,
       latitude: pin.latitude,
+      timeDeciblesAvg:
+        pin.timeDecibels.reduce((a, b) => a + b, 0) / pin.timeDecibels.length,
     };
     pins.push(pinData);
   });
