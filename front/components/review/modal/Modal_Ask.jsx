@@ -1,4 +1,4 @@
-import { SmallBtn } from '../../styles/btnStyles';
+import { SmallBtn } from '../../../styles/btnStyles';
 import styled from 'styled-components'
 import Modal_Ask_Layout  from './Modal_Ask.style';
 

@@ -1,4 +1,4 @@
-import { SmallBtn } from '../../styles/btnStyles';
+import { SmallBtn } from '../../../styles/btnStyles';
 import {useState} from 'react';
 
 import styled from 'styled-components'
