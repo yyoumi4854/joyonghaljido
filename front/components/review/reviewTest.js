@@ -116,7 +116,7 @@ const ReviewTest = ({ currentState }) => {
                   <div className='reviewTextCon'>
                     <div className='textTop'>
                       <p>{x.title}</p>
-                      <span>{x.createdAt}</span>{/* 날짜데이터넣기 */}
+                      <span>{x.createdAt.slice(2, 10) + ',  ' + x.createdAt.slice(11, 16)}</span>{/* 날짜데이터넣기 */}
                     </div>
                     <div className='textBottom'>
                       <p>
