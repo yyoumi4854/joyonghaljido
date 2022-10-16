@@ -3,6 +3,7 @@ import React from 'react';
 // styled
 import ReviewTestContent from './reviewTestStyles';
 import Title from '../titleStyles';
+import nameId from '../../Id_book/nameId.json'
 
 // react-icons
 import { AiOutlineArrowLeft } from "react-icons/ai";
@@ -123,7 +124,7 @@ const ReviewTest = ({ currentState }) => {
                         {toggleEllipsis(x.description, limit).isShowMore && <button onClick={onClickMore(x.description)}>...더보기</button>}
                       </p>
                     </div>
-                    <span className='dongTag'>발산동</span>
+                    <span className='dongTag'>{nameId.find(v => v._id === x.dongId).name}</span>
                   </div>
 
                   <button className='editBtn'><AiOutlineMore /></button>
