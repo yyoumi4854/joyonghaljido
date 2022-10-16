@@ -33,9 +33,7 @@ const PinSelect = ({ currentState }) => {
     
 
     console.log(pinId);
-    let dataArr = []
     let sum = 0;
-
     const ImgArr = [PinImg1, PinImg2, PinImg3, PinImg4, PinImg5, PinImg6]
 
     // GET API
@@ -54,16 +52,15 @@ const PinSelect = ({ currentState }) => {
         const res = await get('pins/', pinId);
         const d = res.data;
         console.log()
-        dataArr = [d._id, d.name, d.timeDecibels, d.dongName, d.guName]
 
         setPinstate({
-            name : d.name, 
-            timeDecibels : d.timeDecibels, 
-            dong : d.dongName, 
-            gu : d.guName
+            name : res.data.name, 
+            timeDecibels : res.data.timeDecibels, 
+            dong : res.data.dongName, 
+            gu : res.data.guName
         })
 
-        dataArr[2].forEach(e => { sum += e });
+        res.data.timeDecibels.forEach(e => { sum += e });
         calc(sum)
     }
 

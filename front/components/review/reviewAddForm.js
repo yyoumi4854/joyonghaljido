@@ -7,7 +7,7 @@ import {
     FloatClear,
     FormContainer,
 } from "./reviewAddForm.style.js";
-import geoId from '../../../data/geoid.json';
+import geoId from './geoid.json';
 
 const ReviewAddForm = ({ setIsWriting, handler }) => {
     // review content
