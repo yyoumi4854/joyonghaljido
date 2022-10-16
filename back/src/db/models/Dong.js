@@ -36,6 +36,24 @@ class Dong {
 
     return foundDong;
   }
+
+  static async getDongListByGuId(guId) {
+    const dongList = await DongModel.find(
+      { guId },
+      "_id name longitude latitude"
+    );
+
+    if (!dongList) {
+      throw new Error("해당하는 자치구의 동을 찾을 수 없습니다.");
+    }
+
+    //"-동"으로 끝나는 dong name만 포함("-가"로 끝나는 것 제외)
+    const filteredDongList = dongList.filter(
+      (dong) => dong.name.slice(-1) === "동"
+    );
+
+    return filteredDongList;
+  }
 }
 
 module.exports = Dong;

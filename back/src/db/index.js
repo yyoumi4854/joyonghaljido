@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const ReviewModel = require("./schemas/review");
 const GuModel = require("./schemas/gu");
 const DongModel = require("./schemas/dong");
+const PinModel = require("./schemas/pin");
 
 const DB_URL =
   process.env.MONGODB_URL || "MongoDB 서버 주소가 설정되지 않았습니다.";
@@ -21,4 +22,5 @@ module.exports = {
   ReviewModel,
   GuModel,
   DongModel,
-}
+  PinModel,
+};
