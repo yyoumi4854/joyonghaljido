@@ -12,6 +12,7 @@ import { noiseDegree, noiseEffect } from './noiseInfo';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import pinIds from '../../Id_book/pinId.json'
+import * as Api from '../../api';
 
 const PinSelect = ({ currentState }) => {
 
@@ -30,26 +31,12 @@ const PinSelect = ({ currentState }) => {
 
     let pinId = currentState.clickSpotId;
 
-    
-
     console.log(pinId);
     let sum = 0;
     const ImgArr = [PinImg1, PinImg2, PinImg3, PinImg4, PinImg5, PinImg6]
 
-    // GET API
-    const backendPortNumber = "5001";
-    const serverUrl = "http://" + window.location.hostname + ":" + backendPortNumber + "/";
-    async function get(endpoint, params = "") {
-        console.log(`%cGET 요청 ${serverUrl + endpoint + params}`, "color: #a25cd1;");
-        return axios.get(serverUrl + endpoint + params, {
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-            },
-        });
-    }
-
     const getData = async () => {
-        const res = await get('pins/', pinId);
+        const res = await Api.get('pins/', pinId);
         const d = res.data;
         console.log()
 

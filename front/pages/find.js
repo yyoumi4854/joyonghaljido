@@ -16,7 +16,7 @@ import zoomMap from '../dummy/zoom.json';
 // components
 import Map from '../components/map/map';
 import Ranking from '../components/ranking/ranking';
-import ReviewPage from '../components/review/reviewPage';
+import ReviewTest from '../components/review/reviewTest';
 import PinSelect from '../components/pinInfo/pinSelect';
 import RankingInfo from '../components/sideInfo/rankingInfo';
 import PinMarkerInfo from '../components/sideInfo/pinMarkerInfo';
@@ -43,7 +43,7 @@ const Find = () => {
             center: [126.986, 37.561],
         }
     );
-    console.log(currentState);
+    // console.log(currentState);
 
     return (
         <FindLayout>
@@ -53,19 +53,19 @@ const Find = () => {
                         <Ranking
                             currentState={currentState}
                             setCurrentState={setCurrentState} />
-                        <RankingInfo />
+                        {/* <RankingInfo /> */}
                     </>)
                     : null}
                 {currentState.currentView === 'gu' ?
                     (<>
-                        <ReviewPage
+                        <ReviewTest
                             currentState={currentState}
                             setCurrentState={setCurrentState} />
-                        <PinMarkerInfo />
+                        {/* <PinMarkerInfo /> */}
                     </>)
                     : null}
                 {currentState.currentView === 'dong' ?
-                    <ReviewPage
+                    <ReviewTest 
                         currentState={currentState}
                         setCurrentState={setCurrentState} /> : null}
                 {currentState.currentView === 'info' ?

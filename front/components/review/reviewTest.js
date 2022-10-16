@@ -8,9 +8,60 @@ import Title from '../titleStyles';
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { AiFillWechat } from "react-icons/ai";
 import { AiOutlineMore } from "react-icons/ai";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import * as Api from '../../api'; // API 활용하세용
 
-const ReviewTest = () => {
+const ReviewTest = ({currentState}) => {
+
+    const func = async () => {
+        //구 리뷰 출력
+        if(currentState.currentView === 'gu'){
+            console.log('test')
+            try{
+                const params = {guId : '6344187ebe26106c41c6d734'}
+                // const res = await axios.get(`http://localhost:5001/reviews?guId="${guId}"`);
+                const res = await axios.get("http://localhost:5001/reviews", {params});
+                console.log(res.data);
+                // 6344187ebe26106c41c6d734 : 강북구
+            }
+            catch{
+                console.log('실패!')
+            }
+        }
+        // //동 리뷰 출력
+        // else if(currentState.currentView === 'dong'){
+        //     const res = await axios.get(`http://localhost:5001/reviews?dongId=${currentState.dongId}`);
+        //     console.log(res.data);
+        // }
+    }
+    func();
+
+// //구 리뷰 출력
+// if(currentState.currentView === 'gu'){
+//     console.log('test')
+//   async ()=>{
+//     // const res = await Api.get(`/reviews?guId=${currentState.guId}`);
+//     try{
+//         const res = await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}`);
+//         console.log(res.data);
+//     }
+//     catch{
+//         console.log('실패!')
+//     }
+    
+//   }
+// }
+// //동 리뷰 출력
+// else if(currentState.currentView === 'dong'){
+//   async ()=>{
+//     // const res = await Api.get(`/reviews?dongId=${currentState.dongId}`);
+//     const res = await axios.get(`http://localhost:5001/reviews?dongId=${currentState.dongId}`);
+//     console.log(res.data);
+//   }
+// }
+  
+
   let arr=[
     {level: 'good', text: '아주 좋습니다.'},
     {level: 'soso', text: '별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다..'},

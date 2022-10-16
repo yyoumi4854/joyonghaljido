@@ -9,7 +9,6 @@ import dummy from "../../dummy/reviews.json";
 const ReviewPage = () => {
 
     const [isWriting, setIsWriting] = useState(false);
-    
     const handler = (e) => {
         if(e.target.id == 'on'){setIsWriting(true)}
         if(e.target.id == 'off'){setIsWriting(false)}
