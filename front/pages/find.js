@@ -30,16 +30,20 @@ const Find = () => {
         {
             currentView: 'ranking',
             //'ranking', 'gu', 'dong', 'info'
-            rankingTab: 'mw',
+            rankingTab: 'noise',
             //'mw' or 'noise'
 
             zoom: 2,
+            guId: '',
+            guName: '',
+            clickSpotId: '',
             clickedName: '',
+
             map: seoulMap,
             center: [126.986, 37.561],
-            name: '',
         }
     );
+    console.log(currentState);
 
     return (
         <FindLayout>

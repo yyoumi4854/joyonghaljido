@@ -11,13 +11,13 @@ import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 // import { AiOutlineVerticalAlignTop } from "react-icons/ai";
 
 const Ranking2 = ({ currentState, setCurrentState }) => {
-  const [tab, setTab] = useState('tabDB');
+  // const [tab, setTab] = useState(currentState.rankingTab);
   const [sortBtns, setSortBtns] = useState('value');
   const [toggle, setToggle] = useState({ value: 0, name: 0 });
 
   const tabChange = {
-    tabDB: ['소음', DB_OBJ],
-    tabMW: ['민원', MW_OBJ]
+    noise: ['소음', DB_OBJ],
+    mw: ['민원', MW_OBJ]
   };
 
   const handlerValueClick = () => {
@@ -54,22 +54,20 @@ const Ranking2 = ({ currentState, setCurrentState }) => {
     <RankingContent>
       <ul className='tab'>
         <li
-          className={tab === 'tabDB' && 'active'}
+          className={currentState.rankingTab === 'noise' ? 'active' : 'tabDB'}
           onClick={() => {
-            setTab('tabDB');
             setCurrentState({ ...currentState, rankingTab: 'noise' });
           }}>소음(db)</li>
         <li
-          className={tab === 'tabMW' && 'active'}
+          className={currentState.rankingTab === 'mw' ? 'active' : 'tabMW'}
           onClick={() => {
-            setTab('tabMW');
             setCurrentState({ ...currentState, rankingTab: 'mw' });
           }}>민원(건)</li>
       </ul>
 
       <Title>
         <div className='title'>
-          <h3>{tabChange[tab][0]} <span>순위</span></h3>
+          <h3>{tabChange[currentState.rankingTab][0]} <span>순위</span></h3>
         </div>
 
         <ul className='toggleList'>
@@ -94,7 +92,7 @@ const Ranking2 = ({ currentState, setCurrentState }) => {
 
       <ul className='ranking'>
         {
-          rankingSort(sortBtns, toggle[sortBtns], tabChange[tab][1]).map((x, i) => {
+          rankingSort(sortBtns, toggle[sortBtns], tabChange[currentState.rankingTab][1]).map((x, i) => {
             return (
               <li key={i}>
                 <p>{x.name}</p>
