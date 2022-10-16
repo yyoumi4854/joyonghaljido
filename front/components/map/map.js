@@ -140,30 +140,48 @@ const Map = ({ currentState, setCurrentState }) => {
             <ReactTooltip type='light'>{tooltipName}</ReactTooltip>
             <div className='locationText'>
                 {currentState.currentView === 'ranking' ?
-                    <h2 >찾고 싶은 지역을 선택해주세요.</h2> :
-                    <h2 ><span
-                        onClick={() => {
-                            setCurrentState({
-                                ...currentState,
-                                currentView: 'ranking',
-                                // rankingTab: 'noise',
-                                zoom: 2,
-                                map: seoulMap,
+                    <h2>찾고 싶은 지역을 선택해주세요.</h2> :
+                    <h2>
+                        <span
+                            className='hoverUp'
+                            onClick={() => {
+                                setCurrentState({
+                                    ...currentState,
+                                    currentView: 'ranking',
+                                    // rankingTab: 'noise',
+                                    zoom: 2,
+                                    map: seoulMap,
 
-                                guId: '',
-                                guName: '',
-                                clickSpotId: '',
-                                clickedName: '',
-                                center: [126.986, 37.561],
-                            });
-                        }}>서울시</span> <BsForwardFill />
-                        <span onClick={() => (
-                            setCurrentState({
-                                ...currentState,
-                                currentView: 'gu',
-                                clickSpotId: '',
-                                clickedName: '',
-                            }))}>{currentState.guName}</span> {currentState.clickSpotId ? <><BsForwardFill /> <span>{currentState.clickedName}</span></> : null}</h2>}
+                                    guId: '',
+                                    guName: '',
+                                    clickSpotId: '',
+                                    clickedName: '',
+                                    center: [126.986, 37.561],
+                                });
+                            }}>서울시
+                        </span>
+                        <BsForwardFill />
+                        <span
+                            className='hoverUp'
+                            onClick={() => (
+                                setCurrentState({
+                                    ...currentState,
+                                    currentView: 'gu',
+                                    clickSpotId: '',
+                                    clickedName: '',
+                                }))}>
+                            {currentState?.guName}
+                        </span>
+                        {currentState.clickSpotId &&
+                            <>
+                                <BsForwardFill />
+                                <span className='hoverUp'>
+                                    {currentState.clickedName}
+                                </span>
+                            </>
+                        }
+                    </h2>
+                }
             </div>
 
 
@@ -187,6 +205,7 @@ const Map = ({ currentState, setCurrentState }) => {
                                         NOISE_OBJ.find(v => v.name === geo.properties.name)
 
                                     return <Geography
+                                        className='hoverUp'
                                         fill={
                                             currentState.currentView !== 'ranking' ?
                                                 theme.colors.grey3 :
@@ -269,8 +288,7 @@ const Map = ({ currentState, setCurrentState }) => {
                                         setTooltipName('');
                                     }}
                                     coordinates={[pin.longitude, pin.latitude]}>
-                                    <g
-                                        transform="translate(-0, -5) scale(0.1)">
+                                    <g transform="translate(-0, -5) scale(0.07)">
                                         <path d="M25.9078 59.0345C25.5502 59.8087 24.4498 59.8087 24.0922 59.0345L18.7274 47.4193C18.4213 46.7567 18.9053 46 19.6352 46H30.3648C31.0947 46 31.5787 46.7567 31.2727 47.4193L25.9078 59.0345Z" fill="#7352DE" />
                                         <path d="M50 25C50 38.8071 38.8071 50 25 50C11.1929 50 0 38.8071 0 25C0 11.1929 11.1929 0 25 0C38.8071 0 50 11.1929 50 25Z" fill="#7352DE" />
                                         <path d="M25 45C36.0469 45 45 36.0469 45 25C45 13.9531 36.0469 5 25 5C13.9531 5 5 13.9531 5 25C5 36.0469 13.9531 45 25 45ZM12.5625 29.5391C12.2656 28.4688 13.1406 27.5 14.25 27.5H35.75C36.8594 27.5 37.7422 28.4688 37.4375 29.5391C35.9531 34.8438 30.9453 38.75 25 38.75C19.0547 38.75 14.0469 34.8438 12.5625 29.5391ZM15.4297 13.9609L22.4531 17.7031C23.2891 18.1484 23.2891 19.3516 22.4531 19.7969L15.4297 23.5391C14.8125 23.8672 14.0625 23.4219 14.0625 22.7188C14.0625 22.5 14.1406 22.2891 14.2812 22.125L17.0938 18.75L14.2812 15.375C14.1406 15.2109 14.0625 15 14.0625 14.7812C14.0625 14.0781 14.8125 13.6328 15.4297 13.9609ZM35.9375 14.7734C35.9375 14.9922 35.8594 15.2031 35.7188 15.3672L32.9062 18.7422L35.7188 22.1172C35.8594 22.2812 35.9375 22.4922 35.9375 22.7109C35.9375 23.4141 35.1875 23.8594 34.5703 23.5312L27.5469 19.7891C26.7109 19.3438 26.7109 18.1406 27.5469 17.6953L34.5703 13.9531C35.1875 13.625 35.9375 14.0703 35.9375 14.7734Z" fill="#AB97EB" />
@@ -307,14 +325,13 @@ const Map = ({ currentState, setCurrentState }) => {
                                     }}
                                     coordinates={[dong.longitude, dong.latitude]}>
                                     <circle
-                                        r={1}
+                                        r={0.5}
                                     />
                                 </Marker>
                             }) : null}
                     </ZoomableGroup>
                 </ComposableMap>
             </div>
-
         </MapContent >);
 }
 

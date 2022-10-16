@@ -12,60 +12,32 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as Api from '../../api'; // API 활용하세용
 
-const ReviewTest = ({currentState}) => {
+const ReviewTest = ({ currentState }) => {
 
-    const func = async () => {
-        //구 리뷰 출력
-        if(currentState.currentView === 'gu'){
-            console.log('test')
-            try{
-                const params = {guId : '6344187ebe26106c41c6d734'}
-                // const res = await axios.get(`http://localhost:5001/reviews?guId="${guId}"`);
-                const res = await axios.get("http://localhost:5001/reviews", {params});
-                console.log(res.data);
-                // 6344187ebe26106c41c6d734 : 강북구
-            }
-            catch{
-                console.log('실패!')
-            }
-        }
-        // //동 리뷰 출력
-        // else if(currentState.currentView === 'dong'){
-        //     const res = await axios.get(`http://localhost:5001/reviews?dongId=${currentState.dongId}`);
-        //     console.log(res.data);
-        // }
+  //구 리뷰 출력
+  if (currentState.currentView === 'gu') {
+    try {
+      // axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}`);
     }
-    func();
+    catch {
+      console.log('구 리뷰 불러오기 실패!');
+    }
+  }
+  //동 리뷰 출력
+  else if (currentState.currentView === 'dong') {
+    try {
+      // axios.get(`http://localhost:5001/reviews?dongId=${currentState.dongId}`);
+    }
+    catch {
+      console.log('동 리뷰 불러오기 실패!');
+    }
+  }
 
-// //구 리뷰 출력
-// if(currentState.currentView === 'gu'){
-//     console.log('test')
-//   async ()=>{
-//     // const res = await Api.get(`/reviews?guId=${currentState.guId}`);
-//     try{
-//         const res = await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}`);
-//         console.log(res.data);
-//     }
-//     catch{
-//         console.log('실패!')
-//     }
-    
-//   }
-// }
-// //동 리뷰 출력
-// else if(currentState.currentView === 'dong'){
-//   async ()=>{
-//     // const res = await Api.get(`/reviews?dongId=${currentState.dongId}`);
-//     const res = await axios.get(`http://localhost:5001/reviews?dongId=${currentState.dongId}`);
-//     console.log(res.data);
-//   }
-// }
-  
 
-  let arr=[
-    {level: 'good', text: '아주 좋습니다.'},
-    {level: 'soso', text: '별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다..'},
-    {level: 'bad', text: '시끄러워요.시끄러워요.시끄러워요.'},
+  let arr = [
+    { level: 'good', text: '아주 좋습니다.' },
+    { level: 'soso', text: '별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다.별로입니다..' },
+    { level: 'bad', text: '시끄러워요.시끄러워요.시끄러워요.' },
   ]
 
   const [limit, setLimit] = useState(71);
@@ -85,7 +57,7 @@ const ReviewTest = ({currentState}) => {
       <Title>
         <div className='title'>
           <button className='back'>
-            <AiOutlineArrowLeft/>
+            <AiOutlineArrowLeft />
           </button>
           <h3>동대문구 답신리 2동 <span>리뷰</span></h3>
         </div>
@@ -93,7 +65,7 @@ const ReviewTest = ({currentState}) => {
         <div>
           <div className='reviewAll'>
             <button>
-              <AiFillWechat/>
+              <AiFillWechat />
             </button>
             <span>999</span>
           </div>
@@ -119,8 +91,8 @@ const ReviewTest = ({currentState}) => {
       <div className='reviewList'>
         <ul>
           {
-            arr.map((x)=>{
-              return(
+            arr.map((x) => {
+              return (
                 <li>
                   <div className={x['level']}>{/* 리뷰의 소음레벨에따라 "good, soso, bad" className에 채워지기 */}
                     <span className='level'>{x['level']}</span>{/* 여기에 good, soso, bad 내용넣기 */}
@@ -140,7 +112,7 @@ const ReviewTest = ({currentState}) => {
                     <span className='dongTag'>발산동</span>
                   </div>
 
-                  <button className='editBtn'><AiOutlineMore/></button>
+                  <button className='editBtn'><AiOutlineMore /></button>
                 </li>
               )
             })
@@ -149,6 +121,5 @@ const ReviewTest = ({currentState}) => {
       </div>
     </ReviewTestContent>
   );
-};
-
+}
 export default ReviewTest;

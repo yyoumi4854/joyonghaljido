@@ -2,7 +2,7 @@ import axios from "axios";
 
 const backendPortNumber = "5001";
 const serverUrl =
-  "http://" + window.location.hostname + ":" + backendPortNumber + "/";
+  "http://" + 'localhost' + ":" + backendPortNumber + "/";
 
 // async function get(endpoint, params = "") {
 //   console.log(

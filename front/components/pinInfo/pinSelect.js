@@ -15,19 +15,22 @@ import pinIds from '../../Id_book/pinId.json'
 import * as Api from '../../api';
 
 const PinSelect = ({ currentState }) => {
+    useEffect(() => {
+        console.log('getdata');
+        getData();
+    }, [currentState]);
 
     const [pinState, setPinstate] = useState({
-        name:'',
-        timeDecibels:[],
-        dong:'',
-        gu:''
+        name: '',
+        timeDecibels: [],
+        dong: '',
+        gu: '',
+
+        noiseDegreeMessage: '',
+        noiseEffectMessage: '',
+        imgSrcNum: -1,
+        avg: 0,
     })
-
-    const [avg, setAvg] = useState(-1)
-    const [ImgSrcNum, setImgSrcNum] = useState(-1)
-
-    const [noiseDegreeMessage, setNoiseDegreeMessage] = useState('')
-    const [noiseEffectMessage, setNoiseEffectMessage] = useState('')
 
     let pinId = currentState.clickSpotId;
 
@@ -38,36 +41,51 @@ const PinSelect = ({ currentState }) => {
     const getData = async () => {
         const res = await Api.get('pins/', pinId);
         const d = res.data;
-        console.log()
-
-        setPinstate({
-            name : res.data.name, 
-            timeDecibels : res.data.timeDecibels, 
-            dong : res.data.dongName, 
-            gu : res.data.guName
-        })
 
         res.data.timeDecibels.forEach(e => { sum += e });
-        calc(sum)
+        const result = calc(sum)
+
+
+        setPinstate({
+            ...pinState,
+            name: res.data.name,
+            timeDecibels: res.data.timeDecibels,
+            dong: res.data.dongName,
+            gu: res.data.guName,
+
+            noiseDegreeMessage: result.noiseDegreeMessage,
+            noiseEffectMessage: result.noiseEffectMessage,
+            imgSrcNum: result.imgSrcState,
+            avg: result.avg,
+        })
     }
 
-    getData();
-
     const calc = (sum) => {
-        setAvg(Math.floor(sum / 6));
-        const val = ((avg - (avg % 10)) + '');
+        const result = {
+            noiseDegreeMessage: '',
+            noiseEffectMessage: '',
+            imgSrcState: -1,
+            avg: 0,
+        }
+        result.avg = Math.floor(sum / 6);
+
+        const val = ((result.avg - (result.avg % 10)) + '');
+
         for (let i = 0; i < noiseDegree.length; i++) {
-            if (noiseDegree[i].dB == val) { setNoiseDegreeMessage(noiseDegree[i].MSG) }
+            if (noiseDegree[i].dB == val) { result.noiseDegreeMessage = noiseDegree[i].MSG }
         }
         for (let i = 0; i < noiseEffect.length; i++) {
-            if (noiseEffect[i].dB == val) { setNoiseEffectMessage(noiseEffect[i].MSG) }
+            if (noiseEffect[i].dB == val) { result.noiseEffectMessage = noiseEffect[i].MSG }
         }
-        if (avg <= 25) { setImgSrcNum(1) } // 보라
-        else if (avg > 25 && avg <= 35) { setImgSrcNum(2) } // 파랑
-        else if (avg > 35 && avg <= 45) { setImgSrcNum(3) } // 초록
-        else if (avg > 45 && avg <= 55) { setImgSrcNum(4) } // 노랑
-        else if (avg > 55 && avg <= 65) { setImgSrcNum(5) } // 주황
-        else if (avg > 65) { setImgSrcNum(6) } // 빨강
+
+        if (result.avg <= 25) { result.imgSrcState = 1 } // 보라
+        else if (result.avg > 25 && result.avg <= 35) { result.imgSrcState = 2 } // 파랑
+        else if (result.avg > 35 && result.avg <= 45) { result.imgSrcState = 3 } // 초록
+        else if (result.avg > 45 && result.avg <= 55) { result.imgSrcState = 4 } // 노랑
+        else if (result.avg > 55 && result.avg <= 65) { result.imgSrcState = 5 } // 주황
+        else if (result.avg > 65) { result.imgSrcState = 6 } // 빨강
+
+        return result;
     }
 
     return (
@@ -89,17 +107,17 @@ const PinSelect = ({ currentState }) => {
                     </div>
                     <div className='Lside'>
                         {ImgArr.map((x, i) => {
-                            if (i + 1 == ImgSrcNum) {
+                            if (i + 1 == pinState.imgSrcNum) {
                                 return (<p><Image src={x} alt={x}></Image></p>)
                             }
                         })}
-                        <div className='average'>{avg}</div>
+                        <div className='average'>{pinState.avg}</div>
                     </div>
                     <div className='Rside'>
                         <p className='bold'> 소음 정도 </p>
-                        <p className="gray"> {noiseDegreeMessage}</p>
+                        <p className="gray"> {pinState.noiseDegreeMessage}</p>
                         <p className='bold'> 소음 영향 </p>
-                        <p className="gray"> {noiseEffectMessage}</p>
+                        <p className="gray"> {pinState.noiseEffectMessage}</p>
                     </div>
                 </div>
 
@@ -107,7 +125,7 @@ const PinSelect = ({ currentState }) => {
                 <div className='section3'>
                     <h3>시간대별 소음 그래프</h3>
                     <div className='graph'>
-                        <G4_PinGraph time={pinState.timeDecibels} colorIdx={ImgSrcNum} />
+                        <G4_PinGraph time={pinState.timeDecibels} colorIdx={pinState.imgSrcNum} />
                     </div>
                     <div>
                         <button type="button" className="toReview" data-toggle="modal" data-target="">

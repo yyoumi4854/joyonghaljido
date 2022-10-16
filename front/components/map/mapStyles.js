@@ -4,19 +4,18 @@ const MapContent = styled.div`
   position: relative;
 
   .locationText{
-    position: fixed;
-    top: 162px; // 기본82
-    left: 50%;
-    transform: translateY(-50%);
+    position: absolute;
+    top: 142px; // 기본82
+    width : 100%;
+    text-align : center;
     font-size: ${({ theme }) => theme.fontSizes.titleFs};
     font-weight: 700;
 
     span{
-      transition: .2s;
       cursor: pointer;
-
-      &:nth-child(1){
-        color: ${({ theme }) => theme.colors.grey2};
+      color : ${({ theme }) => theme.colors.grey2};
+      &:last-child{
+        color: black;
       }
 
       &:hover{
@@ -28,6 +27,7 @@ const MapContent = styled.div`
       width: auto;
       height: 36px;
       vertical-align: top;
+      padding : 0 10px;
       color: ${({ theme }) => theme.colors.mainLight1};
     }
   }

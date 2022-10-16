@@ -1,0 +1,7 @@
+.hoverUp {
+    transition: 0.2s ease-in-out all;
+}
+
+.hoverUp:hover {
+    scale: 1.1;
+}
