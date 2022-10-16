@@ -15,10 +15,12 @@ import pinIds from '../../Id_book/pinId.json'
 
 const PinSelect = ({ currentState }) => {
 
-    const [name, setName] = useState('')
-    const [timeDecibels, setTimeDecibels] = useState([])
-    const [dong, setDong] = useState('')
-    const [gu, setGu] = useState('')
+    const [pinState, setPinstate] = useState({
+        name:'',
+        timeDecibels:[],
+        dong:'',
+        gu:''
+    })
 
     const [avg, setAvg] = useState(-1)
     const [ImgSrcNum, setImgSrcNum] = useState(-1)
@@ -27,22 +29,12 @@ const PinSelect = ({ currentState }) => {
     const [noiseEffectMessage, setNoiseEffectMessage] = useState('')
 
     let pinId = currentState.clickSpotId;
-    useEffect(() => {
-        getData();
-    }, [pinId]);
+
+    
 
     console.log(pinId);
     let dataArr = []
     let sum = 0;
-
-    // useEffect(() => {
-    //     pinIds.forEach(ele => {
-    //         if (ele.name == currentState.clickedName){
-    //             pinId = ele._id
-    //         }
-    //     });
-    //     getData()
-    //   }, [currentState.name]);
 
     const ImgArr = [PinImg1, PinImg2, PinImg3, PinImg4, PinImg5, PinImg6]
 
@@ -61,14 +53,21 @@ const PinSelect = ({ currentState }) => {
     const getData = async () => {
         const res = await get('pins/', pinId);
         const d = res.data;
+        console.log()
         dataArr = [d._id, d.name, d.timeDecibels, d.dongName, d.guName]
-        setName(d.name)
-        setTimeDecibels(d.timeDecibels)
-        setDong(d.dongName)
-        setGu(d.guName)
+
+        setPinstate({
+            name : d.name, 
+            timeDecibels : d.timeDecibels, 
+            dong : d.dongName, 
+            gu : d.guName
+        })
+
         dataArr[2].forEach(e => { sum += e });
         calc(sum)
     }
+
+    getData();
 
     const calc = (sum) => {
         setAvg(Math.floor(sum / 6));
@@ -95,8 +94,8 @@ const PinSelect = ({ currentState }) => {
                         <h2><Image src={LeftArrow} alt='LeftArrow' onClick={() => { alert() }}></Image></h2>
                     </div>
                     <div className='Rside'>
-                        <h2>{name}</h2>
-                        <h4>{gu} {dong}</h4>
+                        <h2>{pinState.name}</h2>
+                        <h4>{pinState.gu} {pinState.dong}</h4>
                     </div>
                 </div>
                 <hr></hr>
@@ -124,7 +123,7 @@ const PinSelect = ({ currentState }) => {
                 <div className='section3'>
                     <h3>시간대별 소음 그래프</h3>
                     <div className='graph'>
-                        <G4_PinGraph time={timeDecibels} colorIdx={ImgSrcNum} />
+                        <G4_PinGraph time={pinState.timeDecibels} colorIdx={ImgSrcNum} />
                     </div>
                     <div>
                         <button type="button" className="toReview" data-toggle="modal" data-target="">
