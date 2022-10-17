@@ -119,7 +119,7 @@ const ReviewAddForm = ({ currentState,  toggleIsWriting }) => {
                     <div className="content">
                         <p className="title">비밀번호를 입력해 주세요.</p>
                         <input
-                            type="text"
+                            type="password"
                             placeholder="비밀번호를 입력해주세요."
                             name="password"
                             value={review.password}
@@ -131,20 +131,20 @@ const ReviewAddForm = ({ currentState,  toggleIsWriting }) => {
                         <p className="title">내가 느낀 소음은 어느 정도였나요?</p>
 
                         <ul className="radioBox"> 
-                            <li>
-                                <input id="bad" type="radio" name="noiseLevel" value='1' checked={ noiseLevel === "1" } onClick={ handleNoiseLevelClick }/>
-                                <label for='bad'>나쁨</label>
-                                <p>나쁨</p>
+                            <li className="good">
+                                <input id="good" type="radio" name="noiseLevel" value='3' checked={ noiseLevel === "3" } onClick={ handleNoiseLevelClick }/>
+                                <label for="good">좋음</label>
+                                <p>좋음</p>
                             </li>
-                            <li>
+                            <li className="soso">
                                 <input id="soso" type="radio" name="noiseLevel" value='2' checked={ noiseLevel === "2" } onClick={ handleNoiseLevelClick }/>
                                 <label for='soso'>보통</label>
                                 <p>보통</p>
                             </li>
-                            <li>
-                                <input id="good" type="radio" name="noiseLevel" value='3' checked={ noiseLevel === "3" } onClick={ handleNoiseLevelClick }/>
-                                <label for="good">좋음</label>
-                                <p>좋음</p>
+                            <li className="bad">
+                                <input id="bad" type="radio" name="noiseLevel" value='1' checked={ noiseLevel === "1" } onClick={ handleNoiseLevelClick }/>
+                                <label for='bad'>나쁨</label>
+                                <p>나쁨</p>
                             </li>
                         </ul>
                     </div>

@@ -91,15 +91,17 @@ const FormContent = styled.div`
                 input[type=radio]{display: none;}
                 p{margin-top: 8px;}
 
-                &:nth-child(2) label{background: url('/images/noiseSoso.svg') no-repeat center;}
-                &:nth-child(3) label{background: url('/images/noiseGood.svg') no-repeat center;}
+                &.good label{background: url('/images/noiseGood.svg') no-repeat center;}
+                &.soso label{background: url('/images/noiseSoso.svg') no-repeat center;}
+                &.bad label{background: url('/images/noiseBad.svg') no-repeat center;}
 
                 input[type=radio]:checked + label + p{
                     font-weight: 500;
                     color: ${({ theme }) => theme.colors.red};
                 }
-                &:nth-child(2) input[type=radio]:checked + label + p{color: ${({ theme }) => theme.colors.yellow};}
-                &:nth-child(3) input[type=radio]:checked + label + p{color: ${({ theme }) => theme.colors.main};}
+                &.good input[type=radio]:checked + label + p{color: ${({ theme }) => theme.colors.main};}
+                &.soso input[type=radio]:checked + label + p{color: ${({ theme }) => theme.colors.yellow};}
+                &.bad input[type=radio]:checked + label + p{color: ${({ theme }) => theme.colors.red};}
             }
         }
 
