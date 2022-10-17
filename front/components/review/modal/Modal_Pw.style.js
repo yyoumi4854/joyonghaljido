@@ -3,6 +3,7 @@ import styled from 'styled-components'
 const Modal_PW_Layout = styled.div`
 
     .modal {
+        z-index:9;
         position: fixed;
         left : calc(50% - 224px);
         top :  calc(50% - 96px);
@@ -14,6 +15,7 @@ const Modal_PW_Layout = styled.div`
         padding: 20px;
         padding-left:10px;
         border: 1px solid #888;
+        z-index:999;
 
         h3{
             font-weight:700;

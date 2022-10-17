@@ -2,15 +2,24 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import FormContent from "./reviewAddForm.style";
 import { SmallBtn } from '../../styles/btnStyles';
+import styled from 'styled-components';
+
+const DarkArea  = styled.div`
+  position: fixed;
+  width: 1000vw;
+  height: 1000vh;
+  background: rgba(0, 0, 0, 0.6);
+  left:-50%;
+  top:-50%;
+  z-index:5;
+`
 
 import geoId from './geoid.json';
-
-const ReviewAddForm = ({ currentState,  toggleIsWriting }) => {
+// const ReviewAddForm = ({ setIsWriting , currentState,  toggleIsWriting, setModal, modal }) => {
+const ReviewAddForm = ({ setIsWriting}) => {
     // review content
     const [noiseLevel, setNoiseLevel] = useState('');
-
     const [dongList, setDongList] = useState([]);
-
     const [review, setReview] = useState({
         guId: "",
         dongId: "",
@@ -23,7 +32,6 @@ const ReviewAddForm = ({ currentState,  toggleIsWriting }) => {
     // 구 선택했을 때 속한 동 리스트 찾기
     const handleGuChange = async (e) => {
         const selectedGuId = e.target.value;
-
         const dongList = geoId.filter(element => element._id === selectedGuId);
         setDongList(dongList[0].dongs);
     }
@@ -42,34 +50,31 @@ const ReviewAddForm = ({ currentState,  toggleIsWriting }) => {
 
     const handleAddSubmit = async (e) => {
         e.preventDefault();
-
-        // 등록 버튼 눌렀을 때 이벤트 (api 연결)
-        // POST & GET
         try {
+            console.log('review', review)
             await axios.post("http://localhost:5001/reviews", review);
-            toggleIsWriting;
+            setIsWriting(false);
         } catch (e) {
             console.log("POST 요청이 실패했습니다.", e);
         }
     }
 
     const modalRef = useRef();
-
     useEffect(() => {
         document.addEventListener('mousedown', handleOutsideClick);
-
         return () => {
             document.removeEventListener('mousedown', handleOutsideClick);
         };
     });
-
     const handleOutsideClick = (e) => {
         if (modalRef.current && !modalRef.current.contains(e.target)) {
-            toggleIsWriting;
+            setIsWriting(false);
         }
     };
 
     return (
+        <>
+        <DarkArea></DarkArea>
         <FormContent ref={modalRef} onChange={ handleReviewChange }>
             <div className="formCon">
                 <form onSubmit={ handleAddSubmit }>
@@ -150,13 +155,16 @@ const ReviewAddForm = ({ currentState,  toggleIsWriting }) => {
                     </div>
 
                     <div className="btnBox content">
-                        <SmallBtn onClick={ toggleIsWriting }>취소</SmallBtn>
+                        <SmallBtn onClick={()=>{setIsWriting(false)} }>취소</SmallBtn>
                         <SmallBtn type="submit" check='yes'>확인</SmallBtn>
                     </div>
                 </form>
             </div>
         </FormContent>
+        </>
     )
 }
 
 export default ReviewAddForm;
+
+

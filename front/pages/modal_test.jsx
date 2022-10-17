@@ -31,7 +31,6 @@ const TestPage = () => {
         const outerModal = document.querySelector('.outerModal')
         if(denyWindow){outerModal.classList.add('dark')}
         else{outerModal.classList.remove('dark')}
-
     }, [denyWindow])
 
     const outerModalClicked = (e) => {

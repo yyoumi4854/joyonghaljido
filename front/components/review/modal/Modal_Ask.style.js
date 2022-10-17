@@ -1,9 +1,8 @@
 import styled from 'styled-components'
 
 const Modal_Ask_Layout = styled.div`
-    
     .modal {
-        
+        z-index:9;
         position: fixed;
         left : calc(50% - 224px);
         top :  calc(50% - 96px);
@@ -21,6 +20,9 @@ const Modal_Ask_Layout = styled.div`
             font-weight:700;
         }
     }
+
+    
+
 `
 
 export default Modal_Ask_Layout;
