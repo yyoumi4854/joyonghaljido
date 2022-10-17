@@ -10,10 +10,10 @@ class Review {
   }
 
   //get reviews by gu
-  static async getListByGu(guId, skip, filter) {
+  static async getListByGu(guId, skip, limit, noiseLevel) {
     const reviews = await ReviewModel.aggregate([
       {
-        $match: filter ? { guId, noiseLevel: parseInt(filter) } : { guId },
+        $match: { guId, ...(noiseLevel && { noiseLevel }) },
       },
       {
         $lookup: {
@@ -37,10 +37,10 @@ class Review {
         },
       },
       {
-        $skip: parseInt(skip) * 10,
+        $skip: skip * limit,
       },
       {
-        $limit: 10,
+        $limit: limit,
       },
     ]);
 
@@ -48,10 +48,10 @@ class Review {
   }
 
   //get reviews by dong
-  static async getListByDong(dongId, skip, filter) {
+  static async getListByDong(dongId, skip, limit, noiseLevel) {
     const reviews = await ReviewModel.aggregate([
       {
-        $match: filter ? { dongId, noiseLevel: parseInt(filter) } : { dongId },
+        $match: { dongId, ...(noiseLevel && { noiseLevel }) },
       },
       {
         $lookup: {
@@ -73,10 +73,10 @@ class Review {
         },
       },
       {
-        $skip: parseInt(skip) * 10,
+        $skip: skip * limit,
       },
       {
-        $limit: 10,
+        $limit: limit,
       },
     ]);
 
@@ -88,6 +88,34 @@ class Review {
     const review = await ReviewModel.findById({ _id: reviewId });
 
     return review;
+  }
+
+  //get review count
+  static async getCount(guId, dongId) {
+    const reviewCount = await ReviewModel.aggregate([
+      {
+        $match: (dongId && { dongId }) || { guId },
+      },
+      {
+        $count: "totalReview",
+      },
+    ]);
+
+    const noiseLevelCount = await ReviewModel.aggregate([
+      {
+        $match: (dongId && { dongId }) || { guId },
+      },
+      {
+        $group: {
+          _id: "$noiseLevel",
+          total: {
+            $count: {},
+          },
+        },
+      },
+    ]);
+
+    return { reviewCount, noiseLevelCount };
   }
 
   //update review

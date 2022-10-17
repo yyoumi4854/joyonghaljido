@@ -24,43 +24,53 @@ class reviewService {
 
     const createdReview = await Review.create(newReview);
 
-    if (createdReview) {
-      createdReview.errorMessage = null;
-    } else {
-      createdReview.errorMessage = "리뷰 등록에 실패했습니다.";
+    if (!createdReview) {
+      throw new Error("리뷰 등록에 실패했습니다.");
     }
 
     return createdReview;
   }
 
   //get reivews
-  static async getList(guId, dongId, skip, filter) {
+  static async getList(guId, dongId, skip, limit, noiseLevel) {
     let reviews = [];
 
     if (!dongId) {
-      reviews = await Review.getListByGu(guId, skip, filter);
+      reviews = await Review.getListByGu(guId, skip, limit, noiseLevel);
     } else {
-      reviews = await Review.getListByDong(dongId, skip, filter);
-    }
-
-    if (reviews.length === 0) {
-      reviews.errorMessage = "리뷰가 존재하지 않습니다.";
-    } else {
-      reviews.errorMessage = null;
+      reviews = await Review.getListByDong(dongId, skip, limit, noiseLevel);
     }
 
     return reviews;
   }
 
+  //get review count
+  static async getCount(guId, dongId) {
+    const count = await Review.getCount(guId, dongId);
+
+    return count;
+  }
+
+  //check password
+  static async checkPassword(reviewId, password) {
+    const review = await Review.getByReviewId(reviewId);
+
+    if (!review) {
+      throw new Error("해당 리뷰는 존재하지 않습니다.");
+    }
+
+    const isMatched = await bcrypt.compare(password, review.password);
+
+    if (!isMatched) {
+      throw new Error("비밀번호가 일치하지 않습니다.");
+    }
+
+    return isMatched;
+  }
+
   //update review
   static async update(reviewId, toUpdate) {
     const updates = Object.keys(toUpdate);
-
-    //password hashing before update
-    if (toUpdate.password) {
-      const hashedPassword = await bcrypt.hash(toUpdate.password, 8);
-      toUpdate.password = hashedPassword;
-    }
 
     updates.forEach(async (update) => {
       await Review.update({ _id: reviewId }, { [update]: toUpdate[update] });
