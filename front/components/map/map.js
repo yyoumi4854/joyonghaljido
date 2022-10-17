@@ -192,7 +192,6 @@ const Map = ({ currentState, setCurrentState }) => {
 
                         {currentState.currentView !== 'ranking' ?
                             pins && pins.map(pin => {
-                                console.log(pin);
                                 return <Marker
                                     key={pin._id}
                                     onClick={() => {
