@@ -8,13 +8,15 @@ const passwordMiddleware = async (req, res, next) => {
   const review = await Review.getByReviewId(reviewId);
 
   if (!review) {
-    throw new Error("해당 리뷰는 존재하지 않습니다.");
+    next(new Error("해당 리뷰는 존재하지 않습니다."));
+    return;
   }
 
   const isMatched = await bcrypt.compare(currentPassword, review.password);
 
   if (!isMatched) {
-    throw new Error("비밀번호가 일치하지 않습니다.");
+    next(new Error("비밀번호가 일치하지 않습니다."));
+    return;
   }
 
   req.currentReview = review;

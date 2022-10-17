@@ -44,28 +44,31 @@ router.get("/", async (req, res, next) => {
 
     const reviews = await reviewService.getList(guId, dongId, skip, filter);
 
-    if (reviews.errorMessage) {
-      throw new Error(reviews.errorMessage);
-    }
-
     res.status(200).json(reviews);
   } catch (error) {
     next(error);
   }
 });
 
-//update review
-router.put("/:reviewId", passwordMiddleware, async (req, res, next) => {
+//check password
+router.get("/:reviewId", async (req, res, next) => {
   try {
-    const reviewId = req.currentReview._id;
-    const updates = [
-      "guId",
-      "dongId",
-      "title",
-      "description",
-      "password",
-      "noiseLevel",
-    ];
+    const reviewId = req.params.reviewId;
+    const password = req.body.password;
+
+    const result = await reviewService.checkPassword(reviewId, password);
+
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//update review
+router.put("/:reviewId", async (req, res, next) => {
+  try {
+    const reviewId = req.params.reviewId;
+    const updates = ["title", "description", "noiseLevel"];
     let toUpdate = {};
 
     updates.forEach((update) => {

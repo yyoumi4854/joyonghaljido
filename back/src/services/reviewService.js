@@ -43,24 +43,29 @@ class reviewService {
       reviews = await Review.getListByDong(dongId, skip, filter);
     }
 
-    if (reviews.length === 0) {
-      reviews.errorMessage = "리뷰가 존재하지 않습니다.";
-    } else {
-      reviews.errorMessage = null;
+    return reviews;
+  }
+
+  //check password
+  static async checkPassword(reviewId, password) {
+    const review = await Review.getByReviewId(reviewId);
+
+    if (!review) {
+      throw new Error("해당 리뷰는 존재하지 않습니다.");
     }
 
-    return reviews;
+    const isMatched = await bcrypt.compare(password, review.password);
+
+    if (!isMatched) {
+      throw new Error("비밀번호가 일치하지 않습니다.");
+    }
+
+    return isMatched;
   }
 
   //update review
   static async update(reviewId, toUpdate) {
     const updates = Object.keys(toUpdate);
-
-    //password hashing before update
-    if (toUpdate.password) {
-      const hashedPassword = await bcrypt.hash(toUpdate.password, 8);
-      toUpdate.password = hashedPassword;
-    }
 
     updates.forEach(async (update) => {
       await Review.update({ _id: reviewId }, { [update]: toUpdate[update] });
