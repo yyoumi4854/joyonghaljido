@@ -25,6 +25,7 @@ import FindLayout from './findLayoutStyles';
 import FooterStyle from '../styles/footerStyles';
 
 const Find = () => {
+    const [pins, setPins] = useState('');
     const [currentState, setCurrentState] = useState(
         {
             currentView: 'ranking',
@@ -43,7 +44,7 @@ const Find = () => {
         }
     );
 
-    const [modal, setModal] = useState('none') 
+    const [modal, setModal] = useState('none')
     // 모달종류 : pw, chk, deny, pw_delete, pw_update, none
 
     return (
@@ -64,7 +65,7 @@ const Find = () => {
                             setCurrentState={setCurrentState}
                             modal={modal}
                             setModal={setModal}
-                            />
+                        />
                         {/* <PinMarkerInfo /> */}
                     </>)
                     : null}
@@ -74,9 +75,11 @@ const Find = () => {
                         setCurrentState={setCurrentState}
                         modal={modal}
                         setModal={setModal}
-                         /> : null}
+                    /> : null}
                 {currentState.currentView === 'info' ?
                     <PinSelect
+                        pins={pins}
+                        setPins={setPins}
                         currentState={currentState}
                         setCurrentState={setCurrentState} /> : null}
                 <FooterStyle>&copy; 2022 조용할지도</FooterStyle>
@@ -85,6 +88,8 @@ const Find = () => {
                 <Map
                     currentState={currentState}
                     setCurrentState={setCurrentState}
+                    pins={pins}
+                    setPins={setPins}
                 />
             </div>
         </FindLayout>

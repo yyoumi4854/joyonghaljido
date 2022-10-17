@@ -9,16 +9,42 @@ import * as Api from '../../api';
 // styled
 import PinSelectLayout from './pinSelect.style';
 import Title from '../titleStyles';
-import {ReviewBtn} from '../../styles/btnStyles';
+import { ReviewBtn } from '../../styles/btnStyles';
 
 // react-icons
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
-const PinSelect = ({ currentState }) => {
-    useEffect(() => {
-        console.log('getdata');
-        getData();
-    }, [currentState]);
+const calc = (avg) => {
+    const result = {
+        noiseDegreeMessage: '',
+        noiseEffectMessage: '',
+        imgSrcState: -1,
+        avg: 0,
+    }
+    result.avg = avg;
+
+    const val = ((result.avg - (result.avg % 10)) + '');
+
+    for (let i = 0; i < noiseDegree.length; i++) {
+        if (noiseDegree[i].dB == val) { result.noiseDegreeMessage = noiseDegree[i].MSG }
+    }
+    for (let i = 0; i < noiseEffect.length; i++) {
+        if (noiseEffect[i].dB == val) { result.noiseEffectMessage = noiseEffect[i].MSG }
+    }
+
+    if (result.avg <= 50) { result.imgSrcState = 1 } // 보라
+    else if (result.avg > 50 && result.avg <= 55) { result.imgSrcState = 2 } // 파랑
+    else if (result.avg > 55 && result.avg <= 60) { result.imgSrcState = 3 } // 초록
+    else if (result.avg > 60 && result.avg <= 65) { result.imgSrcState = 4 } // 노랑
+    else if (result.avg > 65 && result.avg <= 70) { result.imgSrcState = 5 } // 주황
+    else if (result.avg > 70) { result.imgSrcState = 6 } // 빨강
+
+    return result;
+}
+
+const PinSelect = ({ currentState, pins }) => {
+
+    const pin = pins.find(v => v._id === currentState.clickSpotId);
 
     const [pinState, setPinstate] = useState({
         name: '',
@@ -32,71 +58,32 @@ const PinSelect = ({ currentState }) => {
         avg: 0,
     })
 
-    let pinId = currentState.clickSpotId;
-
-    console.log(pinId);
-    let sum = 0;
-
-    const getData = async () => {
-        const res = await Api.get('pins/', pinId);
-        const d = res.data;
-
-        res.data.timeDecibels.forEach(e => { sum += e });
-        const result = calc(sum)
-
-
+    useEffect(() => {
+        const result = calc(pin.timeDeciblesAvg);
         setPinstate({
             ...pinState,
-            name: res.data.name,
-            timeDecibels: res.data.timeDecibels,
-            dong: res.data.dongName,
-            gu: res.data.guName,
+            name: pin.name,
+            timeDecibels: pin.timeDecibels,
+            dong: pin.dongName,
+            gu: currentState.guName,
 
             noiseDegreeMessage: result.noiseDegreeMessage,
             noiseEffectMessage: result.noiseEffectMessage,
             imgSrcNum: result.imgSrcState,
             avg: result.avg,
         })
-    }
-
-    const calc = (sum) => {
-        const result = {
-            noiseDegreeMessage: '',
-            noiseEffectMessage: '',
-            imgSrcState: -1,
-            avg: 0,
-        }
-        result.avg = Math.floor(sum / 6);
-
-        const val = ((result.avg - (result.avg % 10)) + '');
-
-        for (let i = 0; i < noiseDegree.length; i++) {
-            if (noiseDegree[i].dB == val) { result.noiseDegreeMessage = noiseDegree[i].MSG }
-        }
-        for (let i = 0; i < noiseEffect.length; i++) {
-            if (noiseEffect[i].dB == val) { result.noiseEffectMessage = noiseEffect[i].MSG }
-        }
-
-        if (result.avg <= 50) { result.imgSrcState = 1 } // 보라
-        else if (result.avg > 50 && result.avg <= 55) { result.imgSrcState = 2 } // 파랑
-        else if (result.avg > 55 && result.avg <= 60) { result.imgSrcState = 3 } // 초록
-        else if (result.avg > 60 && result.avg <= 65) { result.imgSrcState = 4 } // 노랑
-        else if (result.avg > 65 && result.avg <= 70) { result.imgSrcState = 5 } // 주황
-        else if (result.avg > 70) { result.imgSrcState = 6 } // 빨강
-
-        return result;
-    }
+    }, [currentState.clickSpotId])
 
     return (
         <PinSelectLayout>
             <Title alignItem='flexStart'>
                 <div className='title'>
                     <button className='back'>
-                    <AiOutlineArrowLeft/>
+                        <AiOutlineArrowLeft />
                     </button>
                     <div>
-                    <h3>{pinState.name}</h3>
-                    <h4>{pinState.gu} {pinState.dong}</h4>
+                        <h3>{pinState.name}</h3>
+                        <h4>{pinState.gu} {pinState.dong}</h4>
                     </div>
                 </div>
             </Title>
@@ -107,7 +94,7 @@ const PinSelect = ({ currentState }) => {
                     <div className='textBox'>
                         <div className={`pin${pinState.imgSrcNum}`}>
                             <span>{`pin${pinState.imgSrcNum}`}</span>
-                            <p>{pinState.avg}</p>
+                            <p>{Math.floor(pinState.avg)}</p>
                         </div>
 
                         <div className='infoBox'>

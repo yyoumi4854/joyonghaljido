@@ -44,8 +44,8 @@ const mapColor = (currentState) => {
     }
 }
 
-const Map = ({ currentState, setCurrentState }) => {
-    const [pins, setPins] = useState('');
+const Map = ({ currentState, setCurrentState, pins, setPins }) => {
+
     const [dongs, setDongs] = useState('');
     const [tooltipName, setTooltipName] = useState('');
 
