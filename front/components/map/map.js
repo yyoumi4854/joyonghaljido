@@ -205,7 +205,7 @@ const Map = ({ currentState, setCurrentState }) => {
                                         NOISE_OBJ.find(v => v.name === geo.properties.name)
 
                                     return <Geography
-                                        className='hoverUp'
+                                        className='tansition'
                                         fill={
                                             currentState.currentView !== 'ranking' ?
                                                 theme.colors.grey3 :

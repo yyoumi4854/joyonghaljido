@@ -5,3 +5,7 @@
 .hoverUp:hover {
     scale: 1.1;
 }
+
+.tansition {
+    transition: 0.2s ease-in-out all;
+}
