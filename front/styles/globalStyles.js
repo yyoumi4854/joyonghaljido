@@ -21,6 +21,7 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
     background: transparent;
     border: 0;
+    font-size: 16px;
     cursor: pointer;
   }
 
