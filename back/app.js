@@ -19,16 +19,11 @@ app.use(cors({ credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get("/", (req, res) => {
-  res.send("Hello Team04");
-});
-
 app.use("/gus", guRouter);
 app.use("/dongs", dongRouter);
 app.use("/pins", pinRouter);
 app.use("/location", locationRouter);
 app.use("/reviews", reviewRouter);
-
 app.use(errorMiddleware);
 
 app.listen(PORT, () => {
