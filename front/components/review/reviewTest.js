@@ -15,9 +15,9 @@ import * as Api from '../../api'; // API 활용하세용
 
 const ReviewTest = ({ currentState }) => {
   const noise = {
-    1: 'good',
+    3: 'good',
     2: 'soso',
-    3: 'bad',
+    1: 'bad',
   }
   const [list, setList] = useState([]);
   useEffect(() => {
@@ -91,7 +91,7 @@ const ReviewTest = ({ currentState }) => {
         {/* 여기도 백엔드에서 개수를 보내줘야함. 페이지네이션 사용하기 때문에 프론트단에서 처리 불가능 */}
         <li className='active'>
           <span>좋음</span>
-          <p>{list && list.filter(v => v.noiseLevel === 1).length}</p>
+          <p>{list && list.filter(v => v.noiseLevel === 3).length}</p>
         </li>
         <li>
           <span>보통</span>
@@ -99,7 +99,7 @@ const ReviewTest = ({ currentState }) => {
         </li>
         <li>
           <span>나쁨</span>
-          <p>{list && list.filter(v => v.noiseLevel === 3).length}</p>
+          <p>{list && list.filter(v => v.noiseLevel === 1).length}</p>
         </li>
       </ul>
 
