@@ -1,23 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { 
-    ColorDiv1,
-    ColorDiv2,
-    ColorDiv3,
-    FloatClear,
-    FormContainer,
-} from "./reviewAddForm.style.js";
+import FormContent from "./reviewAddForm.style";
+import { SmallBtn } from '../../styles/btnStyles';
+
 import geoId from './geoid.json';
 
-const ReviewAddForm = ({ setIsWriting, handler }) => {
+const ReviewAddForm = ({ currentState,  toggleIsWriting }) => {
     // review content
-    // const [guId, setGuId] = useState('');
-    // const [dongId, setDongId] = useState('');
-    // const [title, setTitle] = useState('');
-    // const [description, setDescription] = useState('');
-    // const [password, setPassword] = useState('');
-
-    
     const [noiseLevel, setNoiseLevel] = useState('');
 
     const [dongList, setDongList] = useState([]);
@@ -39,9 +28,6 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
         setDongList(dongList[0].dongs);
     }
 
-    // const handleTitleChange = (e) => {setTitle(e.target.value)};
-    // const handleDescriptionChange = (e) => {setDescription(e.target.value)};
-    // const handlePasswordChange = (e) => {setPassword(e.target.value)};
     const handleNoiseLevelClick = (e) => {
         setNoiseLevel(e.target.value);
     };
@@ -61,7 +47,7 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
         // POST & GET
         try {
             await axios.post("http://localhost:5001/reviews", review);
-            setIsWriting(false);
+            toggleIsWriting;
         } catch (e) {
             console.log("POST 요청이 실패했습니다.", e);
         }
@@ -79,87 +65,97 @@ const ReviewAddForm = ({ setIsWriting, handler }) => {
 
     const handleOutsideClick = (e) => {
         if (modalRef.current && !modalRef.current.contains(e.target)) {
-            setIsWriting(false);
+            toggleIsWriting;
         }
     };
 
     return (
-        <div ref={modalRef} onChange={ handleReviewChange }>
-            <FormContainer>
-                <form onSubmit={ handleAddSubmit }>  
-                    <div>
-                        <select name="guId" id="" onChange={ handleGuChange }>
-                            {/* <option value="">구를 선택해주세요.</option> */}
-                            {
-                                geoId.map(gu => {
-                                    return <option key={gu._id} value={gu._id}>{gu.name}</option>
-                                })
-                            }
-                        </select>
-                        <select name="dongId" id="" disabled={ !guId }>
-                            {/* <option value="">동을 선택해주세요.</option> */}
-                            {
-                                dongList.map(dong => {
-                                    return <option key={dong._id} value={dong._id}>{dong.name}</option>
-                                })
-                            }
-                        </select><br></br><br></br>                             
+        <FormContent ref={modalRef} onChange={ handleReviewChange }>
+            <div className="formCon">
+                <form onSubmit={ handleAddSubmit }>
+                    <h3>소음 리뷰 <span>작성하기</span></h3>
+                    <div className="content">
+                        <p className="title">지역 선택을 선택해주세요.</p>
+                        <div className="selectBox">
+                            <select name="guId" onChange={ handleGuChange }>
+                                <option value="">구를 선택해주세요.</option>
+                                {
+                                    geoId.map(gu => {
+                                        return <option key={gu._id} value={gu._id}>{gu.name}</option>
+                                    })
+                                }
+                            </select>
+                            <select name="dongId" id="" disabled={ !review.guId }>
+                                <option value="">동을 선택해주세요.</option>
+                                {
+                                    dongList.map(dong => {
+                                        return <option key={dong._id} value={dong._id}>{dong.name}</option>
+                                    })
+                                }
+                            </select>
+                        </div>
                     </div>
-                    <div>
-                        <label>소음에 대한 상세 설명을 작성해 주세요</label><br></br>
-                        <input
-                            type="text"
-                            placeholder="제목"
-                            name="title"
-                            value={ review.title }></input>                
-                        <input
-                            type="text"
-                            placeholder="내용"
-                            name="description"
-                            value={ review.description }></input>
+
+                    <div className="content">
+                        <p className="title">소음에 대한 상세 설명을 작성해주세요.</p>
+                        <div className="inputBox">
+                            <input
+                                type="text"
+                                placeholder="제목을 입력해 주세요."
+                                name="title"
+                                value={review.title}
+                            />
+
+                            <textarea 
+                                name="description"
+                                value={review.description}
+                                placeholder="내용을 입력해주세요."
+                            ></textarea>
+                        </div>
                     </div>
                     <br></br>
 
 
-                    <div>
-                        <label>비밀번호를 입력해 주세요.</label><br></br>
+                    <div className="content">
+                        <p className="title">비밀번호를 입력해 주세요.</p>
                         <input
                             type="text"
-                            placeholder="비밀번호"
+                            placeholder="비밀번호를 입력해주세요."
                             name="password"
-                            value={ review.password }></input>
+                            value={review.password}
+                        />
                     </div>
                     <br></br>
 
-                    <div>
-                        <label>내가 느낀 소음은 어느 정도였나요?</label>
+                    <div className="content">
+                        <p className="title">내가 느낀 소음은 어느 정도였나요?</p>
 
-                        <div>
-                            <ColorDiv1></ColorDiv1>
-                            <label>시끄러워요</label>
-                            <input type="radio" value="1" name="noiseLevel" checked={ noiseLevel === "1" } onClick={ handleNoiseLevelClick }></input>    
-                        </div>
-                        <div>
-                            <ColorDiv2></ColorDiv2>
-                            <label>그저 그래요</label>
-                            <input type="radio" value="2" name="noiseLevel" checked={ noiseLevel === "2" } onClick={ handleNoiseLevelClick }></input>
-                        </div>
-                        <div>
-                            <ColorDiv3></ColorDiv3>
-                            <label>조용해요</label>
-                            <input type="radio" value="3" name="noiseLevel" checked={ noiseLevel === "3" } onClick={ handleNoiseLevelClick }></input>
-                        </div>
-
-                        <FloatClear></FloatClear>
+                        <ul className="radioBox"> 
+                            <li>
+                                <input id="bad" type="radio" name="noiseLevel" value='1' checked={ noiseLevel === "1" } onClick={ handleNoiseLevelClick }/>
+                                <label for='bad'>나쁨</label>
+                                <p>나쁨</p>
+                            </li>
+                            <li>
+                                <input id="soso" type="radio" name="noiseLevel" value='2' checked={ noiseLevel === "2" } onClick={ handleNoiseLevelClick }/>
+                                <label for='soso'>보통</label>
+                                <p>보통</p>
+                            </li>
+                            <li>
+                                <input id="good" type="radio" name="noiseLevel" value='3' checked={ noiseLevel === "3" } onClick={ handleNoiseLevelClick }/>
+                                <label for="good">좋음</label>
+                                <p>좋음</p>
+                            </li>
+                        </ul>
                     </div>
-                    <div>
-                        
-                        <input type="button" id="off" value="취소" onClick={ handler }></input>
-                        <input type="submit" id="off" value="제출"></input>
+
+                    <div className="btnBox content">
+                        <SmallBtn onClick={ toggleIsWriting }>취소</SmallBtn>
+                        <SmallBtn type="submit" check='yes'>확인</SmallBtn>
                     </div>
                 </form>
-            </FormContainer>
-        </div>
+            </div>
+        </FormContent>
     )
 }
 
