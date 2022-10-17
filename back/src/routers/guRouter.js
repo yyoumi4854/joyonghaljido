@@ -1,12 +1,16 @@
 const { Router } = require("express");
-const guModel = require("../db/schemas/gu");
+const guService = require("../services/guService");
 
 const guRouter = Router();
 
-guRouter.get("/:guId", async (req, res) => {
-  const { guId } = req.params;
-  const foundGu = await guModel.findOne({ _id: guId });
-  res.status(200).json(foundGu);
+guRouter.get("/:guId", async (req, res, next) => {
+  try {
+    const { guId } = req.params;
+    const foundGuGeoJSON = await guService.getGuGeoById(guId);
+    res.status(200).json(foundGuGeoJSON);
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = guRouter;
