@@ -34,8 +34,12 @@ const MapContent = styled.div`
   }
   .locationText{
     position: absolute;
-    top: 120px; // 기본82
-    width : 100%;
+    display : inline;
+    top: 60px; // 기본82
+    left : 0;
+    right : 0;
+    // width : 100%;
+
     text-align : center;
     font-size: ${({ theme }) => theme.fontSizes.titleFs};
     font-weight: 700;

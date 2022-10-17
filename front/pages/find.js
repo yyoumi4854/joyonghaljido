@@ -10,8 +10,7 @@ import {
 import { useState } from 'react';
 import ReactTooltip from 'react-tooltip'
 
-import seoulMap from '../dummy/seoul.json';
-import zoomMap from '../dummy/zoom.json';
+import seoulMap from '../data/map/seoul.json';
 
 // components
 import Map from '../components/map/map';
