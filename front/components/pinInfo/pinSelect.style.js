@@ -40,8 +40,6 @@ const PinSelectLayout = styled.div`
             font-weight: 700;
             font-size: 18px;
             color: ${({ theme }) => theme.colors.main};
-
-            &:first-child{margin-bottom: 16px;}
         }
 
         & > div{
@@ -51,6 +49,8 @@ const PinSelectLayout = styled.div`
 
         // 어느 정도 소음
         .textCon{
+            .title{margin-bottom: 16px;}
+            
             .textBox{
                 ${({ theme }) => theme.common.flexCenter};
 
