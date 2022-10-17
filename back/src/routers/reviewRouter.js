@@ -8,12 +8,7 @@ const router = Router();
 //create review
 router.post("/", postRequestLimiter, async (req, res, next) => {
   try {
-    const guId = req.body.guId;
-    const dongId = req.body.dongId;
-    const title = req.body.title;
-    const description = req.body.description;
-    const password = req.body.password;
-    const noiseLevel = req.body.noiseLevel;
+    const { guId, dongId, title, description, password, noiseLevel } = req.body;
 
     const newReview = await reviewService.create({
       guId,
@@ -24,25 +19,41 @@ router.post("/", postRequestLimiter, async (req, res, next) => {
       noiseLevel,
     });
 
-    if (newReview.errorMessage) {
-      throw new Error(newReview.errorMessage);
-    }
-
     res.status(201).json(newReview);
   } catch (error) {
     next(error);
   }
 });
 
+//get query object function
+function createGetQuery(config) {
+  config = Object.assign(
+    {
+      guId: null,
+      dongId: null,
+      skip: 0,
+      limit: 10,
+      noiseLevel: null,
+    },
+    config
+  );
+
+  return config;
+}
+
 //get reviews
 router.get("/", async (req, res, next) => {
   try {
-    const guId = req.query.guId ?? null;
-    const dongId = req.query.dongId ?? null;
-    const skip = req.query.skip ?? 0;
-    const noiseLevel = req.query.noiseLevel ?? null;
+    const queryConfig = createGetQuery(req.query);
+    const { guId, dongId, skip, limit, noiseLevel } = queryConfig;
 
-    const reviews = await reviewService.getList(guId, dongId, skip, noiseLevel);
+    const reviews = await reviewService.getList(
+      guId,
+      dongId,
+      parseInt(skip, 10),
+      parseInt(limit, 10),
+      parseInt(noiseLevel, 10)
+    );
 
     res.status(200).json(reviews);
   } catch (error) {

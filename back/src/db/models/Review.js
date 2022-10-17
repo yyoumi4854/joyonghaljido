@@ -10,12 +10,10 @@ class Review {
   }
 
   //get reviews by gu
-  static async getListByGu(guId, skip, noiseLevel) {
+  static async getListByGu(guId, skip, limit, noiseLevel) {
     const reviews = await ReviewModel.aggregate([
       {
-        $match: noiseLevel
-          ? { guId, noiseLevel: parseInt(noiseLevel) }
-          : { guId },
+        $match: { guId, ...(noiseLevel && { noiseLevel }) },
       },
       {
         $lookup: {
@@ -39,10 +37,10 @@ class Review {
         },
       },
       {
-        $skip: parseInt(skip) * 10,
+        $skip: skip * limit,
       },
       {
-        $limit: 10,
+        $limit: limit,
       },
     ]);
 
@@ -50,12 +48,10 @@ class Review {
   }
 
   //get reviews by dong
-  static async getListByDong(dongId, skip, noiseLevel) {
+  static async getListByDong(dongId, skip, limit, noiseLevel) {
     const reviews = await ReviewModel.aggregate([
       {
-        $match: noiseLevel
-          ? { dongId, noiseLevel: parseInt(noiseLevel) }
-          : { dongId },
+        $match: { dongId, ...(noiseLevel && { noiseLevel }) },
       },
       {
         $lookup: {
@@ -77,10 +73,10 @@ class Review {
         },
       },
       {
-        $skip: parseInt(skip) * 10,
+        $skip: skip * limit,
       },
       {
-        $limit: 10,
+        $limit: limit,
       },
     ]);
 

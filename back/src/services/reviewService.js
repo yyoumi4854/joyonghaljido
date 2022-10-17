@@ -24,23 +24,21 @@ class reviewService {
 
     const createdReview = await Review.create(newReview);
 
-    if (createdReview) {
-      createdReview.errorMessage = null;
-    } else {
-      createdReview.errorMessage = "리뷰 등록에 실패했습니다.";
+    if (!createdReview) {
+      throw new Error("리뷰 등록에 실패했습니다.");
     }
 
     return createdReview;
   }
 
   //get reivews
-  static async getList(guId, dongId, skip, noiseLevel) {
+  static async getList(guId, dongId, skip, limit, noiseLevel) {
     let reviews = [];
 
     if (!dongId) {
-      reviews = await Review.getListByGu(guId, skip, noiseLevel);
+      reviews = await Review.getListByGu(guId, skip, limit, noiseLevel);
     } else {
-      reviews = await Review.getListByDong(dongId, skip, noiseLevel);
+      reviews = await Review.getListByDong(dongId, skip, limit, noiseLevel);
     }
 
     return reviews;
