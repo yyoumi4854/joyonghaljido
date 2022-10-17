@@ -40,11 +40,25 @@ router.get("/", async (req, res, next) => {
     const guId = req.query.guId ?? null;
     const dongId = req.query.dongId ?? null;
     const skip = req.query.skip ?? 0;
-    const filter = req.query.filter ?? null;
+    const noiseLevel = req.query.noiseLevel ?? null;
 
-    const reviews = await reviewService.getList(guId, dongId, skip, filter);
+    const reviews = await reviewService.getList(guId, dongId, skip, noiseLevel);
 
     res.status(200).json(reviews);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//get reveiw count
+router.get("/count", async (req, res, next) => {
+  try {
+    const guId = req.query.guId ?? null;
+    const dongId = req.query.dongId ?? null;
+
+    const count = await reviewService.getCount(guId, dongId);
+
+    res.status(200).json(count);
   } catch (error) {
     next(error);
   }

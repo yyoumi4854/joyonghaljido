@@ -34,16 +34,23 @@ class reviewService {
   }
 
   //get reivews
-  static async getList(guId, dongId, skip, filter) {
+  static async getList(guId, dongId, skip, noiseLevel) {
     let reviews = [];
 
     if (!dongId) {
-      reviews = await Review.getListByGu(guId, skip, filter);
+      reviews = await Review.getListByGu(guId, skip, noiseLevel);
     } else {
-      reviews = await Review.getListByDong(dongId, skip, filter);
+      reviews = await Review.getListByDong(dongId, skip, noiseLevel);
     }
 
     return reviews;
+  }
+
+  //get review count
+  static async getCount(guId, dongId) {
+    const count = await Review.getCount(guId, dongId);
+
+    return count;
   }
 
   //check password
