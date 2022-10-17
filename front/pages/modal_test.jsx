@@ -3,6 +3,8 @@ import Modal_Ask from '../components/review/modal/Modal_Ask'
 import Modal_Deny from '../components/review/modal/Modal_Deny'
 import styled from 'styled-components'
 import {useState, useEffect} from 'react';
+import axios from "axios";
+import * as Api from '../api';
 
 const TestPage = () => {
 
@@ -78,6 +80,10 @@ const TestPage = () => {
             <p className='pTag'>글쓰기 금지</p>
             <button className='modalButton' onClick={()=>{setDenyWindow(true)}}>글쓰기</button>
             {denyWindow && <Modal_Deny setDenyWindow={setDenyWindow} timeLeft={timeLeft}/>}
+
+            <hr></hr>
+            리뷰 삭제 테스트
+            <button className='modalButton' onClick={()=>{deleteReview()}}>삭제</button>
         </div>
     </OuterPageLayout>
   );
