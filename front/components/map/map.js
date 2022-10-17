@@ -30,14 +30,14 @@ import { scaleQuantize } from "d3-scale";
 import MapContent from './mapStyles';
 
 // react-icons
-import { BsForwardFill } from "react-icons/bs";
+import { BsFillCaretDownFill } from "react-icons/bs";
 
 import nameIds from '../../Id_book/nameId.json';
 
 import axios from 'axios';
 
 const Map = ({ currentState, setCurrentState }) => {
-    const [pins, setPins] = useState('');
+    const [gus, setGus] = useState('');
     const [dongs, setDongs] = useState('');
     const [tooltipName, setTooltipName] = useState('');
 
@@ -133,53 +133,57 @@ const Map = ({ currentState, setCurrentState }) => {
         { name: '중랑구', VALUE: 61.8 },
     ];
 
-
-
     return (
         <MapContent>
             <ReactTooltip type='light'>{tooltipName}</ReactTooltip>
+            <div className='locationPath'>
+                <span
+                    className='path'
+                    onClick={() => {
+                        setCurrentState({
+                            ...currentState,
+                            currentView: 'ranking',
+                            zoom: 2,
+                            map: seoulMap,
+
+                            guId: '',
+                            guName: '',
+                            clickSpotId: '',
+                            clickedName: '',
+                            center: [126.986, 37.561],
+                        });
+                    }}>서울시
+                </span>
+                {currentState.guName && <>
+                    <span className='down'><BsFillCaretDownFill /></span>
+                    <span
+                        className='path'
+                        onClick={() => {
+                            const gu = currentState.guName;
+                            setCurrentState({
+                                ...currentState,
+                                currentView: 'gu',
+                                clickSpotId: '',
+                                clickedName: gu,
+                            })
+                        }}>
+                        {currentState?.guName}
+                    </span>
+                </>}
+                {currentState.clickSpotId &&
+                    <>
+                        <span className='down'><BsFillCaretDownFill /></span>
+                        <span className='path'>
+                            {currentState.clickedName}
+                        </span>
+                    </>
+                }
+            </div>
             <div className='locationText'>
                 {currentState.currentView === 'ranking' ?
                     <h2>찾고 싶은 지역을 선택해주세요.</h2> :
                     <h2>
-                        <span
-                            className='hoverUp'
-                            onClick={() => {
-                                setCurrentState({
-                                    ...currentState,
-                                    currentView: 'ranking',
-                                    // rankingTab: 'noise',
-                                    zoom: 2,
-                                    map: seoulMap,
-
-                                    guId: '',
-                                    guName: '',
-                                    clickSpotId: '',
-                                    clickedName: '',
-                                    center: [126.986, 37.561],
-                                });
-                            }}>서울시
-                        </span>
-                        <BsForwardFill />
-                        <span
-                            className='hoverUp'
-                            onClick={() => (
-                                setCurrentState({
-                                    ...currentState,
-                                    currentView: 'gu',
-                                    clickSpotId: '',
-                                    clickedName: '',
-                                }))}>
-                            {currentState?.guName}
-                        </span>
-                        {currentState.clickSpotId &&
-                            <>
-                                <BsForwardFill />
-                                <span className='hoverUp'>
-                                    {currentState.clickedName}
-                                </span>
-                            </>
-                        }
+                        {currentState.clickedName}
                     </h2>
                 }
             </div>
@@ -221,10 +225,9 @@ const Map = ({ currentState, setCurrentState }) => {
                                                 const guName = gu.name;
 
                                                 const mapData = await axios.get(`http://localhost:5001/gus/${guId}`);
-                                                const dongsAndPins = await axios.get(`http://localhost:5001/location/gus/${guId}`);
-                                                setDongs(dongsAndPins.data.dongs);
-                                                setPins(dongsAndPins.data.pins);
-                                                // console.log(pins);
+                                                const dongsAndGus = await axios.get(`http://localhost:5001/location/gus/${guId}`);
+                                                setDongs(dongsAndGus.data.dongs);
+                                                setGus(dongsAndGus.data.pins);
 
                                                 const { center } = zoomMap[name];
                                                 // const { center } = mapData.data;
@@ -270,24 +273,25 @@ const Map = ({ currentState, setCurrentState }) => {
                         </Geographies>
 
                         {currentState.currentView !== 'ranking' ?
-                            pins && pins.map(pin => {
+                            gus && gus.map(gu => {
+                                console.log(gu);
                                 return <Marker
-                                    key={pin._id}
+                                    key={gu._id}
                                     onClick={() => {
                                         setCurrentState({
                                             ...currentState,
                                             currentView: 'info',
-                                            clickedName: pin.name,
-                                            clickSpotId: pin._id
+                                            clickedName: gu.name,
+                                            clickSpotId: gu._id
                                         });
                                     }}
                                     onMouseEnter={() => {
-                                        setTooltipName(pin.name);
+                                        setTooltipName(gu.name);
                                     }}
                                     onMouseLeave={() => {
                                         setTooltipName('');
                                     }}
-                                    coordinates={[pin.longitude, pin.latitude]}>
+                                    coordinates={[gu.longitude, gu.latitude]}>
                                     <g transform="translate(-0, -5) scale(0.07)">
                                         <path d="M25.9078 59.0345C25.5502 59.8087 24.4498 59.8087 24.0922 59.0345L18.7274 47.4193C18.4213 46.7567 18.9053 46 19.6352 46H30.3648C31.0947 46 31.5787 46.7567 31.2727 47.4193L25.9078 59.0345Z" fill="#7352DE" />
                                         <path d="M50 25C50 38.8071 38.8071 50 25 50C11.1929 50 0 38.8071 0 25C0 11.1929 11.1929 0 25 0C38.8071 0 50 11.1929 50 25Z" fill="#7352DE" />
