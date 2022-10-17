@@ -1,32 +1,85 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const ReviewTestContent = styled.div`
+const noiseLevel1 = css`
+  background: url('/images/noiseBad.svg') no-repeat center;
+  background-size: contain; 
+`;
+
+const noiseLevel2 = css`
+  background: url('/images/noiseSoso.svg') no-repeat center;
+  background-size: contain; 
+`;
+
+const noiseLevel3 = css`
+  background: url('/images/noiseGood.svg') no-repeat center;
+  background-size: contain; 
+`;
+
+const ReviewListContent = styled.div`
+  .noiseAvgCon{
+    ${({ theme }) => theme.common.flexCenter};
+    justify-content: center;
+    padding: 20px 0;
+    background: ${({ theme }) => theme.colors.mainLight2};
+    border-bottom: 1px solid ${({ theme }) => theme.colors.grey1};
+
+    span[class^='noiseLevel']{
+      width: 48px;
+      height: 48px;
+      text-indent: -9999px;
+    }
+
+    .noiseLevel1{
+      ${noiseLevel1}
+      &+p span{
+        color: ${({ theme }) => theme.colors.red};
+      }
+    }
+    .noiseLevel2{
+      ${noiseLevel2}
+      &+p span{
+        color: ${({ theme }) => theme.colors.yellow};
+      }
+    }
+    .noiseLevel3{
+      ${noiseLevel3}
+      &+p span{
+        color: ${({ theme }) => theme.colors.main};
+      }
+    }
+
+    p{
+      margin-left: 20px;
+      font-size: ${({ theme }) => theme.fontSizes.bigFs};
+      span{
+        font-weight: 700;
+      }
+    }
+  }
+
   .noiseTab{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     border-bottom: 1px solid ${({ theme }) => theme.colors.grey1};
 
     li{
-      padding: 20px 0;
+      padding: 12px 0;
       text-align: center;
 
       span{
         width: 32px;
         height: 32px;
-        background: url('/images/noiseGood.svg') no-repeat center;
-        background-size: contain;        
+        ${noiseLevel3}    
         text-indent: -9999px;
         cursor: pointer;
       }
       p{margin-top: 4px;}
 
       &:nth-child(2) span{
-        background: url('/images/noiseSoso.svg') no-repeat center;
-        background-size: contain;
+        ${noiseLevel2}
       }
       &:nth-child(3) span{
-        background: url('/images/noiseBad.svg') no-repeat center;
-        background-size: contain;
+        ${noiseLevel1}
       }
 
       &.active p{
@@ -43,11 +96,15 @@ const ReviewTestContent = styled.div`
   }
 
   .reviewList{
+    ${({ theme }) => theme.common.flexCenter};
+    flex-direction: column;
+
+    height: calc(100vh - 64px - 89px - 68px - 77px - 64px - 48px);
     padding: 0 24px;
-    height: calc(100vh - 64px - 68px - 94px - 48px);
     overflow: auto;
 
     ul{
+      width: 100%;
       li{
         display: grid;
         grid-template-columns: 32px 1fr;
@@ -60,27 +117,21 @@ const ReviewTestContent = styled.div`
           width: 32px;
           height: 32px;
           text-indent: -9999px;
-          background: url('/images/noiseGood.svg') no-repeat center;
-          background-size: contain;
-
         }
 
-        .good{
+        .noiseLevel3{
           span{
-            background: url('/images/noiseGood.svg') no-repeat center;
-            background-size: contain;
+            ${noiseLevel3}
           }
         }
-        .soso{
+        .noiseLevel2{
           span{
-            background: url('/images/noiseSoso.svg') no-repeat center;
-            background-size: contain;
+            ${noiseLevel2}
           }
         }
-        .bad{
+        .noiseLevel1{
           span{
-            background: url('/images/noiseBad.svg') no-repeat center;
-            background-size: contain;
+            ${noiseLevel3}
           }
         }
 
@@ -120,6 +171,7 @@ const ReviewTestContent = styled.div`
           .dongTag{
             margin-top: 8px;
             padding: 4px 12px;
+            font-size: 14px;
             color: ${({ theme }) => theme.colors.main};
             background: ${({ theme }) => theme.colors.mainLight2};
             border-radius: 24px;
@@ -139,19 +191,19 @@ const ReviewTestContent = styled.div`
       }
     }
   }
-`;
-export default ReviewTestContent;
 
-// label{
-//   width: 48px;
-//   height: 48px;
-//   background: url('/images/noiseBad.svg') no-repeat center;
-//   cursor: pointer;
-//   text-indent: -9999px;
-// }
+  .reviewAddBtn{
+    margin-top: 12px;
+    font-size: 14px;
+    color: ${({ theme }) => theme.colors.main};
+    /* border-bottom: 1px solid transparent; */
+    transition: .3s;
+    svg{vertical-align: text-top;}
 
-// input[type=radio]{display: none;}
-// p{margin-top: 8px;}
+    /* &:hover{
+      border-bottom: 1px solid ${({ theme }) => theme.colors.main};
+    } */
+  }
+  `;
+export default ReviewListContent;
 
-// &:nth-child(2) label{background: url('/images/noiseSoso.svg') no-repeat center;}
-// &:nth-child(3) label{background: url('/images/noiseGood.svg') no-repeat center;}

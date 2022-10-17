@@ -9,14 +9,22 @@ const SmallBtn = styled.button`
   border-radius: 4px;
 `;
 
-// 소음 리뷰 쓰러가기, 소음 리뷰 10개 더보기
-const LongBtn = styled.button`
-  width: 100%;
-  height: 40px;
-  background: ${({check}) => check === 'more' ? '#F5F5F5' : '#fff'};
-  border: 2px solid ${({check}) => check === 'more' || '#30C586'};
-  border-radius: 4px;
-  color: ${({ theme }) => theme.colors.main};
+// 소음 리뷰 쓰러가기
+const ReviewBtn = styled.div`
+  padding: 12px 24px;
+  button{
+    width: 100%;
+    height: 40px;
+    border: 1px solid ${({ theme }) => theme.colors.main};
+    border-radius: 4px;
+    color: ${({ theme }) => theme.colors.main};
+    transition: all .3s;
+
+    &:hover{
+      background: ${({ theme }) => theme.colors.grey4};
+      border: 1px solid transparent;
+    }
+  }
 `;
 
 // topBtn
@@ -33,4 +41,4 @@ const TopBtn = styled.button`
   }
 `;
 
-export {SmallBtn, LongBtn, TopBtn};
+export {SmallBtn, ReviewBtn, TopBtn};

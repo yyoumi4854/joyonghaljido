@@ -16,7 +16,7 @@ import zoomMap from '../dummy/zoom.json';
 // components
 import Map from '../components/map/map';
 import Ranking from '../components/ranking/ranking';
-import ReviewTest from '../components/review/reviewTest';
+import Review from '../components/review/review';
 import PinSelect from '../components/pinInfo/pinSelect';
 import RankingInfo from '../components/sideInfo/rankingInfo';
 import PinMarkerInfo from '../components/sideInfo/pinMarkerInfo';
@@ -47,7 +47,7 @@ const Find = () => {
 
     return (
         <FindLayout>
-            <div >
+            <div>
                 {currentState.currentView === 'ranking' ?
                     (<>
                         <Ranking
@@ -58,14 +58,14 @@ const Find = () => {
                     : null}
                 {currentState.currentView === 'gu' ?
                     (<>
-                        <ReviewTest
+                        <Review
                             currentState={currentState}
                             setCurrentState={setCurrentState} />
                         {/* <PinMarkerInfo /> */}
                     </>)
                     : null}
                 {currentState.currentView === 'dong' ?
-                    <ReviewTest 
+                    <Review 
                         currentState={currentState}
                         setCurrentState={setCurrentState} /> : null}
                 {currentState.currentView === 'info' ?
@@ -74,7 +74,7 @@ const Find = () => {
                         setCurrentState={setCurrentState} /> : null}
                 <FooterStyle>&copy; 2022 조용할지도</FooterStyle>
             </div>
-            <div >
+            <div>
                 <Map
                     currentState={currentState}
                     setCurrentState={setCurrentState}
