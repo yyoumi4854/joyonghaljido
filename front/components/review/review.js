@@ -19,64 +19,64 @@ import Title from '../titleStyles';
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { AiFillWechat } from "react-icons/ai";
 
-const ReviewTest = ({currentState, setModal, modal}) => {
+const ReviewTest = ({ currentState, setModal, modal }) => {
 
   const [list, setList] = useState([]);
   const [limit, setLimit] = useState(71);
   const [reviewObj, setReviewObj] = useState(undefined)
   const [isEditing, setIsEditing] = useState(false);
-  
+
   const [listChanged, setListChanged] = useState(false);
   const [trueValue, setTrueValue] = useState(true);
 
   const [isWriting, setIsWriting] = useState(false)
   const [more, setMore] = useState(0)
 
-  const openIsEditing =  () => {setIsEditing(true);}
-  const closeIsEditing = () => {setIsEditing(false);}
+  const openIsEditing = () => { setIsEditing(true); }
+  const closeIsEditing = () => { setIsEditing(false); }
 
-  useEffect(()=>{
+  useEffect(() => {
     setMore(0)
   }, [currentState.guId, currentState.dongId])
 
-  useEffect(()=>{
+  useEffect(() => {
     getReview();
   }, [more, listChanged, currentState.guId, currentState.dongId])
 
   const getReview = async () => {
-        // 구 리뷰
-        if (currentState.currentView === 'gu') {
-            try {
-                // 첫 10개
-                await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}`)
-                .then(v => (setList(v.data)));
-                // 이후
-                for(let i=1; i<=more; i++){
-                    await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}&skip=${i}`)
-                    .then(v => (setList((prev) => {
-                        return [...prev, ...v.data]
-                    })));
-                }
-            }
-            catch {console.log('구 리뷰 로딩 실패!');}
+    // 구 리뷰
+    if (currentState.currentView === 'gu') {
+      try {
+        // 첫 10개
+        await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}`)
+          .then(v => (setList(v.data)));
+        // 이후
+        for (let i = 1; i <= more; i++) {
+          await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}&skip=${i}`)
+            .then(v => (setList((prev) => {
+              return [...prev, ...v.data]
+            })));
         }
-        // 동 리뷰
-        else if (currentState.currentView === 'dong') {
-            try {
-                // 첫 10개
-                await axios.get(`http://localhost:5001/reviews?dongId=${currentState.dongId}`)
-                .then(v => (setList(v.data)));
-                // 이후
-                for(let i=0; i<more; i++){
-                    await axios.get(`http://localhost:5001/reviews?dongId=${currentState.dongId}&skip=${more}`)
-                    .then(v => (setList((prev) => {
-                        return [...prev, ...v.data]
-                    })));
-                }
-            }
-            catch {console.log('동 리뷰 로딩 실패!');}
-        }
+      }
+      catch { console.log('구 리뷰 로딩 실패!'); }
     }
+    // 동 리뷰
+    else if (currentState.currentView === 'dong') {
+      try {
+        // 첫 10개
+        await axios.get(`http://localhost:5001/reviews?dongId=${currentState.dongId}`)
+          .then(v => (setList(v.data)));
+        // 이후
+        for (let i = 0; i < more; i++) {
+          await axios.get(`http://localhost:5001/reviews?dongId=${currentState.dongId}&skip=${more}`)
+            .then(v => (setList((prev) => {
+              return [...prev, ...v.data]
+            })));
+        }
+      }
+      catch { console.log('동 리뷰 로딩 실패!'); }
+    }
+  }
 
   const toggleEllipsis = (str, limit) => {
     return {
@@ -110,62 +110,62 @@ const ReviewTest = ({currentState, setModal, modal}) => {
         </div>
       </Title>
 
-      {(trueValue && (list.length==0))
+      {(trueValue && (list.length == 0))
         ?
         <ReviewNone
-        setIsWriting={setIsWriting}
+          setIsWriting={setIsWriting}
         />
         :
         <ReviewList
-        list={list}
-        limit={limit}
-        toggleEllipsis={toggleEllipsis}
-        onClickMore={onClickMore}
-        setModal={setModal}
-        setReviewObj={setReviewObj}
-        setIsWriting={setIsWriting}
-        isWriting={isWriting}
-        setMore={setMore}
-          />
+          list={list}
+          limit={limit}
+          toggleEllipsis={toggleEllipsis}
+          onClickMore={onClickMore}
+          setModal={setModal}
+          setReviewObj={setReviewObj}
+          setIsWriting={setIsWriting}
+          isWriting={isWriting}
+          setMore={setMore}
+        />
       }
 
-        {/* 작성불가 안내 */}
-        {(modal == 'ban') && <Modal_Ban
-            setModal={setModal}
-        />}
+      {/* 작성불가 안내 */}
+      {(modal == 'ban') && <Modal_Ban
+        setModal={setModal}
+      />}
 
-        {/* 삭제 확인 */}
-        {(modal == 'chk') && <Modal_Ask
-            setModal={setModal}
-        />}
+      {/* 삭제 확인 */}
+      {(modal == 'chk') && <Modal_Ask
+        setModal={setModal}
+      />}
 
-        {/* 비번확인 AND 삭제 */}
-        {modal == 'pw_delete' && <Modal_Pw_Del
-            setModal={setModal}
-            reviewObj={reviewObj}
-            setListChanged={setListChanged}
-        />}
+      {/* 비번확인 AND 삭제 */}
+      {modal == 'pw_delete' && <Modal_Pw_Del
+        setModal={setModal}
+        reviewObj={reviewObj}
+        setListChanged={setListChanged}
+      />}
 
-        {/* 비번확인 FOR 수정 */}
-            {modal == 'pw_update' && <Modal_Pw_Update
-            setModal={setModal}
-            reviewObj={reviewObj}
-            openIsEditing={openIsEditing}
-        />}
+      {/* 비번확인 FOR 수정 */}
+      {modal == 'pw_update' && <Modal_Pw_Update
+        setModal={setModal}
+        reviewObj={reviewObj}
+        openIsEditing={openIsEditing}
+      />}
 
-        {/* 수정 폼 */}
-        {isEditing && <ReviewEditForm 
-        currentReview={reviewObj} 
+      {/* 수정 폼 */}
+      {isEditing && <ReviewEditForm
+        currentReview={reviewObj}
         closeIsEditing={closeIsEditing}
         setListChanged={setListChanged}
-        />}
+      />}
 
-        {/* 입력 폼 */}
-        {isWriting && <ReviewAddForm 
-        setIsWriting={setIsWriting} 
+      {/* 입력 폼 */}
+      {isWriting && <ReviewAddForm
+        setIsWriting={setIsWriting}
         setListChanged={setListChanged}
         currentState={currentState}
-        />}
+      />}
     </>
   );
 }
