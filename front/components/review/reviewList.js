@@ -1,37 +1,37 @@
 import nameId from '../../Id_book/nameId.json'
-import {useState} from 'react'
+import { useState } from 'react'
 // styled
 import ReviewListContent from './reviewListStyles';
-import {SmallBtn, ReviewBtn} from '../../styles/btnStyles';
+import { SmallBtn, ReviewBtn } from '../../styles/btnStyles';
 import TripleDotsModal from './tripleDotsModal';
 
 // react-icons
 import { AiOutlineMore } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
 
-const ReviewList = ({list, limit, toggleEllipsis, onClickMore, setModal, setReviewObj, setIsWriting, isWriting, setMore}) => {
+const ReviewList = ({ list, limit, toggleEllipsis, onClickMore, setModal, setReviewObj, setIsWriting, isWriting, setMore }) => {
+  console.log('review list render');
+  // 작동이 되다말다해서 포기
+  const [controlList, setControlList] = useState([...list]);
+  const [noiseTabActive, setNoiseTabActive] = useState([0, 0, 0]);
 
-    // 작동이 되다말다해서 포기
-    const [controlList, setControlList] = useState([...list]);
-    const [noiseTabActive, setNoiseTabActive] = useState([0, 0, 0]);
+  const handlerNoiseTabClick = (e) => {
+    const targetId = parseInt(e.target.id);
+    const newList = [...list].filter(v => v.noiseLevel === targetId);
+    setControlList(newList);
 
-    const handlerNoiseTabClick = (e)=>{
-      const targetId = parseInt(e.target.id);
-      const newList = [...list].filter(v => v.noiseLevel === targetId);
-      setControlList(newList);
+    const newNoiseTabActive = new Array(3).fill(0);
+    newNoiseTabActive[targetId - 1] = 1;
+    setNoiseTabActive(newNoiseTabActive);
+  }
 
-      const newNoiseTabActive = new Array(3).fill(0);
-      newNoiseTabActive[targetId-1] = 1;
-      setNoiseTabActive(newNoiseTabActive);
-    }
-
-    // 평균 소음 구하기 반올림 값으로 구함
-    const noiseText = {1: '나쁨', 2: '보통', 3: '좋음'}
-    let noiseAvg = 0;
-    if(list.length > 0){
-      const noiseSum = list.map(v=> v.noiseLevel).reduce((prev, cur) => prev+cur) / list.length;
-      noiseAvg = Math.round(noiseSum);
-    }
+  // 평균 소음 구하기 반올림 값으로 구함
+  const noiseText = { 1: '나쁨', 2: '보통', 3: '좋음' }
+  let noiseAvg = 0;
+  if (list.length > 0) {
+    const noiseSum = list.map(v => v.noiseLevel).reduce((prev, cur) => prev + cur) / list.length;
+    noiseAvg = Math.round(noiseSum);
+  }
 
   return (
     <ReviewListContent>
@@ -65,7 +65,7 @@ const ReviewList = ({list, limit, toggleEllipsis, onClickMore, setModal, setRevi
           {
             list && list.map((x) => {
               return (
-                <li>
+                <li key={x._id}>
                   <div className={`noiseLevel${x.noiseLevel}`}>
                     <span className='level'>{`noiseLevel${x.noiseLevel}`}</span>
                   </div>
@@ -87,20 +87,20 @@ const ReviewList = ({list, limit, toggleEllipsis, onClickMore, setModal, setRevi
                   <button className='editBtn'><AiOutlineMore /></button>
 
                   <TripleDotsModal
-                    setModal={setModal} 
+                    setModal={setModal}
                     x={x}
-                    setReviewObj={setReviewObj}/>
+                    setReviewObj={setReviewObj} />
                 </li>
               )
             })
           }
         </ul>
 
-        <button className='reviewAddBtn' onClick={()=>{setMore(prev=>prev+1)}}>소음 리뷰 10개 더보기 <BiChevronDown/></button>
+        <button className='reviewAddBtn' onClick={() => { setMore(prev => prev + 1) }}>소음 리뷰 10개 더보기 <BiChevronDown /></button>
       </div>
 
       <ReviewBtn>
-        <button onClick={()=>{setIsWriting(true)}}>소음 리뷰 쓰러가기</button>
+        <button onClick={() => { setIsWriting(true) }}>소음 리뷰 쓰러가기</button>
       </ReviewBtn>
 
     </ReviewListContent>

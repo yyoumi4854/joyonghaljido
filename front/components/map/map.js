@@ -8,7 +8,7 @@ import {
 } from 'react-simple-maps';
 import { scaleQuantize } from "d3-scale";
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ReactTooltip from 'react-tooltip'
 
 
@@ -47,7 +47,11 @@ const mapColor = (currentState) => {
 const Map = ({ currentState, setCurrentState, pins, setPins }) => {
 
     const [dongs, setDongs] = useState('');
+    //tooltip때문에 호버할때마다 리렌더 발생 => 매우 비효율
     const [tooltipName, setTooltipName] = useState('');
+    useEffect(() => {
+        console.log(pins);
+    }, [pins])
 
     return (
         <MapContent>
@@ -143,8 +147,8 @@ const Map = ({ currentState, setCurrentState, pins, setPins }) => {
                                                 setDongs(dongsAndPins.data.dongs);
                                                 setPins(dongsAndPins.data.pins);
 
-                                                const { center } = zoomMap[name];
-                                                // const { center } = mapData.data;
+                                                // const { center } = zoomMap[name];
+                                                const { center } = mapData.data;
 
                                                 setCurrentState({
                                                     ...currentState,
@@ -188,7 +192,6 @@ const Map = ({ currentState, setCurrentState, pins, setPins }) => {
 
                         {currentState.currentView !== 'ranking' ?
                             pins && pins.map(pin => {
-                                console.log(pin);
                                 return <Marker
                                     key={pin._id}
                                     onClick={() => {
@@ -206,9 +209,8 @@ const Map = ({ currentState, setCurrentState, pins, setPins }) => {
                                         setTooltipName('');
                                     }}
                                     coordinates={[pin.longitude, pin.latitude]}>
-
                                     {
-                                        pin.timeDecibelsAvg <= 50 && pin.timeDecibelsAvg > 1 &&
+                                        pin.timeDecibelsAvg > 1 && pin.timeDecibelsAvg <= 50 &&
                                         purplePin
                                     }
                                     {

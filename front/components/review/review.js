@@ -19,8 +19,11 @@ import Title from '../titleStyles';
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { AiFillWechat } from "react-icons/ai";
 
-const Review = ({ currentState, setModal, modal }) => {
+//map
+import seoulMap from '../../data/map/seoul.json';
 
+const Review = ({ currentState, setCurrentState, setModal, modal }) => {
+  console.log('review render');
   const [list, setList] = useState([]);
   const [limit, setLimit] = useState(71);
   const [reviewObj, setReviewObj] = useState(undefined)
@@ -44,7 +47,6 @@ const Review = ({ currentState, setModal, modal }) => {
   }, [more, listChanged, currentState.guId, currentState.dongId])
 
   const getReview = async () => {
-    console.log(currentState);
     // 구 리뷰
     if (currentState.currentView === 'gu') {
       try {
@@ -89,12 +91,37 @@ const Review = ({ currentState, setModal, modal }) => {
   const onClickMore = (str) => () => {
     setLimit(str.length);
   };
+  const back = (currentState, setCurrentState) => {
+    if (currentState.currentView === 'gu') {
+      setCurrentState({
+        ...currentState,
+        currentView: 'ranking',
+        zoom: 2,
+        map: seoulMap,
+
+        guId: '',
+        guName: '',
+        clickSpotId: '',
+        clickedName: '',
+        center: [126.986, 37.561],
+      });
+    }
+    if (currentState.currentView === 'dong' || currentState.currentView === 'info') {
+      const gu = currentState.guName;
+      setCurrentState({
+        ...currentState,
+        currentView: 'gu',
+        clickSpotId: '',
+        clickedName: gu,
+      })
+    }
+  }
 
   return (
     <>
       <Title>
         <div className='title'>
-          <button className='back'>
+          <button className='back' onClick={() => { back(currentState, setCurrentState); }}>
             <AiOutlineArrowLeft />
           </button>
           <h3>{currentState.guName} {currentState.clickSpotId && currentState.clickedName} <span>리뷰</span></h3>

@@ -42,10 +42,9 @@ const calc = (avg) => {
     return result;
 }
 
-const PinSelect = ({ currentState, pins }) => {
+const PinSelect = ({ currentState, setCurrentState, pins }) => {
 
     const pin = pins.find(v => v._id === currentState.clickSpotId);
-    console.log(pin);
 
     const [pinState, setPinstate] = useState({
         name: '',
@@ -74,12 +73,22 @@ const PinSelect = ({ currentState, pins }) => {
             avg: result.avg,
         })
     }, [currentState.clickSpotId])
-
+    const back = (currentState, setCurrentState) => {
+        if (currentState.currentView === 'dong' || currentState.currentView === 'info') {
+            const gu = currentState.guName;
+            setCurrentState({
+                ...currentState,
+                currentView: 'gu',
+                clickSpotId: '',
+                clickedName: gu,
+            })
+        }
+    }
     return (
         <PinSelectLayout>
             <Title alignItem='flexStart'>
                 <div className='title'>
-                    <button className='back'>
+                    <button className='back' onClick={() => { back(currentState, setCurrentState) }}>
                         <AiOutlineArrowLeft />
                     </button>
                     <div>
