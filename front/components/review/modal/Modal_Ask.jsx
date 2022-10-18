@@ -13,12 +13,10 @@ const DarkArea  = styled.div`
   top:-50%;
   z-index:5;
 `
-
 const Modal_Ask = ({setModal, modal}) => {
   
   const deleteReview = () => {setModal('pw_delete')}
   const cancelSelect = () => {setModal('none');}
-
 
   let innerScreen = 0
   let outerScreen = 0
@@ -29,9 +27,6 @@ const Modal_Ask = ({setModal, modal}) => {
   const innerCheck = () => {
     innerScreen = 0; outerScreen = 0;
   }
-
-
-
     return (
     <>
         <DarkArea onClick={()=>{outerScreen++; outerCheck();}}></DarkArea >

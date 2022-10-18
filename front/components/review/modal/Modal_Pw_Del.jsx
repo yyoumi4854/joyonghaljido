@@ -5,20 +5,10 @@ import Modal_PW_Layout   from './Modal_Pw.style';
 import DarkArea   from './DarkArea.style';
 import axios from 'axios';
 
-const Modal_Pw = ({setModal,modal,reviewObj}) => {
+const Modal_Pw = ({setModal, modal, reviewObj}) => {
 
   const [showWrong, setShowWrong] = useState(false)
   const [inputValue, setInputValue] = useState('')
-
-
-
-  // const [innerScreen, setInnerScreen] = useState(0)
-  // const [outerScreen, setOuterScreen] = useState(0)
-  // useEffect(() => {
-  //   if(innerScreen + outerScreen == 1){setModal('none');}
-  //   setInnerScreen(0); 
-  //   setOuterScreen(0);
-  // }, [innerScreen, outerScreen]);
 
   let innerScreen = 0
   let outerScreen = 0
@@ -29,8 +19,6 @@ const Modal_Pw = ({setModal,modal,reviewObj}) => {
   const innerCheck = () => {
     innerScreen = 0; outerScreen = 0;
   }
-
-
 
   async function del(endpoint, params = "") {
     console.log(`DELETE 요청 ${'http://localhost:5001' + endpoint + "/" + params}`);

@@ -12,14 +12,15 @@ import TripleDotsModal from './tripleDotsModal';
 import { AiOutlineMore } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
 
-
-const ReviewList = ({list, limit, toggleEllipsis, onClickMore, setModal, modal}) => {
+const ReviewList = ({list, limit, toggleEllipsis, onClickMore, setModal, modal, reviewObj, setReviewObj}) => {
 
     // (...) 클릭 시 수정, 삭제가 나타나도록 구현할 예정
     // 지금은 그냥 수정, 삭제가 그냥 보임
     // const [IfDotsClicked, setIfDotsClicked] = useState(false)
     const [isWriting, setIsWriting] = useState(false)
-
+    const [selectedReview, setSelectedReview] = useState(undefined)
+    
+ 
   return (
     <ReviewListContent>
       <div className='noiseAvgCon'>
@@ -65,8 +66,8 @@ const ReviewList = ({list, limit, toggleEllipsis, onClickMore, setModal, modal})
                       
                       <TripleDotsModal 
                       setModal={setModal} 
-                      modal={modal}
-                      reviewObj={x}/>
+                      x={x}
+                      setReviewObj={setReviewObj}/>
 
                     </div>
                     <div className='textBottom'>
@@ -95,6 +96,7 @@ const ReviewList = ({list, limit, toggleEllipsis, onClickMore, setModal, modal})
         // setModal={undefined} 
         // modal={undefined}
         />}
+
       <ReviewBtn>
         <button onClick={()=>{setIsWriting(true)}}>소음 리뷰 쓰러가기</button>
 

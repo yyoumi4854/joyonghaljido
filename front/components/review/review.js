@@ -1,5 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import Modal_Pw_Del from './modal/Modal_Pw_Del'
+import Modal_Pw_Update from './modal/Modal_Pw_Update'
+import Modal_Ask from './modal/Modal_Ask'
+import styled from "styled-components";
 
 // import nameId from '../../Id_book/nameId.json'
 
@@ -18,7 +22,11 @@ import { AiFillWechat } from "react-icons/ai";
 
 
 const ReviewTest = ({ currentState, setModal, modal }) => {
+
   const [list, setList] = useState([]);
+  const [reviewObj, setReviewObj] = useState(undefined)
+
+
   useEffect(() => {
     //구 리뷰 출력
     if (currentState.currentView === 'gu') {
@@ -44,10 +52,6 @@ const ReviewTest = ({ currentState, setModal, modal }) => {
     , [list]);
 
 
-  useEffect(() => {
-    // console.log(list);
-  }, [list])
-
   const [limit, setLimit] = useState(71);
   const toggleEllipsis = (str, limit) => {
     return {
@@ -59,6 +63,7 @@ const ReviewTest = ({ currentState, setModal, modal }) => {
   const onClickMore = (str) => () => {
     setLimit(str.length);
   };
+
 
   return (
     <>
@@ -88,8 +93,30 @@ const ReviewTest = ({ currentState, setModal, modal }) => {
         onClickMore={onClickMore}
         setModal={setModal}
         modal={modal}
+        reviewObj={reviewObj}
+        setReviewObj={setReviewObj}
       />
       {/* <ReviewNone/> */}
+      
+        {/* 삭제확인 */}
+        {(modal == 'chk') && <Modal_Ask
+            setModal={setModal}
+            modal={modal}
+        />}
+
+        {/* 비번확인 + 삭제 */}
+        {modal == 'pw_delete' && <Modal_Pw_Del
+            setModal={setModal}
+            modal={modal}
+            reviewObj={reviewObj}
+        />}
+
+        {/* 비번확인 + 수정 */}
+            {modal == 'pw_update' && <Modal_Pw_Update
+            setModal={setModal}
+            modal={modal}
+            reviewObj={reviewObj}
+        />}
     </>
   );
 }
