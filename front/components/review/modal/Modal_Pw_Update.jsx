@@ -1,14 +1,16 @@
 import { SmallBtn } from '../../../styles/btnStyles';
 import { useState, useEffect } from 'react';
 
+import ReviewEditForm from '../reviewEditForm';
 import Modal_PW_Layout   from './Modal_Pw.style';
 import DarkArea   from './DarkArea.style';
 import axios from 'axios';
 
 const Modal_Pw = ({setModal, modal, reviewObj}) => {
 
-  const [showWrong, setShowWrong] = useState(false)
-  const [inputValue, setInputValue] = useState('')
+  const [showWrong, setShowWrong] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
   
   let innerScreen = 0
   let outerScreen = 0
@@ -20,40 +22,30 @@ const Modal_Pw = ({setModal, modal, reviewObj}) => {
     innerScreen = 0; outerScreen = 0;
   }
 
+  const openIsEditing = () => {
+    setIsEditing(true);
+  }
 
-  const updateReview = async () => {
-    // API 입력
-    const endpoint = 'reviews'
-    const reviewId = reviewObj._id;
-    // 필요한 값 정리 ....................
-
-
-
-
-
-
-
-    try{
-      
-
-
-
-
-
-      console.log('수정 성공')
-      alert('수정 성공')
-      setModal('none')
-    }
-    catch{
-      fail();
-      console.log('수정 실패')
-      alert('수정 실패')
-    }
+  const closeIsEditing = () => {
+    setIsEditing(false);
   }
 
   // 비밀번호 입력
-  const submitPW = async () => {
-      await updateReview()
+  const submitPW = async (e) => {
+      e.preventDefault();
+
+      const reviewId = reviewObj._id;
+      const inputPassword = inputValue;
+
+      try {
+        await axios.get(`/reviews/${reviewId}`, {params: {password: inputPassword}})
+          .then((res) => {
+            console.log(res.data);
+          })
+        openIsEditing;
+      } catch (e) {
+        console.log(e);
+      }
   }
 
   // 빨간색 입력창 (비번 입력 실패)
@@ -90,10 +82,11 @@ const Modal_Pw = ({setModal, modal, reviewObj}) => {
           <SmallBtn 
             type='submit' 
             check='yes' 
-            onClick={()=>{ submitPW();}}>확인
+            onClick={submitPW}>확인
           </SmallBtn>
         </div>
       </Modal_PW_Layout>
+      {isEditing===true && <ReviewEditForm currentReview={ reviewObj } closeIsEditing></ReviewEditForm>}
     </>
   );
 }
