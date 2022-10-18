@@ -29,7 +29,7 @@ const ReviewEditForm = ({ currentReview, closeIsEditing }) => {
 
         try {
             await axios.put(`http://localhost:5001/reviews/${reviewId}`, review);
-            closeIsEditing;
+            closeIsEditing();
         } catch (e) {
             console.log("수정 오류", e);
         }
@@ -47,7 +47,7 @@ const ReviewEditForm = ({ currentReview, closeIsEditing }) => {
 
     const handleOutsideClick = (e) => {
         if (modalRef.current && !modalRef.current.contains(e.target)) {
-            closeIsEditing;
+            closeIsEditing();
         }
     };
     

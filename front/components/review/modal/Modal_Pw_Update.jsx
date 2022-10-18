@@ -6,11 +6,10 @@ import Modal_PW_Layout from './Modal_Pw.style';
 import DarkArea from './DarkArea.style';
 import axios from 'axios';
 
-const Modal_Pw = ({ setModal, modal, reviewObj }) => {
+const Modal_Pw = ({ setModal, modal, reviewObj, openIsEditing }) => {
 
   const [showWrong, setShowWrong] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const [isEditing, setIsEditing] = useState(false);
 
   let innerScreen = 0
   let outerScreen = 0
@@ -22,27 +21,21 @@ const Modal_Pw = ({ setModal, modal, reviewObj }) => {
     innerScreen = 0; outerScreen = 0;
   }
 
-  const openIsEditing = () => {
-    setIsEditing(true);
-  }
-
-  const closeIsEditing = () => {
-    setIsEditing(false);
-  }
-
   // 비밀번호 입력
   const submitPW = async (e) => {
     e.preventDefault();
 
     const reviewId = reviewObj._id;
-    const inputPassword = inputValue;
+    console.log(inputValue);
 
     try {
-      await axios.get(`/reviews/${reviewId}`, { data: { password: inputPassword } })
+      await axios.post(`http://localhost:5001/reviews/${reviewId}`, { password: inputValue+'' })
         .then((res) => {
-          console.log(res.data);
+          if(res.data === true) {
+            setModal('none');
+            openIsEditing();
+          }
         })
-      openIsEditing;
     } catch (e) {
       console.log(e);
     }
@@ -86,7 +79,6 @@ const Modal_Pw = ({ setModal, modal, reviewObj }) => {
           </SmallBtn>
         </div>
       </Modal_PW_Layout>
-      {isEditing === true && <ReviewEditForm currentReview={reviewObj} closeIsEditing></ReviewEditForm>}
     </>
   );
 }

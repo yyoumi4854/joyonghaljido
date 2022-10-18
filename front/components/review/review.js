@@ -12,6 +12,7 @@ import * as Api from '../../api'; // API 활용하세용
 
 import ReviewList from './reviewList';
 import ReviewNone from './reviewNone';
+import ReviewEditForm from './reviewEditForm';
 
 // styled
 import Title from '../titleStyles';
@@ -25,7 +26,15 @@ const ReviewTest = ({ currentState, setModal, modal }) => {
 
   const [list, setList] = useState([]);
   const [reviewObj, setReviewObj] = useState(undefined)
+  const [isEditing, setIsEditing] = useState(false);
 
+  const openIsEditing = () => {
+    setIsEditing(true);
+  }
+
+  const closeIsEditing = () => {
+    setIsEditing(false);
+  }
 
   useEffect(() => {
     //구 리뷰 출력
@@ -116,7 +125,10 @@ const ReviewTest = ({ currentState, setModal, modal }) => {
             setModal={setModal}
             modal={modal}
             reviewObj={reviewObj}
+            openIsEditing={openIsEditing}
         />}
+
+        {isEditing === true && <ReviewEditForm currentReview={reviewObj} closeIsEditing={closeIsEditing}></ReviewEditForm>}
     </>
   );
 }
