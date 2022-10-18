@@ -76,7 +76,7 @@ router.get("/count", async (req, res, next) => {
 });
 
 //check password
-router.get("/:reviewId", async (req, res, next) => {
+router.post("/:reviewId", async (req, res, next) => {
   try {
     const reviewId = req.params.reviewId;
     const password = req.body.password;
