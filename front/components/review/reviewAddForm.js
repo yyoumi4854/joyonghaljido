@@ -1,18 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import FormContent from "./reviewAddForm.style";
-import { SmallBtn } from '../../styles/btnStyles';
-import styled from 'styled-components';
 
-const DarkArea = styled.div`
-  position: fixed;
-  width: 1000vw;
-  height: 1000vh;
-  background: rgba(0, 0, 0, 0.6);
-  left:-50%;
-  top:-50%;
-  z-index:5;
-`
+// styled
+import FormContent from "./reviewAddForm.style";
+import DarkArea from "./darkAreaStyles";
+import { SmallBtn } from '../../styles/btnStyles';
 
 import geoId from './geoid.json';
 // const ReviewAddForm = ({ setIsWriting , currentState,  toggleIsWriting, setModal, modal }) => {
@@ -118,8 +110,6 @@ const ReviewAddForm = ({ setIsWriting }) => {
                 ></textarea>
               </div>
             </div>
-            <br></br>
-
 
             <div className="content">
               <p className="title">비밀번호를 입력해 주세요.</p>
@@ -130,7 +120,6 @@ const ReviewAddForm = ({ setIsWriting }) => {
                 value={review.password}
               />
             </div>
-            <br></br>
 
             <div className="content">
               <p className="title">내가 느낀 소음은 어느 정도였나요?</p>

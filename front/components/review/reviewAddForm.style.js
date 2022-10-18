@@ -1,21 +1,13 @@
 import styled from "styled-components";
 
 const FormContent = styled.div`
-    position: absolute;
-    // width: 100vw;
-    // height: 100vh;
-    // margin-top: -64px;
-    
-    left:50%;
-    top:50%;
-    background: rgba(0, 0, 0, 0.6);
     z-index: 999;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
     .formCon{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
         width: 448px;
         padding: 24px;
         background: #fff;
@@ -36,7 +28,7 @@ const FormContent = styled.div`
         }
 
         .content{
-            padding-top: 40px;
+            padding-top: 24px;
         }
 
         select, input, textarea{
@@ -70,7 +62,7 @@ const FormContent = styled.div`
         .inputBox{
             textarea{
                 margin-top: 4px;
-                height: 160px;
+                height: 120px;
                 resize: none;
             }
         }
@@ -86,7 +78,6 @@ const FormContent = styled.div`
                 label{
                     width: 48px;
                     height: 48px;
-                    background: url('/images/noiseBad.svg') no-repeat center;
                     cursor: pointer;
                     text-indent: -9999px;
                 }
@@ -117,5 +108,6 @@ const FormContent = styled.div`
         }
     }
 `;
+
 
 export default FormContent;

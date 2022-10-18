@@ -131,7 +131,7 @@ const ReviewListContent = styled.div`
         }
         .noiseLevel1{
           span{
-            ${noiseLevel3}
+            ${noiseLevel1}
           }
         }
 
