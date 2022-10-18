@@ -62,10 +62,6 @@ class reviewService {
 
     const isMatched = await bcrypt.compare(password, review.password);
 
-    if (!isMatched) {
-      throw new Error("비밀번호가 일치하지 않습니다.");
-    }
-
     return isMatched;
   }
 
