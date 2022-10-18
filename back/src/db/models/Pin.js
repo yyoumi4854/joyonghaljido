@@ -31,7 +31,6 @@ class Pin {
         $project: {
           guId: 0,
           dongId: 0,
-          timeDecibels: 0,
         },
       },
     ]);
