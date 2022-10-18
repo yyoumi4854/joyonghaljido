@@ -114,7 +114,7 @@ const Ranking2 = ({ currentState, setCurrentState, pins, setPins, dongs, setDong
 
       <ul className='ranking'>
         {
-          rankingSort(sortBtns, toggle[sortBtns], tabChange[currentState.rankingTab][1]).map((x, i) => {
+          rankingSort(sortBtns, toggle[sortBtns], tabChange[currentState.rankingTab][1]).filter(v => v.value !== 0).map((x, i) => {
             return (
               <li key={i} onClick={() => { selectGu(x); }}>
                 <p>{x.name}</p>
