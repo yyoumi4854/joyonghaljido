@@ -24,7 +24,7 @@ class Pin {
       {
         $set: {
           dongName: "$dongName.name",
-          timeDeciblesAvg: { $avg: "$timeDecibels" },
+          timeDecibelsAvg: { $avg: "$timeDecibels" },
         },
       },
       {
