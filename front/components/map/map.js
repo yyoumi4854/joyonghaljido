@@ -210,27 +210,27 @@ const Map = ({ currentState, setCurrentState, pins, setPins }) => {
                                     }}
                                     coordinates={[pin.longitude, pin.latitude]}>
                                     {
-                                        pin.timeDeciblesAvg <= 50 && pin.timeDeciblesAvg > 1 &&
+                                        pin.timeDecibelsAvg <= 50 && pin.timeDecibelsAvg > 1 &&
                                         purplePin
                                     }
                                     {
-                                        pin.timeDeciblesAvg > 50 && pin.timeDeciblesAvg <= 55 &&
+                                        pin.timeDecibelsAvg > 50 && pin.timeDecibelsAvg <= 55 &&
                                         bluePin
                                     }
                                     {
-                                        pin.timeDeciblesAvg > 55 && pin.timeDeciblesAvg <= 60 &&
+                                        pin.timeDecibelsAvg > 55 && pin.timeDecibelsAvg <= 60 &&
                                         greenPin
                                     }
                                     {
-                                        pin.timeDeciblesAvg > 60 && pin.timeDeciblesAvg <= 65 &&
+                                        pin.timeDecibelsAvg > 60 && pin.timeDecibelsAvg <= 65 &&
                                         yellowPin
                                     }
                                     {
-                                        pin.timeDeciblesAvg > 65 && pin.timeDeciblesAvg <= 70 &&
+                                        pin.timeDecibelsAvg > 65 && pin.timeDecibelsAvg <= 70 &&
                                         orangePin
                                     }
                                     {
-                                        pin.timeDeciblesAvg > 70 &&
+                                        pin.timeDecibelsAvg > 70 &&
                                         redPin
                                     }
                                 </Marker>

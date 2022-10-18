@@ -45,6 +45,7 @@ const calc = (avg) => {
 const PinSelect = ({ currentState, pins }) => {
 
     const pin = pins.find(v => v._id === currentState.clickSpotId);
+    console.log(pin);
 
     const [pinState, setPinstate] = useState({
         name: '',
@@ -59,7 +60,7 @@ const PinSelect = ({ currentState, pins }) => {
     })
 
     useEffect(() => {
-        const result = calc(pin.timeDeciblesAvg);
+        const result = calc(pin.timeDecibelsAvg);
         setPinstate({
             ...pinState,
             name: pin.name,

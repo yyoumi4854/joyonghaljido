@@ -41,7 +41,7 @@ const ReviewTest = ({ currentState, setModal, modal }) => {
       }
     }
   }
-    , [list]);
+    , []);
 
 
   useEffect(() => {
