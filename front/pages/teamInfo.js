@@ -27,7 +27,7 @@ const TeamInfo = () => {
                             <Carousel.Caption>
                                 <div style={{ height: '100%', marginBottom: '40px' }}>
                                     <p style={{ fontSize: '50px' }}>최은오</p>
-                                    <p style={{ fontSize: '30px', paddingTop: '40px' }}>그림 그리는 프론트엔드 개발자 🎨</p>
+                                    <p style={{ fontSize: '30px', paddingTop: '40px' }}>그림 그리는 FE 개발자 🎨</p>
                                     <div style={{ padding: '15px 0 40px 0', }}>
                                         <span className="badge">Next.js</span>
                                         <span className="badge">Redux</span>
@@ -57,6 +57,7 @@ const TeamInfo = () => {
                                     <div style={{ padding: '15px 0 40px 0', }}>
                                         <span className="badge">React.js</span>
                                         <span className="badge">javaScript</span>
+                                        <span className="badge">Bootstrap</span>
                                         <span className="badge">CSS</span>
                                     </div>
                                     <div className="sub">

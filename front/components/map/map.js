@@ -55,51 +55,51 @@ const Map = ({ currentState, setCurrentState, pins, setPins }) => {
 
             {
                 currentState.guName || currentState.clickSpotId ?
-                <div className='title locationPath'>
-                    {currentState.guName && <>
-                        <p
-                            onClick={() => {
-                                setCurrentState({
-                                    ...currentState,
-                                    currentView: 'ranking',
-                                    zoom: 2,
-                                    map: seoulMap,
+                    <div className='title locationPath'>
+                        {currentState.guName && <>
+                            <p
+                                onClick={() => {
+                                    setCurrentState({
+                                        ...currentState,
+                                        currentView: 'ranking',
+                                        zoom: 2,
+                                        map: seoulMap,
 
-                                    guId: '',
-                                    guName: '',
-                                    clickSpotId: '',
-                                    clickedName: '',
-                                    center: [126.986, 37.561],
-                                });
-                            }}>서울시
-                        </p>
-                        
-                        <BsForwardFill/>
-
-                        <p
-                            onClick={() => {
-                                const gu = currentState.guName;
-                                setCurrentState({
-                                    ...currentState,
-                                    currentView: 'gu',
-                                    clickSpotId: '',
-                                    clickedName: gu,
-                                })
-                            }}>
-                            {currentState?.guName}
-                        </p>
-                    </>}
-
-                    {currentState.clickSpotId &&
-                        <>
-                            <BsForwardFill/>
-                            <p>
-                                {currentState.clickedName}
+                                        guId: '',
+                                        guName: '',
+                                        clickSpotId: '',
+                                        clickedName: '',
+                                        center: [126.986, 37.561],
+                                    });
+                                }}>서울시
                             </p>
-                        </>
-                    }
-                </div>
-                : <p className='title'>지역을 선택해주세요.</p>
+
+                            <BsForwardFill />
+
+                            <p
+                                onClick={() => {
+                                    const gu = currentState.guName;
+                                    setCurrentState({
+                                        ...currentState,
+                                        currentView: 'gu',
+                                        clickSpotId: '',
+                                        clickedName: gu,
+                                    })
+                                }}>
+                                {currentState?.guName}
+                            </p>
+                        </>}
+
+                        {currentState.clickSpotId &&
+                            <>
+                                <BsForwardFill />
+                                <p>
+                                    {currentState.clickedName}
+                                </p>
+                            </>
+                        }
+                    </div>
+                    : <p className='title'>지역을 선택해주세요.</p>
             }
 
 
@@ -188,6 +188,7 @@ const Map = ({ currentState, setCurrentState, pins, setPins }) => {
 
                         {currentState.currentView !== 'ranking' ?
                             pins && pins.map(pin => {
+                                console.log(pin);
                                 return <Marker
                                     key={pin._id}
                                     onClick={() => {
@@ -205,6 +206,7 @@ const Map = ({ currentState, setCurrentState, pins, setPins }) => {
                                         setTooltipName('');
                                     }}
                                     coordinates={[pin.longitude, pin.latitude]}>
+
                                     {
                                         pin.timeDecibelsAvg <= 50 && pin.timeDecibelsAvg > 1 &&
                                         purplePin

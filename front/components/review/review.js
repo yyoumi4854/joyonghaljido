@@ -19,7 +19,7 @@ import Title from '../titleStyles';
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { AiFillWechat } from "react-icons/ai";
 
-const ReviewTest = ({ currentState, setModal, modal }) => {
+const Review = ({ currentState, setModal, modal }) => {
 
   const [list, setList] = useState([]);
   const [limit, setLimit] = useState(71);
@@ -44,6 +44,7 @@ const ReviewTest = ({ currentState, setModal, modal }) => {
   }, [more, listChanged, currentState.guId, currentState.dongId])
 
   const getReview = async () => {
+    console.log(currentState);
     // 구 리뷰
     if (currentState.currentView === 'gu') {
       try {
@@ -64,11 +65,11 @@ const ReviewTest = ({ currentState, setModal, modal }) => {
     else if (currentState.currentView === 'dong') {
       try {
         // 첫 10개
-        await axios.get(`http://localhost:5001/reviews?dongId=${currentState.dongId}`)
+        await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}`)
           .then(v => (setList(v.data)));
         // 이후
-        for (let i = 0; i < more; i++) {
-          await axios.get(`http://localhost:5001/reviews?dongId=${currentState.dongId}&skip=${more}`)
+        for (let i = 1; i <= more; i++) {
+          await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}&skip=${i}`)
             .then(v => (setList((prev) => {
               return [...prev, ...v.data]
             })));
@@ -169,5 +170,5 @@ const ReviewTest = ({ currentState, setModal, modal }) => {
     </>
   );
 }
-export default ReviewTest;
+export default Review;
 // modal
