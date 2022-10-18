@@ -32,9 +32,8 @@ const pin6 = css`
 
 const PinSelectLayout = styled.div`
     .pinInfoCon{
-        // 높이 지정하기
         height: calc(100vh - 64px - 100px - 64px - 48px);
-
+        overflow: auto;
 
         h5.title{
             font-weight: 700;
