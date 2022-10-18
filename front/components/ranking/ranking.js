@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MW_OBJ, DB_OBJ } from './rankData';
+import axios from 'axios';
 
 // styled
 import Title from '../titleStyles';
@@ -10,7 +11,9 @@ import RankingContent from './rankingStyles';
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 // import { AiOutlineVerticalAlignTop } from "react-icons/ai";
 
-const Ranking2 = ({ currentState, setCurrentState }) => {
+import nameIds from '../../Id_book/nameId.json';
+
+const Ranking2 = ({ currentState, setCurrentState, pins, setPins, dongs, setDongs }) => {
   // const [tab, setTab] = useState(currentState.rankingTab);
   const [sortBtns, setSortBtns] = useState('value');
   const [toggle, setToggle] = useState({ value: 0, name: 0 });
@@ -48,6 +51,29 @@ const Ranking2 = ({ currentState, setCurrentState }) => {
     } else {
       return list.sort((a, b) => b[type] - a[type]);
     }
+  };
+
+  const selectGu = async (gu) => {
+    const selecGu = nameIds.find(v => v.name === gu.name);
+    console.log(selecGu);
+    const mapData = await axios.get(`http://localhost:5001/gus/${selecGu._id}`);
+    const dongsAndPins = await axios.get(`http://localhost:5001/location/gus/${selecGu._id}`);
+    setDongs(dongsAndPins.data.dongs);
+    setPins(dongsAndPins.data.pins);
+
+    // const { center } = zoomMap[name];
+    const { center } = mapData.data;
+
+    setCurrentState({
+      ...currentState,
+      currentView: 'gu',
+      zoom: 7,
+      map: mapData.data,
+      clickedName: selecGu.name,
+      center,
+      guId: selecGu._id,
+      guName: selecGu.name,
+    });
   };
 
   return (
@@ -90,7 +116,7 @@ const Ranking2 = ({ currentState, setCurrentState }) => {
         {
           rankingSort(sortBtns, toggle[sortBtns], tabChange[currentState.rankingTab][1]).map((x, i) => {
             return (
-              <li key={i}>
+              <li key={i} onClick={() => { selectGu(x); }}>
                 <p>{x.name}</p>
                 <span>{x.value}</span>
               </li>

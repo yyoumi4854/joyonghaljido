@@ -26,6 +26,8 @@ import FooterStyle from '../styles/footerStyles';
 
 const Find = () => {
   const [pins, setPins] = useState('');
+  const [dongs, setDongs] = useState('');
+
   const [currentState, setCurrentState] = useState(
     {
       currentView: 'ranking',
@@ -54,7 +56,12 @@ const Find = () => {
           (<>
             <Ranking
               currentState={currentState}
-              setCurrentState={setCurrentState} />
+              setCurrentState={setCurrentState}
+
+              pins={pins}
+              setPins={setPins}
+              dongs={dongs}
+              setDongs={setDongs} />
             <RankingInfo />
           </>)
           : null}
@@ -90,6 +97,8 @@ const Find = () => {
           setCurrentState={setCurrentState}
           pins={pins}
           setPins={setPins}
+          dongs={dongs}
+          setDongs={setDongs}
         />
       </div>
     </FindLayout>

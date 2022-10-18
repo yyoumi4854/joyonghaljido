@@ -44,9 +44,9 @@ const mapColor = (currentState) => {
     }
 }
 
-const Map = ({ currentState, setCurrentState, pins, setPins }) => {
+const Map = ({ currentState, setCurrentState, pins, setPins, dongs, setDongs }) => {
 
-    const [dongs, setDongs] = useState('');
+
     //tooltip때문에 호버할때마다 리렌더 발생 => 매우 비효율
     const [tooltipName, setTooltipName] = useState('');
     useEffect(() => {
