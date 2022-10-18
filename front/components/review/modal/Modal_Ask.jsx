@@ -1,18 +1,13 @@
-import { SmallBtn } from '../../../styles/btnStyles';
-import styled from 'styled-components'
-// import DarkArea   from './DarkArea.style';
-import Modal_Ask_Layout  from './Modal_Ask.style';
 import React, { useState, useRef, useEffect } from "react";
+// import styled from 'styled-components'
+// import DarkArea   from './DarkArea.style';
 
-const DarkArea  = styled.div`
-  position: fixed;
-  width: 1000vw;
-  height: 1000vh;
-  background: rgba(0, 0, 0, 0.1);
-  left:-50%;
-  top:-50%;
-  z-index:5;
-`
+// styled
+import DarkArea from "../darkAreaStyles";
+import ModalContent from "./modalStyles";
+// import Modal_Ask_Layout  from './Modal_Ask.style';
+import { SmallBtn } from '../../../styles/btnStyles';
+
 const Modal_Ask = ({setModal, modal}) => {
   
   const deleteReview = () => {setModal('pw_delete')}
@@ -29,16 +24,15 @@ const Modal_Ask = ({setModal, modal}) => {
   }
     return (
     <>
-        <DarkArea onClick={()=>{outerScreen++; outerCheck();}}></DarkArea >
-        <Modal_Ask_Layout onClick={()=>{innerScreen++; innerCheck();}}>
-        <div className="modal">
-          <h3>정말 삭제하시겠습니까?</h3>
-          <br></br>
-          <SmallBtn onClick={()=>{cancelSelect()}}>취소</SmallBtn>
-          <span> &nbsp; &nbsp; </span>
-          <SmallBtn type='submit' check='yes' onClick={()=>{deleteReview()}}>확인</SmallBtn>
-        </div>
-      </Modal_Ask_Layout>
+      <DarkArea onClick={()=>{outerScreen++; outerCheck();}}></DarkArea >
+      <ModalContent onClick={()=>{innerScreen++; innerCheck();}}>
+          <h3 className="del">정말 삭제하시겠습니까?</h3>
+          
+          <div className="btns">
+            <SmallBtn onClick={()=>{cancelSelect()}}>취소</SmallBtn>
+            <SmallBtn type='submit' check='yes' onClick={()=>{deleteReview()}}>확인</SmallBtn>
+          </div>
+      </ModalContent>
     </>
   );
 }

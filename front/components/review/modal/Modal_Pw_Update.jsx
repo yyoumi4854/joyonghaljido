@@ -2,9 +2,12 @@ import { SmallBtn } from '../../../styles/btnStyles';
 import { useState, useEffect } from 'react';
 
 import ReviewEditForm from '../reviewEditForm';
-import Modal_PW_Layout from './Modal_Pw.style';
-import DarkArea from './DarkArea.style';
+// import Modal_PW_Layout from './Modal_Pw.style';
 import axios from 'axios';
+
+// styled
+import DarkArea from '../darkAreaStyles';
+import ModalContent from './modalStyles';
 
 const Modal_Pw = ({ setModal, modal, reviewObj, openIsEditing }) => {
 
@@ -44,7 +47,7 @@ const Modal_Pw = ({ setModal, modal, reviewObj, openIsEditing }) => {
   // 빨간색 입력창 (비번 입력 실패)
   const fail = () => {
     const pwInput = document.getElementById('pwInput')
-    pwInput.style.border = 'solid red 1px';
+    pwInput.style.border='1px solid #E35753';
     setShowWrong(true);
   }
   // 검정색 입력창 (원래대로 복구)
@@ -57,28 +60,32 @@ const Modal_Pw = ({ setModal, modal, reviewObj, openIsEditing }) => {
   return (
     <>
       <DarkArea onClick={() => { outerScreen++; outerCheck(); }}></DarkArea >
-      <Modal_PW_Layout onClick={() => { innerScreen++; innerCheck(); }}>
-        <div className="modal">
-          <h3>비밀번호를 입력해 주세요.</h3>
-          <br></br>
+      <ModalContent onClick={() => { innerScreen++; innerCheck(); }}>
+        <h3>비밀번호를 입력해 주세요.</h3>
+
+        <div className='inputBox'>
           <input
             type="password"
             id="pwInput"
             name="name"
-            placeholder='글 작성에 사용한 비밀번호'
+            placeholder='글 작성시 사용한 비밀번호'
             onChange={(e) => { setInputValue(e.target.value); onChangeHandler() }} required
           />
-          {showWrong && <p className='wrong'>비밀번호가 틀렸습니다</p>}
-          {!showWrong && <p className='space'></p>}
+
+          {showWrong && <span className='wrong'>비밀번호가 틀렸습니다</span>}
+          {/* {!showWrong && <p className='space'></p>} */}
+        </div>
+        
+
+        <div className='btns'>
           <SmallBtn onClick={() => { setModal('none'); }}>취소</SmallBtn>
-          <span> &nbsp; &nbsp; </span>
           <SmallBtn
             type='submit'
             check='yes'
             onClick={submitPW}>확인
           </SmallBtn>
         </div>
-      </Modal_PW_Layout>
+      </ModalContent>
     </>
   );
 }
