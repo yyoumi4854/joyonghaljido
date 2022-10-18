@@ -58,7 +58,7 @@ const ReviewTest = ({ currentState, setModal, modal }) => {
       }
     }
   }
-    , [list]);
+    , []);
 
 
   const [limit, setLimit] = useState(71);

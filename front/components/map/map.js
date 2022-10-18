@@ -26,7 +26,7 @@ import theme from '../../styles/theme';
 import MapContent from './mapStyles';
 
 // react-icons
-import { BsFillCaretDownFill } from "react-icons/bs";
+import { BsForwardFill } from "react-icons/bs";
 
 
 
@@ -53,58 +53,54 @@ const Map = ({ currentState, setCurrentState, pins, setPins }) => {
         <MapContent>
             <ReactTooltip type='light'>{tooltipName}</ReactTooltip>
 
-            <div className='locationPath'>
-                <span
-                    className='path'
-                    onClick={() => {
-                        setCurrentState({
-                            ...currentState,
-                            currentView: 'ranking',
-                            zoom: 2,
-                            map: seoulMap,
+            {
+                currentState.guName || currentState.clickSpotId ?
+                <div className='title locationPath'>
+                    {currentState.guName && <>
+                        <p
+                            onClick={() => {
+                                setCurrentState({
+                                    ...currentState,
+                                    currentView: 'ranking',
+                                    zoom: 2,
+                                    map: seoulMap,
 
-                            guId: '',
-                            guName: '',
-                            clickSpotId: '',
-                            clickedName: '',
-                            center: [126.986, 37.561],
-                        });
-                    }}>서울시
-                </span>
-                {currentState.guName && <>
-                    <span className='down'><BsFillCaretDownFill /></span>
-                    <span
-                        className='path'
-                        onClick={() => {
-                            const gu = currentState.guName;
-                            setCurrentState({
-                                ...currentState,
-                                currentView: 'gu',
-                                clickSpotId: '',
-                                clickedName: gu,
-                            })
-                        }}>
-                        {currentState?.guName}
-                    </span>
-                </>}
-                {currentState.clickSpotId &&
-                    <>
-                        <span className='down'><BsFillCaretDownFill /></span>
-                        <span className='path'>
-                            {currentState.clickedName}
-                        </span>
-                    </>
-                }
-            </div>
+                                    guId: '',
+                                    guName: '',
+                                    clickSpotId: '',
+                                    clickedName: '',
+                                    center: [126.986, 37.561],
+                                });
+                            }}>서울시
+                        </p>
+                        
+                        <BsForwardFill/>
 
-            <div className='locationText'>
-                {currentState.currentView === 'ranking' ?
-                    <h2>찾고 싶은 지역을 선택해주세요.</h2> :
-                    <h2>
-                        {currentState.clickedName}
-                    </h2>
-                }
-            </div>
+                        <p
+                            onClick={() => {
+                                const gu = currentState.guName;
+                                setCurrentState({
+                                    ...currentState,
+                                    currentView: 'gu',
+                                    clickSpotId: '',
+                                    clickedName: gu,
+                                })
+                            }}>
+                            {currentState?.guName}
+                        </p>
+                    </>}
+
+                    {currentState.clickSpotId &&
+                        <>
+                            <BsForwardFill/>
+                            <p>
+                                {currentState.clickedName}
+                            </p>
+                        </>
+                    }
+                </div>
+                : <p className='title'>지역을 선택해주세요.</p>
+            }
 
 
             <div className='mapCon'>
@@ -210,27 +206,27 @@ const Map = ({ currentState, setCurrentState, pins, setPins }) => {
                                     }}
                                     coordinates={[pin.longitude, pin.latitude]}>
                                     {
-                                        pin.timeDeciblesAvg <= 50 && pin.timeDeciblesAvg > 1 &&
+                                        pin.timeDecibelsAvg <= 50 && pin.timeDecibelsAvg > 1 &&
                                         purplePin
                                     }
                                     {
-                                        pin.timeDeciblesAvg > 50 && pin.timeDeciblesAvg <= 55 &&
+                                        pin.timeDecibelsAvg > 50 && pin.timeDecibelsAvg <= 55 &&
                                         bluePin
                                     }
                                     {
-                                        pin.timeDeciblesAvg > 55 && pin.timeDeciblesAvg <= 60 &&
+                                        pin.timeDecibelsAvg > 55 && pin.timeDecibelsAvg <= 60 &&
                                         greenPin
                                     }
                                     {
-                                        pin.timeDeciblesAvg > 60 && pin.timeDeciblesAvg <= 65 &&
+                                        pin.timeDecibelsAvg > 60 && pin.timeDecibelsAvg <= 65 &&
                                         yellowPin
                                     }
                                     {
-                                        pin.timeDeciblesAvg > 65 && pin.timeDeciblesAvg <= 70 &&
+                                        pin.timeDecibelsAvg > 65 && pin.timeDecibelsAvg <= 70 &&
                                         orangePin
                                     }
                                     {
-                                        pin.timeDeciblesAvg > 70 &&
+                                        pin.timeDecibelsAvg > 70 &&
                                         redPin
                                     }
                                 </Marker>
