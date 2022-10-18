@@ -2,26 +2,45 @@ const { PinModel } = require("..");
 
 class Pin {
   static async getPinListByGuId(guId) {
-    const pinList = await PinModel.find(
-      { guId },
-      "_id name longitude latitude timeDecibels"
-    );
+    const pinList = await PinModel.aggregate([
+      {
+        $match: {
+          guId,
+        },
+      },
+      {
+        $lookup: {
+          from: "dongs",
+          localField: "dongId",
+          foreignField: "_id",
+          as: "dongName",
+        },
+      },
+      {
+        $unwind: {
+          path: "$dongName",
+        },
+      },
+      {
+        $set: {
+          dongName: "$dongName.name",
+          timeDeciblesAvg: { $avg: "$timeDecibels" },
+        },
+      },
+      {
+        $project: {
+          guId: 0,
+          dongId: 0,
+          timeDecibels: 0,
+        },
+      },
+    ]);
 
     if (!pinList) {
       throw new Error("해당하는 자치구의 핀을 찾을 수 없습니다.");
     }
 
-    const foundPins = [];
-    const getAvg = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
-    pinList.map((pin) => {
-      const pinData = {
-        ...pin.toObject(),
-        timeDeciblesAvg: getAvg(pin.timeDecibels),
-      };
-      foundPins.push(pinData);
-    });
-
-    return foundPins;
+    return pinList;
   }
 
   static async getPinById(pinId) {
