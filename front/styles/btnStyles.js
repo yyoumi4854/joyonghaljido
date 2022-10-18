@@ -22,23 +22,9 @@ const ReviewBtn = styled.div`
 
     &:hover{
       background: ${({ theme }) => theme.colors.grey4};
-      border: 1px solid transparent;
+      border: 1px solid ${({ theme }) => theme.colors.grey4};
     }
   }
 `;
 
-// topBtn
-const TopBtn = styled.button`
-  width: 100%;
-  height: 61px;
-  background: ${({ theme }) => theme.colors.main};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.mainLight1};
-  
-  svg{
-    color: #fff;
-    width: auto;
-    height: 28px;
-  }
-`;
-
-export { SmallBtn, ReviewBtn, TopBtn };
+export { SmallBtn, ReviewBtn };

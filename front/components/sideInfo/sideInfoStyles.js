@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
 const SideInfoContent = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 24px;
   right: 24px;
   padding: 16px;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid ${({ theme }) => theme.colors.grey3};
   border-radius: 2px;
-  z-index: 9999;
+  z-index: 999;
 
   .ranking{
     dl{
@@ -76,7 +77,7 @@ const SideInfoContent = styled.div`
         span{
           width: 12px;
           height: 12px;
-          background: ${({ theme }) => theme.colors.main};
+          background: ${({ theme }) => theme.colors.mainLight1};
           border-radius: 50%;
         }
       }

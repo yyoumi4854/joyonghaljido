@@ -3,13 +3,18 @@ import { useState, useEffect } from 'react';
 
 const TripleDotsModalStyle = styled.div`
     position: absolute;
-    left:330px;
-    border:1px solid aliceblue ;
-    background-color:whitesmoke;
-    border-radius: 3px;
+    top: -1px;
+    right: 0;
     button{
+        ${({ theme }) => theme.common.flexCenter};
+        flex-direction: column;
+        padding: 8px 12px;
+        background-color: ${({ theme }) => theme.colors.grey4};
+        border: 1px solid ${({ theme }) => theme.colors.grey3};
+        color: ${({ theme }) => theme.colors.grey2};
+
         :hover{
-            color:green;
+            color: ${({ theme }) => theme.colors.main};
         }
     }
     .ud_btn{

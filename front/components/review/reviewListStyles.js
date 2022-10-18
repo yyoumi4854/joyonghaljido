@@ -29,6 +29,10 @@ const ReviewListContent = styled.div`
       text-indent: -9999px;
     }
 
+    p{
+      line-height: 1.25;
+    }
+
     .noiseLevel1{
       ${noiseLevel1}
       &+p span{
@@ -196,13 +200,8 @@ const ReviewListContent = styled.div`
     margin-top: 12px;
     font-size: 14px;
     color: ${({ theme }) => theme.colors.main};
-    /* border-bottom: 1px solid transparent; */
     transition: .3s;
     svg{vertical-align: text-top;}
-
-    /* &:hover{
-      border-bottom: 1px solid ${({ theme }) => theme.colors.main};
-    } */
   }
   `;
 export default ReviewListContent;
