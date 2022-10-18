@@ -11,6 +11,7 @@ const app = ({ Component }) => {
     <>
       <Head>
         <title>조용할지도</title>
+        <link rel="icon" href="./images/favicon_32.png" />
       </Head>
 
       <GlobalStyles />
