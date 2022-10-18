@@ -55,7 +55,7 @@ const Find = () => {
             <Ranking
               currentState={currentState}
               setCurrentState={setCurrentState} />
-            {/* <RankingInfo /> */}
+            <RankingInfo />
           </>)
           : null}
         {currentState.currentView === 'gu' ?
@@ -66,7 +66,7 @@ const Find = () => {
               modal={modal}
               setModal={setModal}
             />
-            {/* <PinMarkerInfo /> */}
+            <PinMarkerInfo />
           </>)
           : null}
         {currentState.currentView === 'dong' ?
