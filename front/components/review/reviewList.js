@@ -1,7 +1,4 @@
-import React from 'react';
-import {useState} from 'react';
 import nameId from '../../Id_book/nameId.json'
-import ReviewAddForm from './reviewAddForm'
 
 // styled
 import ReviewListContent from './reviewListStyles';
@@ -12,14 +9,7 @@ import TripleDotsModal from './tripleDotsModal';
 import { AiOutlineMore } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
 
-const ReviewList = ({list, limit, toggleEllipsis, onClickMore, setModal, modal, reviewObj, setReviewObj}) => {
-
-    // (...) 클릭 시 수정, 삭제가 나타나도록 구현할 예정
-    // 지금은 그냥 수정, 삭제가 그냥 보임
-    // const [IfDotsClicked, setIfDotsClicked] = useState(false)
-    const [isWriting, setIsWriting] = useState(false)
-    const [selectedReview, setSelectedReview] = useState(undefined)
-    
+const ReviewList = ({list, limit, toggleEllipsis, onClickMore, setModal, setReviewObj, setIsWriting, isWriting, setMore}) => {
  
   return (
     <ReviewListContent>
@@ -28,7 +18,7 @@ const ReviewList = ({list, limit, toggleEllipsis, onClickMore, setModal, modal, 
         <span className='noiseLevel2'>noiseLevel3</span>
         <p>
         소음 리뷰 평균 소음은<br />
-        <span>보통</span>입니다.{/* 내용바꿔치기 */}
+        <span>보통</span>입니다.{/* 내용 바꿔치기 */}
         </p>
       </div>
 
@@ -86,26 +76,15 @@ const ReviewList = ({list, limit, toggleEllipsis, onClickMore, setModal, modal, 
           }
         </ul>
 
-        <button className='reviewAddBtn'>소음 리뷰 10개 더보기 <BiChevronDown/></button>{/* 남은 리뷰가 10개 미만일 경우 -> 소음 리뷰 5개 더보기*/}
+        <button className='reviewAddBtn' onClick={()=>{setMore(prev=>prev+1)}}>소음 리뷰 10개 더보기 <BiChevronDown/></button>
       </div>
-
-      {isWriting && <ReviewAddForm 
-        setIsWriting={setIsWriting} 
-        // currentState={undefined} 
-        // toggleIsWriting={undefined} 
-        // setModal={undefined} 
-        // modal={undefined}
-        />}
 
       <ReviewBtn>
         <button onClick={()=>{setIsWriting(true)}}>소음 리뷰 쓰러가기</button>
-
       </ReviewBtn>
 
         </ReviewListContent>
   );
 };
-
-
 
 export default ReviewList;

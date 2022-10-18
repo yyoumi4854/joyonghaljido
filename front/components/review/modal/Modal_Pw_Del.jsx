@@ -5,7 +5,7 @@ import Modal_PW_Layout   from './Modal_Pw.style';
 import DarkArea   from './DarkArea.style';
 import axios from 'axios';
 
-const Modal_Pw = ({setModal, modal, reviewObj}) => {
+const Modal_Pw = ({setModal, reviewObj, setListChanged}) => {
 
   const [showWrong, setShowWrong] = useState(false)
   const [inputValue, setInputValue] = useState('')
@@ -27,11 +27,14 @@ const Modal_Pw = ({setModal, modal, reviewObj}) => {
     );
   }
   
+
+
   const deleteReview = async() => {
     const reviewId = reviewObj._id;
     console.log(reviewId)
     try{
       await del('/reviews', reviewId)
+      setListChanged(prev=>!prev)
       console.log('삭제 성공')
       alert('삭제 성공')
       setModal('none')

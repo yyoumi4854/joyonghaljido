@@ -7,15 +7,15 @@ import {ReviewBtn} from '../../styles/btnStyles';
 // react-icon
 import { FaSurprise } from "react-icons/fa";
 
-const ReviewNone = ({setModal, modal}) => {
+const ReviewNone = ({setIsWriting}) => {
   return (
     <ReviewNoneContent>
       <div className='noneCon'>
         <FaSurprise/>
-        <p>아직 등록된 소음 리뷰가 없습니다.</p>
+        <p>등록된 소음 리뷰가 없습니다</p>
       </div>
       <ReviewBtn>
-        <button>소음 리뷰 쓰러가기</button>
+        <button onClick={()=>{setIsWriting(true)}}>소음 리뷰 쓰러가기</button>
       </ReviewBtn>
     </ReviewNoneContent>
   );

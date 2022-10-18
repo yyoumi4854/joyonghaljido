@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const Modal_Deny_Layouot = styled.div`
+const Modal_Ban_Layouot = styled.div`
   .modal {
     z-index:999;
     position: fixed;
@@ -20,4 +20,4 @@ const Modal_Deny_Layouot = styled.div`
   }
 `
 
-export default Modal_Deny_Layouot;
+export default Modal_Ban_Layouot;

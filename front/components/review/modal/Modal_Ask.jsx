@@ -13,7 +13,7 @@ const DarkArea  = styled.div`
   top:-50%;
   z-index:5;
 `
-const Modal_Ask = ({setModal, modal}) => {
+const Modal_Ask = ({setModal}) => {
   
   const deleteReview = () => {setModal('pw_delete')}
   const cancelSelect = () => {setModal('none');}

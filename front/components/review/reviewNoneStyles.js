@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 const ReviewNoneContent = styled.div`
+
+  z-index:999;
   .noneCon{
     ${({ theme }) => theme.common.flexCenter};
     flex-direction: column;

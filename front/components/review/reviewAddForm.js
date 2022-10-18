@@ -7,13 +7,14 @@ import DarkArea from "./darkAreaStyles";
 import { SmallBtn } from '../../styles/btnStyles';
 
 import geoId from './geoid.json';
-// const ReviewAddForm = ({ setIsWriting , currentState,  toggleIsWriting, setModal, modal }) => {
-const ReviewAddForm = ({ setIsWriting }) => {
-  // review content
+
+const ReviewAddForm = ({ setIsWriting, setListChanged, currentState }) => {
+  
   const [noiseLevel, setNoiseLevel] = useState('');
   const [dongList, setDongList] = useState([]);
+  const [defaultGu, setDefualtGu] = useState(true);
   const [review, setReview] = useState({
-    guId: "",
+    guId: currentState.guId,
     dongId: "",
     title: "",
     description: "",
@@ -21,12 +22,22 @@ const ReviewAddForm = ({ setIsWriting }) => {
     noiseLevel: "",
   });
 
-  // 구 선택했을 때 속한 동 리스트 찾기
-  const handleGuChange = async (e) => {
-    const selectedGuId = e.target.value;
-    const dongList = geoId.filter(element => element._id === selectedGuId);
-    setDongList(dongList[0].dongs);
-  }
+    const guObj = geoId.filter(element => element._id === currentState.guId);
+
+    // 구 선택했을 때 속한 동 리스트 찾기
+    const handleGuChange = async (e) => {
+        const selectedGuId = e.target.value;
+        if(currentState.guId == selectedGuId){
+            setDefualtGu(true)
+            const guObj = geoId.filter(element => element._id === currentState.guId);
+            setDongList(guObj[0].dongs);
+        }
+        else{
+            setDefualtGu(false)
+            const dongArr = geoId.filter(element => element._id === selectedGuId);
+            setDongList(dongArr[0].dongs);
+        }
+    }
 
   const handleNoiseLevelClick = (e) => {
     setNoiseLevel(e.target.value);
@@ -45,9 +56,11 @@ const ReviewAddForm = ({ setIsWriting }) => {
     try {
       console.log('review', review)
       await axios.post("http://localhost:5001/reviews", review);
+      setListChanged(prev=>!prev)
       setIsWriting(false);
     } catch (e) {
       console.log("POST 요청이 실패했습니다.", e);
+      console.log('보낸 값', review)
     }
   }
 
@@ -72,19 +85,30 @@ const ReviewAddForm = ({ setIsWriting }) => {
           <form onSubmit={handleAddSubmit}>
             <h3>소음 리뷰 <span>작성하기</span></h3>
             <div className="content">
-              <p className="title">지역 선택을 선택해주세요.</p>
+              <p className="title">지역을 선택해주세요.</p>
               <div className="selectBox">
                 <select name="guId" onChange={handleGuChange}>
-                  <option value="">구를 선택해주세요.</option>
+                  <option key={currentState.guId} value={currentState.guId}>{currentState.guName}</option>
                   {
                     geoId.map(gu => {
-                      return <option key={gu._id} value={gu._id}>{gu.name}</option>
+                      if(gu.name == currentState.guName){
+                        // return <option key={gu._id} value={gu._id}>{gu.name}</option>
+                      }
+                      else{
+                        return <option key={gu._id} value={gu._id}>{gu.name}</option>
+                      }
                     })
                   }
                 </select>
-                <select name="dongId" id="" disabled={!review.guId}>
+                <select name="dongId" id="">
                   <option value="">동을 선택해주세요.</option>
-                  {
+                  
+                  {defaultGu && 
+                    guObj[0].dongs.map(dong => {
+                      return <option key={dong._id} value={dong._id}>{dong.name}</option>
+                    })
+                  }
+                  {!defaultGu &&
                     dongList.map(dong => {
                       return <option key={dong._id} value={dong._id}>{dong.name}</option>
                     })

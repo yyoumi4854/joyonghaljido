@@ -6,7 +6,7 @@ import Modal_PW_Layout from './Modal_Pw.style';
 import DarkArea from './DarkArea.style';
 import axios from 'axios';
 
-const Modal_Pw = ({ setModal, modal, reviewObj, openIsEditing }) => {
+const Modal_Pw = ({ setModal, reviewObj, openIsEditing}) => {
 
   const [showWrong, setShowWrong] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -38,6 +38,7 @@ const Modal_Pw = ({ setModal, modal, reviewObj, openIsEditing }) => {
         })
     } catch (e) {
       console.log(e);
+      fail()
     }
   }
 

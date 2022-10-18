@@ -5,7 +5,7 @@ import { SmallBtn } from '../../styles/btnStyles';
 
 import geoId from './geoid.json';
 
-const ReviewEditForm = ({ currentReview, closeIsEditing }) => {
+const ReviewEditForm = ({ currentReview, closeIsEditing, setListChanged }) => {
     const [review, setReview] = useState({
         guId: currentReview.guId,
         dongId: currentReview.dongId,
@@ -26,25 +26,23 @@ const ReviewEditForm = ({ currentReview, closeIsEditing }) => {
     const handleUpdateSubmit = async (e) => {
         e.preventDefault();
         const reviewId = currentReview._id;
-
         try {
             await axios.put(`http://localhost:5001/reviews/${reviewId}`, review);
             closeIsEditing();
+            setListChanged(prev=>!prev)
         } catch (e) {
             console.log("수정 오류", e);
         }
     }
 
+    // modal off (when get out of modal)
     const modalRef = useRef();
-
     useEffect(() => {
         document.addEventListener('mousedown', handleOutsideClick);
-
         return () => {
             document.removeEventListener('mousedown', handleOutsideClick);
         };
     });
-
     const handleOutsideClick = (e) => {
         if (modalRef.current && !modalRef.current.contains(e.target)) {
             closeIsEditing();
