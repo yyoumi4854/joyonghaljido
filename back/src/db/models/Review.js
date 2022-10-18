@@ -121,9 +121,9 @@ class Review {
   //update review
   static async update(reviewId, toUpdate) {
     const updatedReview = await ReviewModel.findOneAndUpdate(
-      reviewId,
+      { _id: reviewId },
       toUpdate,
-      { returnDocument: "after" }
+      { returnOriginal: false }
     );
 
     return updatedReview;

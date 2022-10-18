@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const Review = require("../db/models/Review");
+const { SALT_ROUND } = require("../../constants");
 
 class reviewService {
   //create review
@@ -11,7 +12,7 @@ class reviewService {
     password,
     noiseLevel,
   }) {
-    const hashedPassword = await bcrypt.hash(password, 8);
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUND);
 
     const newReview = {
       guId,
@@ -61,22 +62,18 @@ class reviewService {
 
     const isMatched = await bcrypt.compare(password, review.password);
 
-    if (!isMatched) {
-      throw new Error("비밀번호가 일치하지 않습니다.");
-    }
-
     return isMatched;
   }
 
   //update review
   static async update(reviewId, toUpdate) {
-    const updates = Object.keys(toUpdate);
+    const review = await Review.getByReviewId(reviewId);
 
-    updates.forEach(async (update) => {
-      await Review.update({ _id: reviewId }, { [update]: toUpdate[update] });
-    });
+    if (!review) {
+      throw new Error("해당 리뷰는 존재하지 않습니다.");
+    }
 
-    const updatedReview = await Review.getByReviewId(reviewId);
+    const updatedReview = await Review.update(reviewId, toUpdate);
 
     return updatedReview;
   }
