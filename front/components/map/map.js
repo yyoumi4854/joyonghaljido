@@ -97,14 +97,14 @@ const Map = ({ currentState, setCurrentState, pins, setPins }) => {
                 }
             </div>
 
-            <div className='locationText'>
+            {/* <div className='locationText'>
                 {currentState.currentView === 'ranking' ?
                     <h2>찾고 싶은 지역을 선택해주세요.</h2> :
                     <h2>
                         {currentState.clickedName}
                     </h2>
                 }
-            </div>
+            </div> */}
 
 
             <div className='mapCon'>

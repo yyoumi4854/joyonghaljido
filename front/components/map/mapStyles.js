@@ -26,8 +26,11 @@ const MapContent = styled.div`
     }
     span{
       cursor: pointer;
+      font-size: 20px;
       color : ${({ theme }) => theme.colors.grey2};
       &:last-child{
+        font-size: 24px;
+        font-weight : 700;
         color: black;
       }
     }
