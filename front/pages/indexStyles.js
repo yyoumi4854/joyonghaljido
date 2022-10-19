@@ -105,7 +105,7 @@ const IndexStyle = styled.div`
                     font-weight: 500;
                 }
                 p:first-of-type{left: 34px;} 
-                p:last-of-type{right: 47px;} 
+                p:last-of-type{right: -7px;} 
             }
             .label{
                 margin-top: 16px;

@@ -136,10 +136,6 @@ const Index = () => {
               <dt></dt>
               <dd>구 별 소음민원 발생량</dd>
             </dl>
-            <dl>
-              <dt></dt>
-              <dd>구 별 인구 수</dd>
-            </dl>
           </div>
         </div>
       </section>
