@@ -4,7 +4,7 @@ require("./src/db/index.js");
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
-const { PORT } = require("./constants");
+const { PORT } = require("./src/constants");
 const guRouter = require("./src/routers/guRouter");
 const dongRouter = require("./src/routers/dongRouter");
 const pinRouter = require("./src/routers/pinRouter");

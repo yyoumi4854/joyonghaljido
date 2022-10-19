@@ -2,6 +2,7 @@ const { Router } = require("express");
 const reviewService = require("../services/reviewService");
 const passwordMiddleware = require("../middlewares/passwordMiddleware");
 const postRequestLimiter = require("../middlewares/ipLimitMiddleware");
+const { GET_QUERY_DEFAULT_VALUES } = require("../constants");
 
 const router = Router();
 
@@ -25,34 +26,18 @@ router.post("/", postRequestLimiter, async (req, res, next) => {
   }
 });
 
-//get query object function
-function createGetQuery(config) {
-  config = Object.assign(
-    {
-      guId: null,
-      dongId: null,
-      skip: 0,
-      limit: 10,
-      noiseLevel: null,
-    },
-    config
-  );
-
-  return config;
-}
-
 //get reviews
 router.get("/", async (req, res, next) => {
   try {
-    const queryConfig = createGetQuery(req.query);
-    const { guId, dongId, skip, limit, noiseLevel } = queryConfig;
+    const getQuery = { ...GET_QUERY_DEFAULT_VALUES, ...req.query };
+    const { guId, dongId, skip, limit, noiseLevel } = getQuery;
 
     const reviews = await reviewService.getList(
       guId,
       dongId,
-      parseInt(skip, 10),
-      parseInt(limit, 10),
-      parseInt(noiseLevel, 10)
+      Number.parseInt(skip, 10),
+      Number.parseInt(limit, 10),
+      Number.parseInt(noiseLevel, 10)
     );
 
     res.status(200).json(reviews);
@@ -113,7 +98,7 @@ router.put("/:reviewId", async (req, res, next) => {
 //delete review
 router.delete("/:reviewId", passwordMiddleware, async (req, res, next) => {
   try {
-    const reviewId = req.currentReview._id;
+    const reviewId = req.params.reviewId;
 
     const deletedReview = await reviewService.delete(reviewId);
 

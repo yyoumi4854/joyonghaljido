@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { MONGODB_URL } = require("../../constants");
+const { MONGODB_URL } = require("../constants");
 const ReviewModel = require("./schemas/review");
 const GuModel = require("./schemas/gu");
 const DongModel = require("./schemas/dong");
