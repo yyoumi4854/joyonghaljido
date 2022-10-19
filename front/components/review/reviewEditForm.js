@@ -5,12 +5,12 @@ import { SmallBtn } from '../../styles/btnStyles';
 
 const ReviewEditForm = ({ currentReview, closeIsEditing, setListChanged }) => {
 
-    const [editDongList, setEditDongList] = useState([]);
+    const [editDongInfo, setEditDongInfo] = useState();
     
     useEffect(() => {
         axios.get(`http://localhost:5001/dongs/${currentReview.dongId}`)
             .then((res) => {
-                setEditDongList(res.data);
+                setEditDongInfo(res.data);
             })
     }, []);
 
@@ -65,10 +65,10 @@ const ReviewEditForm = ({ currentReview, closeIsEditing, setListChanged }) => {
                         <p className="title">지역 선택을 선택해주세요.</p>
                         <div className="selectBox">
                             <select name="guId" disabled={ review.guId }>
-                                <option value={review.guId}>{editDongList.find(dong => dong._id === currentReview.dongId).guName}</option>
+                                <option value={review.guId}>{editDongInfo.guName}</option>
                             </select>
                             <select name="dongId" id="" disabled={ review.dongId }>
-                                <option value={review.dongId}>{editDongList.find(dong => dong._id === currentReview.dongId).name}</option>
+                                <option value={review.dongId}>{editDongInfo.name}</option>
                             </select>
                         </div>
                     </div>
