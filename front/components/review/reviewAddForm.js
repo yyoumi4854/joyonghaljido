@@ -29,6 +29,12 @@ const ReviewAddForm = ({ setIsWriting, setListChanged, currentState, setModal })
         })
   }, []);
 
+  useEffect(() => {
+    axios.get(`http://localhost:5001/location/gus/${currentState.guId}/dongs`)
+      .then((res) => {
+        setDongList(res.data.dongs);
+      })
+  }, []);
 
   // 구 선택했을 때 속한 동 리스트 찾기
   const handleGuChange = async (e) => {
@@ -96,10 +102,12 @@ const ReviewAddForm = ({ setIsWriting, setListChanged, currentState, setModal })
               <p className="title">지역을 선택해주세요.</p>
               <div className="selectBox">
                 <select name="guId" onChange={handleGuChange}>
-                  {/* <option key={currentState.guId} value={currentState.guId}>{currentState.guName}</option> */}
+                  <option key={currentState.guId} value={currentState.guId}>{currentState.guName}</option>
                   {
                     guList.map(gu => {
-                      return <option key={gu._id} value={gu._id}>{gu.name}</option>
+                      if (gu.name !== currentState.guName) {
+                        return <option key={gu._id} value={gu._id}>{gu.name}</option>
+                      }
                     })
                   }
                 </select>
