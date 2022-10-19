@@ -6,12 +6,6 @@ const TeamInfo = () => {
     return (
         <>
             <TeamInfoLayout>
-                {/* <div className="sec bg center">
-                    <span className="title-1">데이터4이언스</span>
-                    <span className="title-2">팀 좌우명</span>
-                    <span className="teamText">오히려 좋아!</span>
-                </div> */}
-
                 <section>
                     <div className="inner">
                         <h2>팀원 소개</h2>
@@ -125,7 +119,7 @@ const TeamInfo = () => {
 
                             <div className="right">
                                 <h3>백엔드</h3>
-                                <p className="nameList">연다음봄, 채은빈</p>
+                                <p className="nameList">연다은봄, 채은빈</p>
 
                                 <Carousel className="slideCon">
                                     <Carousel.Item>
