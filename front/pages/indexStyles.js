@@ -86,10 +86,26 @@ const IndexStyle = styled.div`
                 color: ${({ theme }) => theme.colors.grey2};
             }
 
+            
             .graphBox{
+                position: relative;
                 width: 100%;
                 margin-top: 8px;
                 z-index: 20;
+                
+                &.graph3Box{
+                    margin-bottom: 40px;
+                }
+
+
+                p{
+                    position: absolute;
+                    bottom: -20px;
+                    color: #30C586;
+                    font-weight: 500;
+                }
+                p:first-of-type{left: 34px;} 
+                p:last-of-type{right: -7px;} 
             }
             .label{
                 margin-top: 16px;

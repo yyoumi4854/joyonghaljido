@@ -3,15 +3,22 @@ import axios from "axios";
 import FormContent from "./reviewAddForm.style";
 import { SmallBtn } from '../../styles/btnStyles';
 
-import geoId from './geoid.json';
+const ReviewEditForm = ({ currentReview, closeIsEditing, setListChanged, editDongInfo }) => {
 
-const ReviewEditForm = ({ currentReview, closeIsEditing, setListChanged }) => {
+    // const [editDongInfo, setEditDongInfo] = useState();
+    
+    // useEffect(() => {
+    //     axios.get(`http://localhost:5001/dongs/${currentReview.dongId}`)
+    //         .then((res) => {
+    //             setEditDongInfo(res.data);
+    //         })
+    // }, []);
+
     const [review, setReview] = useState({
         guId: currentReview.guId,
         dongId: currentReview.dongId,
         title: currentReview.title,
         description: currentReview.description,
-        password: currentReview.password,
         noiseLevel: currentReview.noiseLevel,
     });
 
@@ -58,10 +65,10 @@ const ReviewEditForm = ({ currentReview, closeIsEditing, setListChanged }) => {
                         <p className="title">지역 선택을 선택해주세요.</p>
                         <div className="selectBox">
                             <select name="guId" disabled={ review.guId }>
-                                <option value={review.guId}>{geoId.find(geo => geo._id === currentReview.guId).name}</option>
+                                <option value={review.guId}>{editDongInfo.guName}</option>
                             </select>
                             <select name="dongId" id="" disabled={ review.dongId }>
-                                <option value={review.dongId}>{geoId.find(geo => geo._id === currentReview.guId).dongs.find(dong => dong._id === currentReview.dongId).name}</option>
+                                <option value={review.dongId}>{editDongInfo.name}</option>
                             </select>
                         </div>
                     </div>
@@ -85,34 +92,22 @@ const ReviewEditForm = ({ currentReview, closeIsEditing, setListChanged }) => {
                     </div>
                     <br></br>
 
-
-                    <div className="content">
-                        <p className="title">비밀번호를 입력해 주세요.</p>
-                        <input
-                            type="password"
-                            name="password"
-                            value={review.password}
-                            disabled
-                        />
-                    </div>
-                    <br></br>
-
                     <div className="content">
                         <p className="title">내가 느낀 소음은 어느 정도였나요?</p>
 
                         <ul className="radioBox"> 
                             <li className="good">
-                                <input id="good" type="radio" name="noiseLevel" value='3' checked={ currentReview.noiseLevel === "3" } />
+                                <input id="good" type="radio" name="noiseLevel" value='3' />
                                 <label for="good">좋음</label>
                                 <p>좋음</p>
                             </li>
                             <li className="soso">
-                                <input id="soso" type="radio" name="noiseLevel" value='2' checked={ currentReview.noiseLevel === "2" } />
+                                <input id="soso" type="radio" name="noiseLevel" value='2' />
                                 <label for='soso'>보통</label>
                                 <p>보통</p>
                             </li>
                             <li className="bad">
-                                <input id="bad" type="radio" name="noiseLevel" value='1' checked={ currentReview.noiseLevel === "1" } />
+                                <input id="bad" type="radio" name="noiseLevel" value='1' />
                                 <label for='bad'>나쁨</label>
                                 <p>나쁨</p>
                             </li>

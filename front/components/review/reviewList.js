@@ -12,7 +12,7 @@ import { BiChevronDown } from "react-icons/bi";
 
 const ReviewList = ({ 
     list, limit, toggleEllipsis, onClickMore, setModal, setReviewObj, 
-    setIsWriting, isWriting, setMore, currentState, more, setList, reviewType, 
+    setIsWriting, isWriting, setMore, dongList, currentState, more, setList, reviewType, 
     setReviewType, reviewCnt, avgIdx, typeChanged, setTypeChanged, lv, setLv}) => {
 
     const [noiseTabActive, setNoiseTabActive] = useState([-1, 0, 0, 0]);
@@ -81,7 +81,7 @@ const ReviewList = ({
                         {toggleEllipsis(x.description, limit).isShowMore && <button onClick={onClickMore(x.description)}>...더보기</button>}
                       </p>
                     </div>
-                    <span className='dongTag'>{nameId.find(v => v._id === x.dongId).name}</span>{/* 동일때는 안보이기 */}
+                    { currentState.currentView === 'gu' && <span className='dongTag'>{dongList.find(v => v._id === x.dongId).name}</span> }
                   </div>
 
                   <button className='editBtn' onClick={()=>{

@@ -46,6 +46,7 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
   
   // 토글 관련
   const [isEditing, setIsEditing] = useState(false);
+  const [dongList, setDongList] = useState([]);
   const [listChanged, setListChanged] = useState(false); // toggle
   const [reviewType, setReviewType] = useState('default'); // or lv
   const [typeChanged, setTypeChanged] = useState(false);
@@ -56,6 +57,8 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
   // ***** [GET 상황] ***** //
   // 1. 구, 동 클릭 (리뷰 최초 로딩) : 
   //   리뷰수 + 리뷰목록 + 평균 소음 인덱스 구하기
+  const [editDongInfo, setEditDongInfo] = useState(undefined);
+
   useEffect(() => {
     setMore(0);
     setReviewType('default');
@@ -232,6 +235,7 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
         setModal={setModal}
         reviewObj={reviewObj}
         openIsEditing={openIsEditing}
+        setEditDongInfo={setEditDongInfo}
       />}
 
       {/* 수정 폼 */}
@@ -239,6 +243,7 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
         currentReview={reviewObj}
         closeIsEditing={closeIsEditing}
         setListChanged={setListChanged}
+        editDongInfo={editDongInfo}
       />}
 
       {/* 입력 폼 */}

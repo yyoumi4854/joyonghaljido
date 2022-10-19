@@ -26,6 +26,13 @@ class Dong {
           guName: "$guName.name",
         },
       },
+      {
+        $project: {
+          longitude: 0,
+          latitude: 0,
+          guId: 0,
+        },
+      },
     ]);
 
     const foundDong = foundDongArr[0];
