@@ -1,11 +1,11 @@
-
 import axios from 'axios';
+import getAvg from '../functions/getAvg'
 
 const filterClicked = async (currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv) => {
-
-
+    
     // 1. 리뷰 개수 구하기
     if (currentState.currentView === 'gu') {
+
         try{
             await axios.get(`http://localhost:5001/reviews/count?guId=${currentState.guId}`)
             .then(v=>{
@@ -43,19 +43,12 @@ const filterClicked = async (currentState, more, setList, setReviewCnt, reviewCn
             console.log('동 리뷰 수 파악 불가')
         }
     }
-
+    
     // 2. 평균 소음 인덱스 계산
     const v1 = reviewCnt[1]
     const v2 = reviewCnt[2]
     const v3 = reviewCnt[3]
-    let tempAvg = Math.max(v1,v2,v3)
-    let res = undefined
-    if(tempAvg == v1){ res = 1}
-    if(tempAvg == v2){ res = 2}
-    if(tempAvg == v3){ res = 3}
-    if(res == 1 && v1<v2+v3){res = 2}
-    if(res == 3 && v1+v2>v3){res = 2}
-    setAvgIdx(res)
+    setAvgIdx(getAvg(v1, v2, v3))
 
     // 3. 리뷰 목록 구하기
     // 구 리뷰

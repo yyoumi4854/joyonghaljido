@@ -5,15 +5,14 @@ import Modal_Ban from './modal/Modal_Ban'
 import Modal_Ask from './modal/Modal_Ask'
 
 // functions
-import getReview from './functions/getReview'
-import getReviewNum from './functions/getReviewNum'
-import getAvg from './functions/getAvg'
-import firstLoad from './functions/firstLoad'
-import getReviewByLv from './functions/getReviewByLv'
-import whenListChanged from './functions/whenListChanged'
+import getReview from './functions/notUsing/getReview'
+import getReviewNum from './functions/notUsing/getReviewNum'
+import getMorePages from './functions/notUsing/getMorePages.js'
+import getReviewByLv from './functions/notUsing/getReviewByLv'
 import filterClicked from './functions/filterClicked.js'
 import allReviewClicked from './functions/allReviewClicked.js'
-import getMorePages from './functions/getMorePages.js'
+import Load_Dong from './functions/Load_Dong.js'
+import Load_Gu from './functions/Load_Gu'
 
 // import nameId from '../../Id_book/nameId.json'
 import axios from 'axios';
@@ -51,76 +50,79 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
   const [reviewType, setReviewType] = useState('default'); // or lv
   const [typeChanged, setTypeChanged] = useState(false);
   const [isWriting, setIsWriting] = useState(false)
+  const [dongListChanged, setDongListChanged] = useState(false)
   const openIsEditing  = () => { setIsEditing(true);}
   const closeIsEditing = () => { setIsEditing(false);}
 
-  // ***** [GET 상황] ***** //
-  // 1. 구, 동 클릭 (리뷰 최초 로딩) : 
-  //   리뷰수 + 리뷰목록 + 평균 소음 인덱스 구하기
   const [editDongInfo, setEditDongInfo] = useState(undefined);
 
-  useEffect(() => {
-    setMore(0);
-    setReviewType('default');
-    firstLoad( 
-        currentState, 
-        more, setList,
-        setReviewCnt, 
-        reviewCnt, 
-        setAvgIdx,
-        )
-  }, [currentState.guId, currentState.clickSpotId])
-  
-  // 2. 타입 변경 시 : 
-  useEffect(() => {
-    setMore(0)
-    if(reviewType=='default'){
-        allReviewClicked(
-            currentState, 
-            more, setList, 
-            setReviewCnt, 
-            reviewCnt, 
-            setAvgIdx)
+    // ***** [GET] ***** //
+    // 0. 구에 따른 동 목록 받기
+    const getDongsByGuId = async () => {
+        try{
+            await axios.get(`http://localhost:5001/location/gus/${currentState.guId}/dongs`)
+            .then((res) => {
+                setDongList(res.data.dongs);
+                console.log('res.data.dongs', res.data.dongs)
+                setDongListChanged(true)
+            });
+        }
+        catch{
+            console.log('getReview 실패')
+        }
     }
-    if(reviewType=='filter'){
-        filterClicked(
-            currentState, 
-            more, 
-            setList, 
-            setReviewCnt, 
-            reviewCnt, 
-            setAvgIdx, 
-            lv)
-    }
-  }, [typeChanged])
 
-  // 3. 더 불러오기(more) or 리뷰 CRD시 (listChanged) : 
-  useEffect(() => {
-    if(reviewType=='default'){
-        allReviewClicked(
-            currentState, 
-            more, setList, 
-            setReviewCnt, 
-            reviewCnt, 
-            setAvgIdx)
-    }
-    if(reviewType=='filter'){
-        filterClicked(
-            currentState, 
-            more, 
-            setList, 
-            setReviewCnt, 
-            reviewCnt, 
-            setAvgIdx, 
-            lv)
-    }
-  }, [more, listChanged]) // ---- 타입 유지 안되고 터지고 있음
+    // 1. 기본 : 리뷰수 + 리뷰목록 + 평균 소음 인덱스 구하기
+    useEffect(() => {
+        getDongsByGuId()
+        setMore(0);
+        // 1-1. Load_Gu 
+        if(currentState.currentView == 'gu'){
+            setReviewType('default');
+            Load_Gu( 
+                currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx,
+            )
+        }
+        // 1-2. Load_Dong 
+        if(currentState.currentView == 'dong'){
+            setReviewType('default');
+            Load_Dong(
+                currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx
+            ) 
+        }
+    }, [currentState.currentView, currentState.guId, currentState.clickSpotId])
 
 
+    // 2. 필터 타입 변경
+    // : 더불러오기-제거, 해당 필터 타입 보여주기
+    useEffect(() => {
+        setMore(0)
+        if(reviewType=='default'){
+            allReviewClicked(
+                currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
+        }
+        if(reviewType=='filter'){
+            filterClicked(
+                currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
+            }
+        }, [typeChanged])
+
+        
+    // 3. 더 불러오기(more) or 리뷰 CRD시 (listChanged) : 
+    // :  더불러오기-수행, 해당 필터 타입 보여주기
+    useEffect(() => {
+        alert()
+        if(reviewType=='default'){
+            allReviewClicked(
+                currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
+        }
+        if(reviewType=='filter'){
+            filterClicked(
+                currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
+            }
+        }, [more, listChanged]) 
 
 
-
-  
   //***** [더보기] *****//
   const toggleEllipsis = (str, limit) => {
     return {
@@ -131,6 +133,8 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
   const onClickMore = (str) => () => {
     setLimit(str.length);
   };
+
+
   //***** [뒤로가기] *****//
   const back = (currentState, setCurrentState) => {
     if (currentState.currentView === 'gu') {
@@ -207,6 +211,8 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
           setTypeChanged={setTypeChanged}
           lv={lv}
           setLv={setLv}
+          dongList={dongList}
+          dongListChanged={dongListChanged}
         />
       }
       <ReviewBtn>

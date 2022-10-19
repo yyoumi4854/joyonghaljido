@@ -38,10 +38,12 @@ const TripleDotsModal = ({ setModal,x,setReviewObj, setTripleDotModal}) => {
   
   const putBtnClicked = () => {
     setModal("pw_update");
+    setTripleDotModal(false)
     setReviewObj(()=>x);
   }
   const delBtnClicked = () => {
     setModal("chk");
+    setTripleDotModal(false)
     setReviewObj(()=>x);
   }
   return (

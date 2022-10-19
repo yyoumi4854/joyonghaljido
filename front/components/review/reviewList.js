@@ -13,7 +13,7 @@ import { BiChevronDown } from "react-icons/bi";
 const ReviewList = ({ 
     list, limit, toggleEllipsis, onClickMore, setModal, setReviewObj, 
     setIsWriting, isWriting, setMore, dongList, currentState, more, setList, reviewType, 
-    setReviewType, reviewCnt, avgIdx, typeChanged, setTypeChanged, lv, setLv}) => {
+    setReviewType, reviewCnt, avgIdx, typeChanged, setTypeChanged, lv, setLv, dongListChanged}) => {
 
     const [noiseTabActive, setNoiseTabActive] = useState([-1, 0, 0, 0]);
     const [tripleDotModal, setTripleDotModal] = useState(false);
@@ -81,7 +81,15 @@ const ReviewList = ({
                         {toggleEllipsis(x.description, limit).isShowMore && <button onClick={onClickMore(x.description)}>...더보기</button>}
                       </p>
                     </div>
-                    { currentState.currentView === 'gu' && <span className='dongTag'>{dongList.find(v => v._id === x.dongId).name}</span> }
+                    {/* 동일때 태그 삭제 */}
+                    { (dongListChanged == true && currentState.currentView === 'gu') &&
+                    <span className='dongTag'>
+                        {dongList.find(v => {
+                        {
+                            return v._id === x.dongId
+                        }
+                        }).name}
+                    </span> }
                   </div>
 
                   <button className='editBtn' onClick={()=>{

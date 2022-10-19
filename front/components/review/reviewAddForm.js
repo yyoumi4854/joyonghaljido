@@ -5,6 +5,7 @@ import axios from "axios";
 import FormContent from "./reviewAddForm.style";
 import DarkArea from "./darkAreaStyles";
 import { SmallBtn } from '../../styles/btnStyles';
+import { Prev } from 'react-bootstrap/esm/PageItem';
 
 const ReviewAddForm = ({ setIsWriting, setListChanged, currentState, setModal }) => {
   
@@ -49,11 +50,16 @@ const ReviewAddForm = ({ setIsWriting, setListChanged, currentState, setModal })
         setDongList(res.data.dongs);
       });
   }
-
+  // 노이즈레벨 입력 시점
   const handleNoiseLevelClick = (e) => {
     setNoiseLevel(e.target.value);
+    axios.get(`http://localhost:5001/location/gus/${currentState.guId}/dongs`)
+      .then((res) => {
+        setDongList(res.data.dongs);
+      })
   };
 
+  // 입력폼 변동
   const handleReviewChange = (e) => {
     const { name, value } = e.target;
     setReview((prev) => ({
@@ -61,7 +67,8 @@ const ReviewAddForm = ({ setIsWriting, setListChanged, currentState, setModal })
       [name]: value,
     }));
   }
-
+ 
+  // 제출 시점   
   const handleAddSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -71,11 +78,17 @@ const ReviewAddForm = ({ setIsWriting, setListChanged, currentState, setModal })
       setIsWriting(false);
     } catch (e) {
       setIsWriting(false);
-      // 작성금지 모달
-      setModal('ban')
+      setModal('ban') // 작성금지 모달
       console.log("POST 요청이 실패했습니다.", e);
       console.log('보낸 값', review)
     }
+  }
+
+  const handleDongValue = (e) => {
+    setReview((prev)=>({
+        ...prev,
+        dongId:e.target.value
+    }))
   }
 
   const modalRef = useRef();
@@ -111,8 +124,9 @@ const ReviewAddForm = ({ setIsWriting, setListChanged, currentState, setModal })
                     })
                   }
                 </select>
-                <select name="dongId" id="">
-                  {/* <option value="">동을 선택해주세요.</option> */}
+                <select name="dongId" id="" onClick={(e)=>{handleDongValue(e);}}>
+                {/* <select name="dongId" id=""> */}
+                  <option value="">동을 선택해주세요.</option>
                   
                   {defaultGu && 
                     dongList.map(dong => {

@@ -1,10 +1,10 @@
 
 import axios from 'axios';
+import getAvg from '../functions/getAvg'
 
 const allReviewClicked = async (currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx) => {
-
+    
     // 1. 리뷰 개수 구하기
-    console.log('allReviewClicked')
     if (currentState.currentView === 'gu') {
         try{
             await axios.get(`http://localhost:5001/reviews/count?guId=${currentState.guId}`)
@@ -48,17 +48,10 @@ const allReviewClicked = async (currentState, more, setList, setReviewCnt, revie
     const v1 = reviewCnt[1]
     const v2 = reviewCnt[2]
     const v3 = reviewCnt[3]
-    let tempAvg = Math.max(v1,v2,v3)
-    let res = undefined
-    if(tempAvg == v1){ res = 1}
-    if(tempAvg == v2){ res = 2}
-    if(tempAvg == v3){ res = 3}
-    if(res == 1 && v1<v2+v3){res = 2}
-    if(res == 3 && v1+v2>v3){res = 2}
-    setAvgIdx(res)
+    setAvgIdx(getAvg(v1, v2, v3))
 
     // 3. 리뷰 목록 구하기
-    // 3-1 구 목록 구하기
+    // 3-1 구 리뷰 목록 구하기
     if (currentState.currentView === 'gu') {
         try {
             await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}`)
@@ -73,7 +66,7 @@ const allReviewClicked = async (currentState, more, setList, setReviewCnt, revie
         }
         catch { console.log('구 리뷰 로딩 실패!'); }
     }
-    // 3-1 동 목록 구하기
+    // 3-1 동 리뷰 목록 구하기
     else if (currentState.currentView === 'dong') {
         try {
             await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}`)
