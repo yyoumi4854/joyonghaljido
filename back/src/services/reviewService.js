@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const Review = require("../db/models/Review");
-const { SALT_ROUND } = require("../../constants");
+const { SALT_ROUND } = require("../constants");
 
 class reviewService {
   //create review

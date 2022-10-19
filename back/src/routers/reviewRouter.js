@@ -2,6 +2,7 @@ const { Router } = require("express");
 const reviewService = require("../services/reviewService");
 const passwordMiddleware = require("../middlewares/passwordMiddleware");
 const postRequestLimiter = require("../middlewares/ipLimitMiddleware");
+const { GET_QUERY_DEFAULT_VALUES } = require("../constants");
 
 const router = Router();
 
@@ -25,27 +26,11 @@ router.post("/", postRequestLimiter, async (req, res, next) => {
   }
 });
 
-//get query object function
-function createGetQuery(config) {
-  config = Object.assign(
-    {
-      guId: null,
-      dongId: null,
-      skip: 0,
-      limit: 10,
-      noiseLevel: null,
-    },
-    config
-  );
-
-  return config;
-}
-
 //get reviews
 router.get("/", async (req, res, next) => {
   try {
-    const queryConfig = createGetQuery(req.query);
-    const { guId, dongId, skip, limit, noiseLevel } = queryConfig;
+    const getQuery = { ...GET_QUERY_DEFAULT_VALUES, ...req.query };
+    const { guId, dongId, skip, limit, noiseLevel } = getQuery;
 
     const reviews = await reviewService.getList(
       guId,
