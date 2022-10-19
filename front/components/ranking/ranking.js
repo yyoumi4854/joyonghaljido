@@ -12,6 +12,7 @@ import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 // import { AiOutlineVerticalAlignTop } from "react-icons/ai";
 
 import nameIds from '../../Id_book/nameId.json';
+import zoomMap from '../../data/map/zoom.json';
 
 const Ranking2 = ({ currentState, setCurrentState, pins, setPins, dongs, setDongs }) => {
   // const [tab, setTab] = useState(currentState.rankingTab);
@@ -61,8 +62,8 @@ const Ranking2 = ({ currentState, setCurrentState, pins, setPins, dongs, setDong
     setDongs(dongsAndPins.data.dongs);
     setPins(dongsAndPins.data.pins);
 
-    // const { center } = zoomMap[name];
-    const { center } = mapData.data;
+    const { center } = zoomMap[selecGu.name];
+    // const { center } = mapData.data;
 
     setCurrentState({
       ...currentState,

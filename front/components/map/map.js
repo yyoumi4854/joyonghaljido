@@ -110,7 +110,7 @@ const Map = ({ currentState, setCurrentState, pins, setPins, dongs, setDongs }) 
             <div className='mapCon'>
                 <ComposableMap
                     projection="geoMercator"
-                    projectionConfig={{ rotate: [-60, 0, 5], scale: 35000 }}
+                    projectionConfig={{ rotate: [-60, 0, 5], scale: 38000 }}
                     data-tip=""
                 >
                     <ZoomableGroup
@@ -147,8 +147,8 @@ const Map = ({ currentState, setCurrentState, pins, setPins, dongs, setDongs }) 
                                                 setDongs(dongsAndPins.data.dongs);
                                                 setPins(dongsAndPins.data.pins);
 
-                                                // const { center } = zoomMap[name];
-                                                const { center } = mapData.data;
+                                                const { center } = zoomMap[name];
+                                                // const { center } = mapData.data;
 
                                                 setCurrentState({
                                                     ...currentState,
