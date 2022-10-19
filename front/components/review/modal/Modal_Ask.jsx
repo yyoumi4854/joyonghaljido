@@ -8,7 +8,7 @@ import ModalContent from "./modalStyles";
 // import Modal_Ask_Layout  from './Modal_Ask.style';
 import { SmallBtn } from '../../../styles/btnStyles';
 
-const Modal_Ask = ({setModal, modal}) => {
+const Modal_Ask = ({setModal}) => {
   
   const deleteReview = () => {setModal('pw_delete')}
   const cancelSelect = () => {setModal('none');}

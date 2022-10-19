@@ -193,9 +193,9 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
         setIsWriting={setIsWriting}
         setListChanged={setListChanged}
         currentState={currentState}
+        setModal={setModal}
       />}
     </>
   );
 }
 export default Review;
-// modal

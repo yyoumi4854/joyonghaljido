@@ -8,7 +8,7 @@ import { SmallBtn } from '../../styles/btnStyles';
 
 import geoId from './geoid.json';
 
-const ReviewAddForm = ({ setIsWriting, setListChanged, currentState }) => {
+const ReviewAddForm = ({ setIsWriting, setListChanged, currentState, setModal }) => {
   
   const [noiseLevel, setNoiseLevel] = useState('');
   const [dongList, setDongList] = useState([]);
@@ -59,6 +59,9 @@ const ReviewAddForm = ({ setIsWriting, setListChanged, currentState }) => {
       setListChanged(prev=>!prev)
       setIsWriting(false);
     } catch (e) {
+      setIsWriting(false);
+      // 작성금지 모달
+      setModal('ban')
       console.log("POST 요청이 실패했습니다.", e);
       console.log('보낸 값', review)
     }
