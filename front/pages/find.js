@@ -51,7 +51,7 @@ const Find = () => {
 
   return (
     <FindLayout>
-      <div>
+      <div className='view'>
         {currentState.currentView === 'ranking' ?
           (<>
             <Ranking
@@ -91,6 +91,7 @@ const Find = () => {
             setCurrentState={setCurrentState} /> : null}
         <FooterStyle>&copy; 2022 조용할지도</FooterStyle>
       </div>
+
       <div>
         <Map
           currentState={currentState}

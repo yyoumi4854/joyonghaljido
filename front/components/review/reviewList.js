@@ -1,8 +1,8 @@
 import nameId from '../../Id_book/nameId.json'
 import { useState } from 'react'
+
 // styled
 import ReviewListContent from './reviewListStyles';
-import { SmallBtn, ReviewBtn } from '../../styles/btnStyles';
 import TripleDotsModal from './tripleDotsModal';
 
 // react-icons
@@ -98,11 +98,6 @@ const ReviewList = ({ list, limit, toggleEllipsis, onClickMore, setModal, setRev
 
         <button className='reviewAddBtn' onClick={() => { setMore(prev => prev + 1) }}>소음 리뷰 10개 더보기 <BiChevronDown /></button>
       </div>
-
-      {/* <ReviewBtn>
-        <button onClick={() => { setIsWriting(true) }}>소음 리뷰 쓰러가기</button>
-      </ReviewBtn> */}
-
     </ReviewListContent>
   );
 };
