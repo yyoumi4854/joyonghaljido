@@ -35,9 +35,9 @@ router.get("/", async (req, res, next) => {
     const reviews = await reviewService.getList(
       guId,
       dongId,
-      parseInt(skip, 10),
-      parseInt(limit, 10),
-      parseInt(noiseLevel, 10)
+      Number.parseInt(skip, 10),
+      Number.parseInt(limit, 10),
+      Number.parseInt(noiseLevel, 10)
     );
 
     res.status(200).json(reviews);
@@ -98,7 +98,7 @@ router.put("/:reviewId", async (req, res, next) => {
 //delete review
 router.delete("/:reviewId", passwordMiddleware, async (req, res, next) => {
   try {
-    const reviewId = req.currentReview._id;
+    const reviewId = req.params.reviewId;
 
     const deletedReview = await reviewService.delete(reviewId);
 
