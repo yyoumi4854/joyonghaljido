@@ -1,32 +1,32 @@
 import styled, { css } from "styled-components";
 
 const pin1 = css`
-    background: url('/images/pin1.svg') no-repeat center;
+    background: url('/images/pins/puplePin.svg') no-repeat center;
     background-size: contain; 
 `;
 
 const pin2 = css`
-    background: url('/images/pin2.svg') no-repeat center;
+    background: url('/images/pins/bluePin.svg') no-repeat center;
     background-size: contain; 
 `;
 
 const pin3 = css`
-    background: url('/images/pin3.svg') no-repeat center;
+    background: url('/images/pins/greenPin.svg') no-repeat center;
     background-size: contain; 
 `;
 
 const pin4 = css`
-    background: url('/images/pin4.svg') no-repeat center;
+    background: url('/images/pins/yellowPin.svg') no-repeat center;
     background-size: contain; 
 `;
 
 const pin5 = css`
-    background: url('/images/pin5.svg') no-repeat center;
+    background: url('/images/pins/orangePin.svg') no-repeat center;
     background-size: contain; 
 `;
 
 const pin6 = css`
-    background: url('/images/pin6.svg') no-repeat center;
+    background: url('/images/pins/redPin.svg') no-repeat center;
     background-size: contain; 
 `;
 

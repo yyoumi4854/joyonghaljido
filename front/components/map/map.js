@@ -255,12 +255,12 @@ const Map = ({ currentState, setCurrentState, pins, setPins, dongs, setDongs }) 
                                         setTooltipName('');
                                     }}
                                     style={{
-                                        default: { fill: theme.colors.main },
+                                        default: { fill: theme.colors.mainLight1 },
                                         hover: {
-                                            fill: theme.colors.main,
+                                            fill: theme.colors.mainLight1,
                                             outline: 'none',
-                                            stroke: theme.colors.mainLight1,
-                                            strokeWidth: 0.5,
+                                            stroke: theme.colors.main,
+                                            strokeWidth: 0.1,
                                         },
                                     }}
                                     coordinates={[dong.longitude, dong.latitude]}>
