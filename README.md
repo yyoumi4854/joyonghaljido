@@ -2,13 +2,11 @@
 
 <br/>
 
-<img src="https://user-images.githubusercontent.com/85475577/196641841-5b755230-8325-4e40-a66d-d29b054b06e2.svg" alt="logo" style="zoom:400%;" />
+<img src="https://user-images.githubusercontent.com/85475577/196641841-5b755230-8325-4e40-a66d-d29b054b06e2.svg" alt="logo" width="40%" />    
 
 <br/>
 
 ## 📄 개요
-
----
 
 - 서비스명: 조용할지도
 - 기획 기간: 2022.10.03 ~ 2022.10.07
@@ -20,42 +18,34 @@
 
 <br/>
 
-## 👨‍👩‍👧‍👦 팀원 소개
-
----
+## 🫶 팀원 소개
 
 **박지연**
-
 - Front-End
 - katkrarrrr@gmail.com
 - Github: [@yeoooon](https://github.com/yeoooon)
 
 **연다은봄**
-
 - Back-End
 - robin.yeon@gmail.com
 - Github: [@robinyeon](https://github.com/robinyeon)
 
 **유민지**
-
 - Front-End
-- yyoumi4854@gmail.com
-  -Github: [@yyoumi4854](https://github.com/yyoumi4854)
+- yyoumi4854@gmail.com  
+- Github: [@yyoumi4854](https://github.com/yyoumi4854)
 
 **윤시준**
-
 - Front-End
 - webcodur@gmail.com
 - Github: [@webcodur](https://github.com/webcodur)
 
 **채은빈**
-
 - Back-End
 - alrxltkfkd@gmail.com
 - Github: [@VelyVelyn](https://github.com/VelyVelyn)
 
 **최은오**
-
 - Front-End
 - pixel@kakao.com
 - Github: [@EunoChoi](https://github.com/EunoChoi)
@@ -63,9 +53,6 @@
 <br/>
 
 ## 기술 스택
-
----
-
 ### Front-End
 
 <div>
@@ -108,10 +95,10 @@
 
 ### 🏰 혹시 어제도 시끄러우셨나요?
 
-<img src="https://user-images.githubusercontent.com/85475577/196637727-8fa5aa3e-50ca-46f6-b4c5-028c54ea75c4.png" alt="메인인사이트3" style="zoom:33%;" /><img src="https://user-images.githubusercontent.com/85475577/196637718-f4bfcaff-d19b-46d1-9ab6-2f490d8bf0cf.png" alt="메인인사이트2" style="zoom:33%;" /><img src="https://user-images.githubusercontent.com/85475577/196637711-3937fc30-20a7-4c95-abc5-f79f5fba63c9.png" alt="메인인사이트1" style="zoom:33%;" />
+<img src="https://user-images.githubusercontent.com/85475577/196637727-8fa5aa3e-50ca-46f6-b4c5-028c54ea75c4.png" alt="메인인사이트3" width="33%" /><img src="https://user-images.githubusercontent.com/85475577/196637718-f4bfcaff-d19b-46d1-9ab6-2f490d8bf0cf.png" alt="메인인사이트2" width="33%" /><img src="https://user-images.githubusercontent.com/85475577/196637711-3937fc30-20a7-4c95-abc5-f79f5fba63c9.png" alt="메인인사이트1" width="33%" />
 
-- WHO, UNEA는 미세먼지 다음으로 건강을 위협하는 환경요인으로 소음공해를 뽑았어요.
-- 메인 화면에서는 소음 공해를, 특히 서울특별시의 상황을 그래프들로 보여줘서 그 심각성을 강조하고 있어요.
+- WHO, UNEA는 미세먼지 다음으로 건강을 위협하는 환경요인으로 **소음 공해**를 뽑았어요.
+- 메인 화면에서는 소음 공해를, 특히 **서울특별시의 상황**을 그래프들로 보여줘서 그 심각성을 강조하고 있어요.
 
 <br/>
 
@@ -135,46 +122,39 @@
 - 왼쪽 목록에서,
   1.  해당 자치구에 적힌 **전체 리뷰와 개수**를 확인할 수 있어요.
   2.  해당 구가 어느정도 시끄러운지 **평균 소음을 색깔 이모지**로 쉽게 확인 가능해요.
-  3.  ` 🙂좋음 😐보통 ☹️나쁨` 각 단계 별 소음리뷰도 **필터링**해서 확인할 수 있어요.
+  3.  `🙂좋음 😐보통 🙁나쁨` 각 단계 별 소음리뷰도 **필터링**해서 확인할 수 있어요.
 
 <br/>
 
 ![핀클릭시화면](https://user-images.githubusercontent.com/85475577/196635019-fb82eb80-daaa-42be-a649-79e45c712f70.png)
 
 #### 📌 소음 정보를 알려주는 핀과 마커
-
 - 📍 핀 : [국가에서 선정한 소음 측정지점](https://www.noiseinfo.or.kr/)을 바탕으로 소음 정보를 알기 쉽게 설명해 놓았어요.
-
   1. 소음 정도에 따라 귀여운 **이모지 색깔**이 달라서 어느 정도의 소음인지 파악할 수 있어요.
   2. 핀을 클릭하면,
      a. 해당 측정지점의 **평균 소음도**와 그 데시벨이 끼치는 **영향**을 확인 할 수 있어요.
      b. 시간대별 소음 수치를 보여주는 **그래프**로 어느 시간이 가장 시끄러운지 체크해보세요.
-
 - 🟢 마커 : 해당 동의 사람들이 직접 들려주는 소음 리뷰를 볼 수 있어요.
   1. 주민들이 느낀 소음을 이모지로 나타내어 상단에 요약해 놓았어요.
   2. 누구나 소음 리뷰 등록이 가능해요. 내가 사는 지역의 소음 리뷰를 적어볼까요?
 
 <br/>
 
-### 👨‍👩‍👧‍👦 소음 정보를 공유하는 리뷰 게시판
+### ✏️ 소음 정보를 공유하는 리뷰 게시판
 
 **빠르고 간단하게 소음 리뷰를 작성**할 수 있도록 로그인이 필요하지 않은, **비밀번호**만을 이용한 익명 게시판을 만들어봤어요.
 
 ![리뷰작성화면](https://user-images.githubusercontent.com/85475577/196635811-5353d253-6be8-4585-a609-dbeaf323b59f.png)
 
 #### 소음 리뷰 작성
-
 - 리뷰를 작성하기 위해선 **비밀번호**를 입력해야해요.
-
 - 무분별한 리뷰 포스팅을 막기 위해 **IP 계정 당 20초에 리뷰 1개**만 작성하도록 되어있어요.
 
 #### 소음 리뷰 조회
-
 - 조회 시 리뷰 게시물 **10개씩 조회**가 가능해요.
 - 유저들이 평가한 소음 정도에 따라 리뷰를 **필터링**하여 조회할 수 있어요.
 
 #### 소음 리뷰 수정, 삭제
-
 - 리뷰를 수정하거나 삭제하려면 생성했을 때 만든 비밀번호를 입력해야 해요.
 
 <br />
