@@ -14,9 +14,9 @@ const ReviewNone = ({setIsWriting}) => {
         <FaSurprise/>
         <p>등록된 소음 리뷰가 없습니다</p>
       </div>
-      <ReviewBtn>
+      {/* <ReviewBtn>
         <button onClick={()=>{setIsWriting(true)}}>소음 리뷰 쓰러가기</button>
-      </ReviewBtn>
+      </ReviewBtn> */}
     </ReviewNoneContent>
   );
 };

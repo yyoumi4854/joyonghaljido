@@ -99,9 +99,9 @@ const ReviewList = ({ list, limit, toggleEllipsis, onClickMore, setModal, setRev
         <button className='reviewAddBtn' onClick={() => { setMore(prev => prev + 1) }}>소음 리뷰 10개 더보기 <BiChevronDown /></button>
       </div>
 
-      <ReviewBtn>
+      {/* <ReviewBtn>
         <button onClick={() => { setIsWriting(true) }}>소음 리뷰 쓰러가기</button>
-      </ReviewBtn>
+      </ReviewBtn> */}
 
     </ReviewListContent>
   );

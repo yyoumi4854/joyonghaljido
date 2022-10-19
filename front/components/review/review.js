@@ -14,6 +14,7 @@ import ReviewAddForm from './reviewAddForm'
 
 // styled
 import Title from '../titleStyles';
+import { SmallBtn, ReviewBtn } from '../../styles/btnStyles';
 
 // react-icons
 import { AiOutlineArrowLeft } from "react-icons/ai";
@@ -156,6 +157,9 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
           setMore={setMore}
         />
       }
+      <ReviewBtn>
+        <button onClick={()=>{setIsWriting(true)}}>소음 리뷰 쓰러가기</button>
+      </ReviewBtn>
 
       {/* 작성불가 안내 */}
       {(modal == 'ban') && <Modal_Ban

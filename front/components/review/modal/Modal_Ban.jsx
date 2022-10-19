@@ -1,18 +1,9 @@
 import { SmallBtn } from '../../../styles/btnStyles';
 import {useState} from 'react';
 
-import styled from 'styled-components'
-import Modal_Ban_Layouot from './Modal_Ban.style';
 import ModalContent from './modalStyles';
 
 const Modal_Ban = ({setDenyWindow, timeLeft}) => {
-
-    // const Guide = styled.div`
-    //     padding-top:30px;
-    //     font-size:14px;
-    //     color:gray;
-    // `
-
     return (
       <ModalContent>
       <h3>작성할 수 없습니다.</h3>
