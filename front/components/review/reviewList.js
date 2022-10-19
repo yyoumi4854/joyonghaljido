@@ -1,8 +1,8 @@
 import nameId from '../../Id_book/nameId.json'
 import { useState } from 'react'
+
 // styled
 import ReviewListContent from './reviewListStyles';
-import { SmallBtn, ReviewBtn } from '../../styles/btnStyles';
 import TripleDotsModal from './tripleDotsModal';
 
 // react-icons
@@ -33,13 +33,15 @@ const ReviewList = ({ list, limit, toggleEllipsis, onClickMore, setModal, setRev
     noiseAvg = Math.round(noiseSum);
   }
 
+  const [editBtns, setEditBtns] = useState(new Array(list.length).fill(0));
+
   return (
     <ReviewListContent>
       <div className='noiseAvgCon'>
         <span className={`noiseLevel${noiseAvg}`}>noiseLevel3</span>
         <p>
           소음 리뷰 평균 소음은<br />
-          <span>{noiseText[noiseAvg]}</span>입니다.{/* 내용바꿔치기 */}
+          <span>{noiseText[noiseAvg]}</span>입니다.
         </p>
       </div>
 
@@ -63,7 +65,7 @@ const ReviewList = ({ list, limit, toggleEllipsis, onClickMore, setModal, setRev
       <div className='reviewList'>
         <ul>
           {
-            list && list.map((x) => {
+            list && list.map((x, i) => {
               return (
                 <li key={x._id}>
                   <div className={`noiseLevel${x.noiseLevel}`}>
@@ -84,12 +86,21 @@ const ReviewList = ({ list, limit, toggleEllipsis, onClickMore, setModal, setRev
                     <span className='dongTag'>{nameId.find(v => v._id === x.dongId).name}</span>{/* 동일때는 안보이기 */}
                   </div>
 
-                  <button className='editBtn'><AiOutlineMore /></button>
+                  <button className='editBtn' onClick={()=>{
+                    let newList = new Array(list.length).fill(0);
+                    newList[i] = 1;
+                    setEditBtns([...newList]);
+                  }}><AiOutlineMore /></button>
 
-                  <TripleDotsModal
-                    setModal={setModal}
-                    x={x}
-                    setReviewObj={setReviewObj} />
+                  {
+                    editBtns[i] ? 
+                    <TripleDotsModal
+                      setModal={setModal}
+                      x={x}
+                      setReviewObj={setReviewObj} />
+                    : null
+                  }
+
                 </li>
               )
             })
@@ -98,11 +109,6 @@ const ReviewList = ({ list, limit, toggleEllipsis, onClickMore, setModal, setRev
 
         <button className='reviewAddBtn' onClick={() => { setMore(prev => prev + 1) }}>소음 리뷰 10개 더보기 <BiChevronDown /></button>
       </div>
-
-      <ReviewBtn>
-        <button onClick={() => { setIsWriting(true) }}>소음 리뷰 쓰러가기</button>
-      </ReviewBtn>
-
     </ReviewListContent>
   );
 };

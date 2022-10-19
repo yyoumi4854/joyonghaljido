@@ -1,8 +1,7 @@
 import { SmallBtn } from '../../../styles/btnStyles';
 import { useState, useEffect } from 'react';
 
-import ReviewEditForm from '../reviewEditForm';
-// import Modal_PW_Layout from './Modal_Pw.style';
+// import ReviewEditForm from '../reviewEditForm';
 import axios from 'axios';
 
 // styled
