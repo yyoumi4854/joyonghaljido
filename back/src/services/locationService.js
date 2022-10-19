@@ -21,6 +21,18 @@ class locationService {
 
     return dongsAndPins;
   }
+
+  static async getDongsByGuId(guId) {
+    const foundGu = await Gu.getGuById(guId);
+    const foundDongs = await Dong.getDongListByGuId(guId);
+
+    const dongs = {
+      ...foundGu.toObject(),
+      dongs: foundDongs,
+    };
+
+    return dongs;
+  }
 }
 
 module.exports = locationService;

@@ -1,6 +1,5 @@
 const { Router } = require("express");
 const guModel = require("../db/schemas/gu");
-const dongModel = require("../db/schemas/dong");
 const pinModel = require("../db/schemas/pin");
 const locationService = require("../services/locationService");
 
@@ -27,23 +26,8 @@ locationRouter.get("/gus/:guId", async (req, res, next) => {
 
 locationRouter.get("/gus/:guId/dongs", async (req, res) => {
   const { guId } = req.params;
-  const foundGu = await guModel.findOne({ _id: guId });
-
-  const dongsData = await dongModel.find({ guId });
-  const dongs = [];
-  dongsData.map((dong) => {
-    const dongData = {
-      _id: dong._id,
-      name: dong.name,
-      longitude: dong.longitude,
-      latitude: dong.latitude,
-    };
-    dongs.push(dongData);
-  });
-
-  const foundGuData = { _id: guId, name: foundGu.name, dongs };
-
-  res.status(200).json(foundGuData);
+  const dongs = await locationService.getDongsByGuId(guId);
+  res.status(200).json(dongs);
 });
 
 locationRouter.get("/gus/:guId/pins", async (req, res) => {
