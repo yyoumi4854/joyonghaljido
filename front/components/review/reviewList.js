@@ -1,64 +1,62 @@
 import nameId from '../../Id_book/nameId.json'
-import { useState } from 'react'
+import { useState, useEffect} from 'react'
 
 // styled
 import ReviewListContent from './reviewListStyles';
-import TripleDotsModal from './tripleDotsModal';
+import Modal_TripleDots from './modal/Modal_TripleDots';
+
 
 // react-icons
 import { AiOutlineMore } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
 
-const ReviewList = ({ list, limit, toggleEllipsis, onClickMore, setModal, setReviewObj, setIsWriting, isWriting, setMore }) => {
-  console.log('review list render');
-  // 작동이 되다말다해서 포기
-  const [controlList, setControlList] = useState([...list]);
-  const [noiseTabActive, setNoiseTabActive] = useState([0, 0, 0]);
+const ReviewList = ({ 
+    list, limit, toggleEllipsis, onClickMore, setModal, setReviewObj, 
+    setIsWriting, isWriting, setMore, currentState, more, setList, reviewType, 
+    setReviewType, reviewCnt, avgIdx, typeChanged, setTypeChanged, lv, setLv}) => {
 
-  const handlerNoiseTabClick = (e) => {
-    const targetId = parseInt(e.target.id);
-    const newList = [...list].filter(v => v.noiseLevel === targetId);
-    setControlList(newList);
+    const [noiseTabActive, setNoiseTabActive] = useState([-1, 0, 0, 0]);
+    const [tripleDotModal, setTripleDotModal] = useState(false);
 
-    const newNoiseTabActive = new Array(3).fill(0);
-    newNoiseTabActive[targetId - 1] = 1;
-    setNoiseTabActive(newNoiseTabActive);
+    const noiseTabHandler = (e) => {
+      
+      // review type Changed
+      setLv(e.target.id)
+      setReviewType('filter')
+      setTypeChanged(prev=>!prev)
+
+      // 해당 레벨 CSS 활성화
+      let arr = [-1, 0, 0, 0]
+      arr[lv] = 1;
+      setNoiseTabActive(arr);
   }
 
-  // 평균 소음 구하기 반올림 값으로 구함
   const noiseText = { 1: '나쁨', 2: '보통', 3: '좋음' }
-  let noiseAvg = 0;
-  if (list.length > 0) {
-    const noiseSum = list.map(v => v.noiseLevel).reduce((prev, cur) => prev + cur) / list.length;
-    noiseAvg = Math.round(noiseSum);
-  }
-
   const [editBtns, setEditBtns] = useState(new Array(list.length).fill(0));
 
   return (
     <ReviewListContent>
       <div className='noiseAvgCon'>
-        <span className={`noiseLevel${noiseAvg}`}>noiseLevel3</span>
+        <span className={`noiseLevel${avgIdx}`}>noiseLevel3</span>
         <p>
-          소음 리뷰 평균 소음은<br />
-          <span>{noiseText[noiseAvg]}</span>입니다.
+          소음 리뷰 평균 소음은<br/>
+          <span>{noiseText[avgIdx]}</span>입니다.
         </p>
-      </div>
+      </div> 
 
       <ul className='noiseTab'>
         {/* 클릭할때마다 li에 active가 붙는걸로 -> active가 붙을때마다 아이콘 밑 글씨가 굵어지고 색상이 바뀜 */}
-        {/* 여기도 백엔드에서 개수를 보내줘야함. 페이지네이션 사용하기 때문에 프론트단에서 처리 불가능 */}
+        <li className={noiseTabActive[3] && 'active'}>
+          <span id='3' onClick={noiseTabHandler}>좋음</span>
+          <p>{reviewCnt[3] || 0}</p>
+        </li>
         <li className={noiseTabActive[2] && 'active'}>
-          <span id='3' onClick={handlerNoiseTabClick}>좋음</span>
-          <p>{list && list.filter(v => v.noiseLevel === 3).length}</p>
+          <span id='2' onClick={noiseTabHandler}>보통</span>
+          <p>{reviewCnt[2] || 0}</p>
         </li>
         <li className={noiseTabActive[1] && 'active'}>
-          <span id='2' onClick={handlerNoiseTabClick}>보통</span>
-          <p>{list && list.filter(v => v.noiseLevel === 2).length}</p>
-        </li>
-        <li className={noiseTabActive[0] && 'active'}>
-          <span id='1' onClick={handlerNoiseTabClick}>나쁨</span>
-          <p>{list && list.filter(v => v.noiseLevel === 1).length}</p>
+          <span id='1' onClick={noiseTabHandler}>나쁨</span>
+          <p>{reviewCnt[1] || 0}</p>
         </li>
       </ul>
 
@@ -87,15 +85,17 @@ const ReviewList = ({ list, limit, toggleEllipsis, onClickMore, setModal, setRev
                   </div>
 
                   <button className='editBtn' onClick={()=>{
+                    setTripleDotModal(true)
                     let newList = new Array(list.length).fill(0);
                     newList[i] = 1;
                     setEditBtns([...newList]);
                   }}><AiOutlineMore /></button>
 
                   {
-                    editBtns[i] ? 
-                    <TripleDotsModal
+                    (editBtns[i] && tripleDotModal)? 
+                    <Modal_TripleDots
                       setModal={setModal}
+                      setTripleDotModal={setTripleDotModal}
                       x={x}
                       setReviewObj={setReviewObj} />
                     : null

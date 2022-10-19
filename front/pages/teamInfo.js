@@ -54,7 +54,7 @@ const TeamInfo = () => {
                             <Carousel.Caption>
                                 <div style={{ height: '100%', marginBottom: '40px' }}>
                                     <p style={{ fontSize: '50px' }}>윤시준</p>
-                                    <p style={{ fontSize: '30px', paddingTop: '40px' }}>react… 리액트가 끝이라니!</p>
+                                    <p style={{ fontSize: '30px', paddingTop: '40px' }}>일 시켜주면 잘할 수 있는데...</p>
                                     <div style={{ padding: '15px 0 40px 0', }}>
                                         <span className="badge">React.js</span>
                                         <span className="badge">javaScript</span>

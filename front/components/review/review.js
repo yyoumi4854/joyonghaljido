@@ -4,9 +4,19 @@ import Modal_Pw_Update from './modal/Modal_Pw_Update'
 import Modal_Ban from './modal/Modal_Ban'
 import Modal_Ask from './modal/Modal_Ask'
 
+// functions
+import getReview from './functions/getReview'
+import getReviewNum from './functions/getReviewNum'
+import getAvg from './functions/getAvg'
+import firstLoad from './functions/firstLoad'
+import getReviewByLv from './functions/getReviewByLv'
+import whenListChanged from './functions/whenListChanged'
+import filterClicked from './functions/filterClicked.js'
+import allReviewClicked from './functions/allReviewClicked.js'
+import getMorePages from './functions/getMorePages.js'
+
 // import nameId from '../../Id_book/nameId.json'
 import axios from 'axios';
-
 import ReviewList from './reviewList';
 import ReviewNone from './reviewNone';
 import ReviewEditForm from './reviewEditForm';
@@ -24,74 +34,101 @@ import { AiFillWechat } from "react-icons/ai";
 import seoulMap from '../../data/map/seoul.json';
 
 const Review = ({ currentState, setCurrentState, setModal, modal }) => {
-  console.log('review render');
+  
+  // 값 조정 관련
   const [list, setList] = useState([]);
-  const [limit, setLimit] = useState(71);
+  const [reviewCnt, setReviewCnt] = useState([0,0,0,0]);  // [all, lv1, lv2, lv3]
   const [reviewObj, setReviewObj] = useState(undefined)
-  const [isEditing, setIsEditing] = useState(false);
-
-  const [listChanged, setListChanged] = useState(false);
-  const [trueValue, setTrueValue] = useState(true);
-
-  const [isWriting, setIsWriting] = useState(false)
+  const [avgIdx, setAvgIdx] = useState(undefined);
   const [more, setMore] = useState(0)
+  const [limit, setLimit] = useState(71);
+  const [lv, setLv] = useState(-1);
+  
+  // 토글 관련
+  const [isEditing, setIsEditing] = useState(false);
+  const [listChanged, setListChanged] = useState(false); // toggle
+  const [reviewType, setReviewType] = useState('default'); // or lv
+  const [typeChanged, setTypeChanged] = useState(false);
+  const [isWriting, setIsWriting] = useState(false)
+  const openIsEditing  = () => { setIsEditing(true);}
+  const closeIsEditing = () => { setIsEditing(false);}
 
-  const openIsEditing = () => { setIsEditing(true); }
-  const closeIsEditing = () => { setIsEditing(false); }
-
+  // ***** [GET 상황] ***** //
+  // 1. 구, 동 클릭 (리뷰 최초 로딩) : 
+  //   리뷰수 + 리뷰목록 + 평균 소음 인덱스 구하기
+  useEffect(() => {
+    setMore(0);
+    setReviewType('default');
+    firstLoad( 
+        currentState, 
+        more, setList,
+        setReviewCnt, 
+        reviewCnt, 
+        setAvgIdx,
+        )
+  }, [currentState.guId, currentState.clickSpotId])
+  
+  // 2. 타입 변경 시 : 
   useEffect(() => {
     setMore(0)
-  }, [currentState.guId, currentState.clickSpotId])
+    if(reviewType=='default'){
+        allReviewClicked(
+            currentState, 
+            more, setList, 
+            setReviewCnt, 
+            reviewCnt, 
+            setAvgIdx)
+    }
+    if(reviewType=='filter'){
+        filterClicked(
+            currentState, 
+            more, 
+            setList, 
+            setReviewCnt, 
+            reviewCnt, 
+            setAvgIdx, 
+            lv)
+    }
+  }, [typeChanged])
 
+  // 3. 더 불러오기(more) or 리뷰 CRD시 (listChanged) : 
   useEffect(() => {
-    getReview();
-  }, [more, listChanged, currentState.guId, currentState.clickSpotId])
-
-  const getReview = async () => {
-    // 구 리뷰
-    if (currentState.currentView === 'gu') {
-      try {
-        // 첫 10개
-        await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}`)
-          .then(v => (setList(v.data)));
-        // 이후
-        for (let i = 1; i <= more; i++) {
-          await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}&skip=${i}`)
-            .then(v => (setList((prev) => {
-              return [...prev, ...v.data]
-            })));
-        }
-      }
-      catch { console.log('구 리뷰 로딩 실패!'); }
+    if(reviewType=='default'){
+        allReviewClicked(
+            currentState, 
+            more, setList, 
+            setReviewCnt, 
+            reviewCnt, 
+            setAvgIdx)
     }
-    // 동 리뷰
-    else if (currentState.currentView === 'dong') {
-      try {
-        // 첫 10개
-        await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}`)
-          .then(v => (setList(v.data)));
-        // 이후
-        for (let i = 1; i <= more; i++) {
-          await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}&skip=${i}`)
-            .then(v => (setList((prev) => {
-              return [...prev, ...v.data]
-            })));
-        }
-      }
-      catch { console.log('동 리뷰 로딩 실패!'); }
+    if(reviewType=='filter'){
+        filterClicked(
+            currentState, 
+            more, 
+            setList, 
+            setReviewCnt, 
+            reviewCnt, 
+            setAvgIdx, 
+            lv)
     }
-  }
+  }, [more, listChanged]) // ---- 타입 유지 안되고 터지고 있음
 
+
+
+
+
+  
+  //***** [더보기] *****//
   const toggleEllipsis = (str, limit) => {
     return {
       string: str.slice(0, limit),
       isShowMore: str.length > limit
     }
   };
-
   const onClickMore = (str) => () => {
     setLimit(str.length);
   };
+  //***** [뒤로가기] *****//
   const back = (currentState, setCurrentState) => {
     if (currentState.currentView === 'gu') {
       setCurrentState({
@@ -131,15 +168,16 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
         <div>
           <div className='reviewAll'>
             <button>
-              <AiFillWechat />
+              <AiFillWechat onClick={()=>{setReviewType('default'); setTypeChanged(prev=>!prev)}}/>
             </button>
             {/* 한번에 모든 게시글을 불러오지 않기 때문에 모든 모든 게시글 개수를 불러오는 api 설정 필요 */}
-            <span>{list && list.length}</span>
+            <span>{reviewCnt[0]}</span> 
+            
           </div>
         </div>
       </Title>
-
-      {(trueValue && (list.length == 0))
+      
+      {(reviewCnt[0] == 0)
         ?
         <ReviewNone
           setIsWriting={setIsWriting}
@@ -155,6 +193,17 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
           setIsWriting={setIsWriting}
           isWriting={isWriting}
           setMore={setMore}
+          currentState={currentState}
+          more={more}
+          setList={setList}
+          reviewType={reviewType}
+          setReviewType={setReviewType}
+          reviewCnt={reviewCnt}
+          avgIdx={avgIdx}
+          typeChanged={typeChanged}
+          setTypeChanged={setTypeChanged}
+          lv={lv}
+          setLv={setLv}
         />
       }
       <ReviewBtn>
