@@ -5,7 +5,7 @@ const SideInfoContent = styled.div`
   bottom: 24px;
   right: 24px;
   padding: 16px;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.6);
   border: 1px solid ${({ theme }) => theme.colors.grey3};
   border-radius: 2px;
   z-index: 10;
