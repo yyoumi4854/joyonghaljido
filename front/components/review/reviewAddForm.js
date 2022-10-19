@@ -6,11 +6,10 @@ import FormContent from "./reviewAddForm.style";
 import DarkArea from "./darkAreaStyles";
 import { SmallBtn } from '../../styles/btnStyles';
 
-import geoId from './geoid.json';
-
 const ReviewAddForm = ({ setIsWriting, setListChanged, currentState, setModal }) => {
   
   const [noiseLevel, setNoiseLevel] = useState('');
+  const [guList, setGuList] = useState([]);
   const [dongList, setDongList] = useState([]);
   const [defaultGu, setDefualtGu] = useState(true);
   const [review, setReview] = useState({
@@ -22,22 +21,28 @@ const ReviewAddForm = ({ setIsWriting, setListChanged, currentState, setModal })
     noiseLevel: "",
   });
 
-    const guObj = geoId.filter(element => element._id === currentState.guId);
+  // 구 리스트 불러오기
+  useEffect(() => {
+    axios.get("http://localhost:5001/location/gus")
+        .then((res) => {
+          setGuList(res.data);
+        })
+  }, []);
 
-    // 구 선택했을 때 속한 동 리스트 찾기
-    const handleGuChange = async (e) => {
-        const selectedGuId = e.target.value;
-        if(currentState.guId == selectedGuId){
-            setDefualtGu(true)
-            const guObj = geoId.filter(element => element._id === currentState.guId);
-            setDongList(guObj[0].dongs);
-        }
-        else{
-            setDefualtGu(false)
-            const dongArr = geoId.filter(element => element._id === selectedGuId);
-            setDongList(dongArr[0].dongs);
-        }
-    }
+
+  // 구 선택했을 때 속한 동 리스트 찾기
+  const handleGuChange = async (e) => {
+      const selectedGuId = e.target.value;
+      if(currentState.guId == selectedGuId){
+        setDefualtGu(true);
+      }else{
+        setDefualtGu(false);
+      }
+      await axios.get(`http://localhost:5001/location/gus/${selectedGuId}/dongs`)
+      .then((res) => {
+        setDongList(res.data.dongs);
+      });
+  }
 
   const handleNoiseLevelClick = (e) => {
     setNoiseLevel(e.target.value);
@@ -91,23 +96,18 @@ const ReviewAddForm = ({ setIsWriting, setListChanged, currentState, setModal })
               <p className="title">지역을 선택해주세요.</p>
               <div className="selectBox">
                 <select name="guId" onChange={handleGuChange}>
-                  <option key={currentState.guId} value={currentState.guId}>{currentState.guName}</option>
+                  {/* <option key={currentState.guId} value={currentState.guId}>{currentState.guName}</option> */}
                   {
-                    geoId.map(gu => {
-                      if(gu.name == currentState.guName){
-                        // return <option key={gu._id} value={gu._id}>{gu.name}</option>
-                      }
-                      else{
-                        return <option key={gu._id} value={gu._id}>{gu.name}</option>
-                      }
+                    guList.map(gu => {
+                      return <option key={gu._id} value={gu._id}>{gu.name}</option>
                     })
                   }
                 </select>
                 <select name="dongId" id="">
-                  <option value="">동을 선택해주세요.</option>
+                  {/* <option value="">동을 선택해주세요.</option> */}
                   
                   {defaultGu && 
-                    guObj[0].dongs.map(dong => {
+                    dongList.map(dong => {
                       return <option key={dong._id} value={dong._id}>{dong.name}</option>
                     })
                   }
