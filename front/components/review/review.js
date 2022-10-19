@@ -163,6 +163,7 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
           isWriting={isWriting}
           setMore={setMore}
           dongList={dongList}
+          currentState={currentState}
         />
       }
       <ReviewBtn>
