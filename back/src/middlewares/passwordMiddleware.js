@@ -1,25 +1,22 @@
-const bcrypt = require("bcrypt");
-const Review = require("../db/models/Review");
+const reviewService = require("../services/reviewService");
 
 const passwordMiddleware = async (req, res, next) => {
   const reviewId = req.params.reviewId;
   const currentPassword = req.body.currentPassword;
 
-  const review = await Review.getByReviewId(reviewId);
+  try {
+    const isMatched = await reviewService.checkPassword(
+      reviewId,
+      currentPassword
+    );
 
-  if (!review) {
-    next(new Error("해당 리뷰는 존재하지 않습니다."));
-    return;
+    if (!isMatched) {
+      throw new Error("비밀번호가 일치하지 않습니다.");
+    }
+  } catch (error) {
+    next(error);
   }
 
-  const isMatched = await bcrypt.compare(currentPassword, review.password);
-
-  if (!isMatched) {
-    next(new Error("비밀번호가 일치하지 않습니다."));
-    return;
-  }
-
-  req.currentReview = review;
   next();
 };
 
