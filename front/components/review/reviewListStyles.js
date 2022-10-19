@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 
+
 const noiseLevel1 = css`
   background: url('/images/noiseBad.svg') no-repeat center;
   background-size: contain; 
@@ -16,6 +17,7 @@ const noiseLevel3 = css`
 `;
 
 const ReviewListContent = styled.div`
+
   .noiseAvgCon{
     ${({ theme }) => theme.common.flexCenter};
     justify-content: center;

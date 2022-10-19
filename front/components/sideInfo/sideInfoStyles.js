@@ -8,7 +8,7 @@ const SideInfoContent = styled.div`
   background: rgba(255, 255, 255, 0.6);
   border: 1px solid ${({ theme }) => theme.colors.grey3};
   border-radius: 2px;
-  z-index: 10;
+  z-index: 990; 
 
   .ranking{
     dl{

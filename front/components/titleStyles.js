@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const Title = styled.div`
+
   ${({ theme }) => theme.common.flexCenter};
   justify-content: space-between;
 

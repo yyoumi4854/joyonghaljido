@@ -41,11 +41,11 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
 
   useEffect(() => {
     setMore(0)
-  }, [currentState.guId, currentState.dongId])
+  }, [currentState.guId, currentState.clickSpotId])
 
   useEffect(() => {
     getReview();
-  }, [more, listChanged, currentState.guId, currentState.dongId])
+  }, [more, listChanged, currentState.guId, currentState.clickSpotId])
 
   const getReview = async () => {
     // 구 리뷰
