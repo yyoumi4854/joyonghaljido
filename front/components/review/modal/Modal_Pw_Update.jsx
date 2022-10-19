@@ -8,7 +8,7 @@ import axios from 'axios';
 import DarkArea from '../darkAreaStyles';
 import ModalContent from './modalStyles';
 
-const Modal_Pw = ({ setModal, reviewObj, openIsEditing}) => {
+const Modal_Pw = ({ setModal, reviewObj, openIsEditing, setEditDongInfo}) => {
 
   const [showWrong, setShowWrong] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -35,7 +35,7 @@ const Modal_Pw = ({ setModal, reviewObj, openIsEditing}) => {
         .then((res) => {
           if(res.data === true) {
             setModal('none');
-            openIsEditing();
+            getDongInfo();
           }
         })
     } catch (e) {
@@ -55,6 +55,14 @@ const Modal_Pw = ({ setModal, reviewObj, openIsEditing}) => {
     const pwInput = document.getElementById('pwInput')
     pwInput.style.border = 'solid black 1px';
     setShowWrong(false);
+  }
+  // 수정할 동, 구 이름 불러와서 보내 주기
+  const getDongInfo = async () => {
+    axios.get(`http://localhost:5001/dongs/${reviewObj.dongId}`)
+      .then((res) => {
+        setEditDongInfo(res.data);
+        openIsEditing();
+      })
   }
 
   return (

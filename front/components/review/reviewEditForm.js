@@ -3,16 +3,16 @@ import axios from "axios";
 import FormContent from "./reviewAddForm.style";
 import { SmallBtn } from '../../styles/btnStyles';
 
-const ReviewEditForm = ({ currentReview, closeIsEditing, setListChanged }) => {
+const ReviewEditForm = ({ currentReview, closeIsEditing, setListChanged, editDongInfo }) => {
 
-    const [editDongInfo, setEditDongInfo] = useState();
+    // const [editDongInfo, setEditDongInfo] = useState();
     
-    useEffect(() => {
-        axios.get(`http://localhost:5001/dongs/${currentReview.dongId}`)
-            .then((res) => {
-                setEditDongInfo(res.data);
-            })
-    }, []);
+    // useEffect(() => {
+    //     axios.get(`http://localhost:5001/dongs/${currentReview.dongId}`)
+    //         .then((res) => {
+    //             setEditDongInfo(res.data);
+    //         })
+    // }, []);
 
     const [review, setReview] = useState({
         guId: currentReview.guId,

@@ -40,6 +40,8 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
   const openIsEditing = () => { setIsEditing(true); }
   const closeIsEditing = () => { setIsEditing(false); }
 
+  const [editDongInfo, setEditDongInfo] = useState(undefined);
+
   useEffect(() => {
     setMore(0)
   }, [currentState.guId, currentState.clickSpotId])
@@ -192,6 +194,7 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
         setModal={setModal}
         reviewObj={reviewObj}
         openIsEditing={openIsEditing}
+        setEditDongInfo={setEditDongInfo}
       />}
 
       {/* 수정 폼 */}
@@ -199,6 +202,7 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
         currentReview={reviewObj}
         closeIsEditing={closeIsEditing}
         setListChanged={setListChanged}
+        editDongInfo={editDongInfo}
       />}
 
       {/* 입력 폼 */}
