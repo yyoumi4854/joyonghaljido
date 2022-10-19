@@ -9,7 +9,7 @@ import TripleDotsModal from './tripleDotsModal';
 import { AiOutlineMore } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
 
-const ReviewList = ({ list, limit, toggleEllipsis, onClickMore, setModal, setReviewObj, setIsWriting, isWriting, setMore }) => {
+const ReviewList = ({ list, limit, toggleEllipsis, onClickMore, setModal, setReviewObj, setIsWriting, isWriting, setMore, dongList }) => {
   console.log('review list render');
   // 작동이 되다말다해서 포기
   const [controlList, setControlList] = useState([...list]);
@@ -83,7 +83,7 @@ const ReviewList = ({ list, limit, toggleEllipsis, onClickMore, setModal, setRev
                         {toggleEllipsis(x.description, limit).isShowMore && <button onClick={onClickMore(x.description)}>...더보기</button>}
                       </p>
                     </div>
-                    <span className='dongTag'>{nameId.find(v => v._id === x.dongId).name}</span>{/* 동일때는 안보이기 */}
+                    <span className='dongTag'>{dongList.find(v => v._id === x.dongId).name}</span>{/* 동일때는 안보이기 */}
                   </div>
 
                   <button className='editBtn' onClick={()=>{

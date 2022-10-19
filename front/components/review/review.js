@@ -29,6 +29,7 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
   const [limit, setLimit] = useState(71);
   const [reviewObj, setReviewObj] = useState(undefined)
   const [isEditing, setIsEditing] = useState(false);
+  const [dongList, setDongList] = useState([]);
 
   const [listChanged, setListChanged] = useState(false);
   const [trueValue, setTrueValue] = useState(true);
@@ -50,6 +51,12 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
   const getReview = async () => {
     // 구 리뷰
     if (currentState.currentView === 'gu') {
+
+      await axios.get(`http://localhost:5001/location/gus/${currentState.guId}/dongs`)
+      .then((res) => {
+        setDongList(res.data.dongs);
+      });
+
       try {
         // 첫 10개
         await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}`)
@@ -155,6 +162,7 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
           setIsWriting={setIsWriting}
           isWriting={isWriting}
           setMore={setMore}
+          dongList={dongList}
         />
       }
       <ReviewBtn>
