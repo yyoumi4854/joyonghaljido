@@ -102,7 +102,7 @@ const TeamInfo = () => {
                             <Carousel.Caption>
                                 <div style={{ height: '100%', marginBottom: '40px' }}>
                                     <p style={{ fontSize: '50px' }}>박지연</p>
-                                    <p style={{ fontSize: '30px', paddingTop: '40px' }}>멘트 필요 합니다.</p>
+                                    <p style={{ fontSize: '30px', paddingTop: '40px' }}>왕왕<del>왕</del> 주니어 개발자 💪</p>
                                     <div style={{ padding: '15px 0 40px 0', }}>
                                         <span className="badge">React.js</span>
                                         <span className="badge">javaScript</span>
