@@ -97,17 +97,17 @@ const ReviewEditForm = ({ currentReview, closeIsEditing, setListChanged, editDon
 
                         <ul className="radioBox"> 
                             <li className="good">
-                                <input id="good" type="radio" name="noiseLevel" value='3' checked={ currentReview.noiseLevel === "3" } />
+                                <input id="good" type="radio" name="noiseLevel" value='3' />
                                 <label for="good">좋음</label>
                                 <p>좋음</p>
                             </li>
                             <li className="soso">
-                                <input id="soso" type="radio" name="noiseLevel" value='2' checked={ currentReview.noiseLevel === "2" } />
+                                <input id="soso" type="radio" name="noiseLevel" value='2' />
                                 <label for='soso'>보통</label>
                                 <p>보통</p>
                             </li>
                             <li className="bad">
-                                <input id="bad" type="radio" name="noiseLevel" value='1' checked={ currentReview.noiseLevel === "1" } />
+                                <input id="bad" type="radio" name="noiseLevel" value='1' />
                                 <label for='bad'>나쁨</label>
                                 <p>나쁨</p>
                             </li>
