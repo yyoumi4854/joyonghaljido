@@ -1,9 +1,6 @@
 import { SmallBtn } from '../../../styles/btnStyles';
 import { useState, useRef, useEffect } from "react";
 
-// import Modal_PW_Layout   from './Modal_Pw.style';
-// import DarkArea   from './DarkArea.style';
-
 import axios from 'axios';
 
 // styled

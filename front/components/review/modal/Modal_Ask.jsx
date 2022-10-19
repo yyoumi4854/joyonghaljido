@@ -1,11 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-// import styled from 'styled-components'
-// import DarkArea   from './DarkArea.style';
 
 // styled
 import DarkArea from "../darkAreaStyles";
 import ModalContent from "./modalStyles";
-// import Modal_Ask_Layout  from './Modal_Ask.style';
 import { SmallBtn } from '../../../styles/btnStyles';
 
 const Modal_Ask = ({setModal}) => {

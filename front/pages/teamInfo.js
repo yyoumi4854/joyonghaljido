@@ -11,6 +11,7 @@ const TeamInfo = () => {
                     <span className="title-2">팀 좌우명</span>
                     <span className="teamText">오히려 좋아!</span>
                 </div>
+
                 <div className="sec center">
                     <span className="title-2">팀원 소개</span>
                 </div>
@@ -78,7 +79,7 @@ const TeamInfo = () => {
                             <Carousel.Caption>
                                 <div style={{ height: '100%', marginBottom: '40px' }}>
                                     <p style={{ fontSize: '50px' }}>유민지</p>
-                                    <p style={{ fontSize: '30px', paddingTop: '40px' }}>멘트 필요 합니다.</p>
+                                    <p style={{ fontSize: '30px', paddingTop: '40px' }}>디자인이 좋은 FE 개발자 😊</p>
                                     <div style={{ padding: '15px 0 40px 0', }}>
                                         <span className="badge">React.js</span>
                                         <span className="badge">javaScript</span>
@@ -170,7 +171,6 @@ const TeamInfo = () => {
                         </Carousel.Item>
                     </Carousel>
                 </div>
-
             </TeamInfoLayout>
             <FooterStyle>&copy; 2022 조용할지도</FooterStyle>
         </>

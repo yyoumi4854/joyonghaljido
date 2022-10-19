@@ -33,12 +33,17 @@ const IndexStyle = styled.div`
             }
 
             button{
-                width: 200px;
+                width: 224px;
                 height: 32px;
                 margin-top: 60px;
                 background: ${({ theme }) => theme.colors.main};
                 border-radius: 32px;
                 color: #fff;
+                transition: all .3s;
+
+                &:hover{
+                    background: #59D19E;
+                }
             }
         }
     }
@@ -113,7 +118,7 @@ const IndexStyle = styled.div`
                     dl:nth-child(2) dt{background: #5BB8FB;}
                 }
                 &.graph3{
-                    dl:nth-child(1) dt{background: #F55073;}
+                    dl:nth-child(1) dt{background: rgba(245, 80, 115, 0.8);}
                     dl:nth-child(2) dt{background: #5BB8FB;}
                 }
             }

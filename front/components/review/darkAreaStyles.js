@@ -6,7 +6,7 @@ const DarkArea = styled.div`
     height: 100vh;
     left: 0;
     top: 0;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.4);
     z-index: 999;
 `;
 

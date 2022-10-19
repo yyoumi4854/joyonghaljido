@@ -5,11 +5,9 @@ import axios from 'axios';
 // styled
 import Title from '../titleStyles';
 import RankingContent from './rankingStyles';
-// import { TopBtn } from '../../styles/btnStyles';
 
 // react-icons
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-// import { AiOutlineVerticalAlignTop } from "react-icons/ai";
 
 import nameIds from '../../Id_book/nameId.json';
 import zoomMap from '../../data/map/zoom.json';
@@ -125,11 +123,7 @@ const Ranking2 = ({ currentState, setCurrentState, pins, setPins, dongs, setDong
           })
         }
       </ul>
-
-      {/* <TopBtn>
-          <AiOutlineVerticalAlignTop/>
-        </TopBtn> */}
-    </RankingContent >
+    </RankingContent>
   );
 };
 

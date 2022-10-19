@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 const TripleDotsModalStyle = styled.div`
     position: absolute;
     top: -1px;
-    right: 0;
+    right: -24px;
     button{
         ${({ theme }) => theme.common.flexCenter};
         flex-direction: column;

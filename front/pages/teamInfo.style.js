@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 const TeamInfoLayout = styled.div`
     margin-top: 64px;
-    width : 100vw;
+
     .title-1{
         font-size : 60px;
         font-weight : 700;
@@ -34,7 +34,6 @@ const TeamInfoLayout = styled.div`
         color : ${({ theme }) => theme.colors.grey2};
     }
     .sec{
-        width : 100vw;
         padding : 30px 150px;
     }
     .sec:first-child{
