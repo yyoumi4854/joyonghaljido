@@ -172,40 +172,35 @@
 2. 프로젝트 실행에 필요한 패키지를 설치합니다.
 
    ```
-   # npm 사용 시
+   cd front
+   npm install
 
    cd back
    npm install
    ```
 
-   ```
-   # yarn 사용 시
-
-   cd back
-   yarn
-   ```
 
 3. 몽고디비를 연결합니다.
+MongoDB가 준비되어 있다는 가정 하에,
+initData가 존재하고 해당 데이터를 어떤 컬렉션에 어떻게 넣어야 정상 동작하는지 적어주시면 될 것 같아요!
 
    ```
-   -- 몽고디비 아틀라스 사용 시 --
-
-   1. 몽고디비 아틀라스 클라우드 데이터베이스 생성
-   2. back 디렉토리의 .env 파일 편집
-   3. MONGODB_URL 변수에 DB URL을 삽입
-   ```
-
-   ```
-   -- 로컬에서 몽고디비 사용 시 --
-
-   1. 몽고디비 설치
-   2. back 디렉토리의 .env 파일 편집
-   3. MONGODB_URL 변수에 mongodb://localhost:27017/ 삽입
+   1. back 폴더의 initData를 확인합니다.
+   2. gus.json : 모든 자치구의 GeoJSON을 담고 있습니다.
+     - `gus` 컬렉션을 생성해 임포트 합니다.
+   3. dongs.json: 모든 행정동의 정보를 담고 있습니다.
+     - `dongs` 컬렉션을 생성해 임포트 합니다.
+   4. pins.json: 모든 측정지점(핀)의 정보를 담고 있습니다.
+     - `pins` 컬렉션을 생성해 임포트 합니다.
+   5. `reviews` 컬렉션을 생성하여 리뷰 CRUD를 확인합니다.
    ```
 
 4. 프론트엔드와 백엔드를 실행합니다.
 
    ```
+   cd front
+   npm run dev
+   
    cd back
    npm start
    ```
