@@ -79,31 +79,44 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
     useEffect(() => {
         getDongsByGuId()
         setMore(0);
-        // 1-1. Load_Gu 
-        if(currentState.currentView == 'gu'){
-            Load_Gu( 
-                currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx,
-            )
+        if(basic == true){
+            // 1-1. Load_Gu 
+            if(currentState.currentView == 'gu'){
+                Load_Gu( 
+                    currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx,
+                )
+            }
+            // 1-2. Load_Dong 
+            if(currentState.currentView == 'dong'){
+                Load_Dong(
+                    currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx
+                ) 
+            }
         }
-        // 1-2. Load_Dong 
-        if(currentState.currentView == 'dong'){
-            Load_Dong(
-                currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx
-            ) 
-        }
-        // more 반영한 GET 실행 (필터링 함수 실행)
-        if(filterClicked == true && basic == false){
-            filtering(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
-        }
-        // more 반영한 반영 GET 실행 (디폴트 함수 실행)
-        if(reviewType=='default' && basic == false){
-            allReviewClicked(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
-        }
+        // if(basic == false){
+        //     // more 반영한 GET 실행 (필터링 함수 실행)
+        //     if(filterClicked == true ){
+        //         filtering(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
+        //     }
+        //     // more 반영한 반영 GET 실행 (디폴트 함수 실행)
+        //     if(reviewType=='default'){
+        //         allReviewClicked(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
+        //     }
+        // }
         
     }, [currentState.currentView, 
         currentState.guId, 
         currentState.clickSpotId,
         filterClicked, basic, more])
+
+
+
+
+
+
+
+
+
         
   //***** [더보기] *****//
   const toggleEllipsis = (str, limit) => {

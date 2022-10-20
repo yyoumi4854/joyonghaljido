@@ -1,7 +1,7 @@
 import nameId from '../../Id_book/nameId.json'
 import { useState, useEffect} from 'react'
 
-import filterClicked from './functions/filtering.js'
+import filtering from './functions/filtering.js'
 import allReviewClicked from './functions/allReviewClicked.js'
 
 // styled
@@ -34,11 +34,12 @@ const ReviewList = ({
       setNoiseTabActive(arr);
 
       setFilterClicked(prev=>false)
-      
-    //   filterClicked(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
+      filtering(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
       }
     
-
+    // const getMoreClicked = () => {
+    //     setMore(()=>{more+1})
+    // }
 
   const noiseText = { 1: '나쁨', 2: '보통', 3: '좋음' }
   const [editBtns, setEditBtns] = useState(new Array(list.length).fill(0));
