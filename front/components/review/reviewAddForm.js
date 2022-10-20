@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
-import filterClicked from './functions/filterClicked.js'
+import filterClicked from './functions/filtering.js'
 import allReviewClicked from './functions/allReviewClicked.js'
 
 // styled

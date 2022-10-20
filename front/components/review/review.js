@@ -10,7 +10,7 @@ import getReviewNum from './functions/notUsing/getReviewNum'
 import getMorePages from './functions/notUsing/getMorePages.js'
 import getReviewByLv from './functions/notUsing/getReviewByLv'
 
-import filterClicked from './functions/filterClicked.js'
+import filtering from './functions/filtering.js'
 import allReviewClicked from './functions/allReviewClicked.js'
 
 import Load_Dong from './functions/Load_Dong.js'
@@ -50,6 +50,8 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
   const [dongList, setDongList] = useState([]);
   const [listChanged, setListChanged] = useState(false); // toggle
   const [reviewType, setReviewType] = useState('default'); // or lv
+  const [filterClicked, setFilterClicked] = useState(false);
+  const [basic, setBasic] = useState(true);
   const [typeChanged, setTypeChanged] = useState(false);
   const [isWriting, setIsWriting] = useState(false)
   const [dongListChanged, setDongListChanged] = useState(false)
@@ -89,7 +91,19 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
                 currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx
             ) 
         }
-    }, [currentState.currentView, currentState.guId, currentState.clickSpotId])
+        // more 반영한 GET 실행 (필터링 함수 실행)
+        if(filterClicked == true && basic == false){
+            filtering(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
+        }
+        // more 반영한 반영 GET 실행 (디폴트 함수 실행)
+        if(reviewType=='default' && basic == false){
+            allReviewClicked(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
+        }
+        
+    }, [currentState.currentView, 
+        currentState.guId, 
+        currentState.clickSpotId,
+        filterClicked, basic, more])
         
   //***** [더보기] *****//
   const toggleEllipsis = (str, limit) => {
@@ -181,7 +195,7 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
           setLv={setLv}
           dongList={dongList}
           dongListChanged={dongListChanged}
-          setReviewCnt={setReviewCnt} setAvgIdx={setAvgIdx}          
+          setReviewCnt={setReviewCnt} setAvgIdx={setAvgIdx} setFilterClicked={setFilterClicked}   
         />
       }
       <ReviewBtn>

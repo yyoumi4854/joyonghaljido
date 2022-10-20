@@ -1,7 +1,7 @@
 import nameId from '../../Id_book/nameId.json'
 import { useState, useEffect} from 'react'
 
-import filterClicked from './functions/filterClicked.js'
+import filterClicked from './functions/filtering.js'
 import allReviewClicked from './functions/allReviewClicked.js'
 
 // styled
@@ -17,7 +17,7 @@ import getMorePages from './functions/notUsing/getMorePages';
 const ReviewList = ({ 
     list, limit, toggleEllipsis, onClickMore, setModal, setReviewObj, 
     setIsWriting, isWriting, setMore, dongList, currentState, more, setList, reviewType, setReviewCnt, setAvgIdx, avgIdx,
-    reviewCnt, typeChanged, lv, setLv, dongListChanged, setReviewType}) => {
+    reviewCnt, typeChanged, lv, setLv, dongListChanged, setReviewType, setFilterClicked}) => {
 
     const [noiseTabActive, setNoiseTabActive] = useState([-1, 0, 0, 0]);
     const [tripleDotModal, setTripleDotModal] = useState(false);
@@ -33,15 +33,12 @@ const ReviewList = ({
       arr[lv] = 1;
       setNoiseTabActive(arr);
 
-      filterClicked(
-          currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
+      setFilterClicked(prev=>false)
+      
+    //   filterClicked(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
       }
     
 
-    const getMoreClicked = (reviewType, currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv) => {
-        if(reviewType=='default'){allReviewClicked(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)}
-        if(reviewType=='filter'){filterClicked(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)}
-    }
 
   const noiseText = { 1: '나쁨', 2: '보통', 3: '좋음' }
   const [editBtns, setEditBtns] = useState(new Array(list.length).fill(0));

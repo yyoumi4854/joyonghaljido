@@ -1,7 +1,7 @@
 import { SmallBtn } from '../../../styles/btnStyles';
 import { useState, useRef, useEffect } from "react";
 
-import filterClicked from '../functions/filterClicked.js'
+import filterClicked from '../functions/filtering.js'
 import allReviewClicked from '../functions/allReviewClicked.js'
 
 import axios from 'axios';

@@ -1,7 +1,7 @@
 import axios from 'axios';
-import getAvg from '../functions/getAvg'
+import getAvg from './getAvg'
 
-const filterClicked = async (currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv) => {
+const filtering = async (currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv) => {
     
     // 1. 리뷰 개수 구하기
     if (currentState.currentView === 'gu') {
@@ -90,7 +90,7 @@ const filterClicked = async (currentState, more, setList, setReviewCnt, reviewCn
 }
 
 
-export default filterClicked
+export default filtering
 
 
 
