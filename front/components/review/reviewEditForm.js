@@ -1,13 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
-// styled
+import filterClicked from './functions/filterClicked.js'
+import allReviewClicked from './functions/allReviewClicked.js'
 import FormContent from "./reviewAddForm.style";
 import DarkArea from "./darkAreaStyles";
 import { SmallBtn } from '../../styles/btnStyles';
 
-const ReviewEditForm = ({ currentReview, closeIsEditing, setListChanged, editDongInfo }) => {
+const ReviewEditForm = ({ currentReview, closeIsEditing, editDongInfo, reviewType, currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv}) => {
 
+    
     // const [editDongInfo, setEditDongInfo] = useState();
     
     // useEffect(() => {
@@ -36,10 +38,24 @@ const ReviewEditForm = ({ currentReview, closeIsEditing, setListChanged, editDon
     const handleUpdateSubmit = async (e) => {
         e.preventDefault();
         const reviewId = currentReview._id;
+        // PUT
         try {
             await axios.put(`http://localhost:5001/reviews/${reviewId}`, review);
             closeIsEditing();
-            setListChanged(prev=>!prev)
+            try{
+                // GET
+                if(reviewType=='default'){
+                    allReviewClicked(
+                        currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
+                }
+                if(reviewType=='filter'){
+                    filterClicked(
+                        currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
+                }
+            }
+            catch{
+                console.log('수정 이후 get 오류')
+            }
         } catch (e) {
             console.log("수정 오류", e);
         }

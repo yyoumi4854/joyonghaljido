@@ -1,13 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
+import filterClicked from './functions/filterClicked.js'
+import allReviewClicked from './functions/allReviewClicked.js'
+
 // styled
 import FormContent from "./reviewAddForm.style";
 import DarkArea from "./darkAreaStyles";
 import { SmallBtn } from '../../styles/btnStyles';
 import { Prev } from 'react-bootstrap/esm/PageItem';
 
-const ReviewAddForm = ({ setIsWriting, setListChanged, currentState, setModal }) => {
+const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv}) => {
   
   const [noiseLevel, setNoiseLevel] = useState('');
   const [guList, setGuList] = useState([]);
@@ -74,7 +77,18 @@ const ReviewAddForm = ({ setIsWriting, setListChanged, currentState, setModal })
     try {
       console.log('review', review)
       await axios.post("http://localhost:5001/reviews", review);
-      setListChanged(prev=>!prev)
+      
+    // 다시 GET 하기
+    if(reviewType=='default'){
+        allReviewClicked(
+            currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
+        }
+    if(reviewType=='filter'){
+        filterClicked(
+            currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
+        }
+
+
       setIsWriting(false);
     } catch (e) {
       setIsWriting(false);
