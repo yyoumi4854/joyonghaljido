@@ -9,7 +9,6 @@ import * as Api from '../../api';
 // styled
 import PinSelectLayout from './pinSelect.style';
 import Title from '../titleStyles';
-import { ReviewBtn } from '../../styles/btnStyles';
 
 // react-icons
 import { AiOutlineArrowLeft } from "react-icons/ai";

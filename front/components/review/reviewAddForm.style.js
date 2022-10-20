@@ -83,7 +83,10 @@ const FormContent = styled.div`
                 }
 
                 input[type=radio]{display: none;}
-                p{margin-top: 8px;}
+                p{
+                    margin-top: 8px;
+                    color: ${({ theme }) => theme.colors.grey1};
+                }
 
                 &.good label{background: url('/images/noiseGood.svg') no-repeat center;}
                 &.soso label{background: url('/images/noiseSoso.svg') no-repeat center;}

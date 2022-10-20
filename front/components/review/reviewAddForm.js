@@ -8,7 +8,6 @@ import allReviewClicked from './functions/allReviewClicked.js'
 import FormContent from "./reviewAddForm.style";
 import DarkArea from "./darkAreaStyles";
 import { SmallBtn } from '../../styles/btnStyles';
-import { Prev } from 'react-bootstrap/esm/PageItem';
 
 const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv}) => {
   
