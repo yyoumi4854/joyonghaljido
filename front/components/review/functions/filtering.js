@@ -3,6 +3,8 @@ import getAvg from './getAvg'
 
 const filtering = async (currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv) => {
     
+    let lv1, lv2, lv3 = [0, 0, 0]
+
     // 1. 리뷰 개수 구하기
     if (currentState.currentView === 'gu') {
 
@@ -11,7 +13,6 @@ const filtering = async (currentState, more, setList, setReviewCnt, reviewCnt, s
             .then(v=>{
                 const all = v.data.reviewCount[0].totalReview
                 const arr = v.data.noiseLevelCount
-                let lv1, lv2, lv3 = [0, 0, 0]
                 arr.forEach(ele => {
                     if(ele._id == 1){lv1 = ele.total}
                     if(ele._id == 2){lv2 = ele.total}
@@ -30,7 +31,6 @@ const filtering = async (currentState, more, setList, setReviewCnt, reviewCnt, s
             .then(v=>{
                 const all = v.data.reviewCount[0].totalReview
                 const arr = v.data.noiseLevelCount
-                let lv1, lv2, lv3 = [0, 0, 0]
                 arr.forEach(ele => {
                     if(ele._id == 1){lv1 = ele.total}
                     if(ele._id == 2){lv2 = ele.total}
@@ -45,10 +45,7 @@ const filtering = async (currentState, more, setList, setReviewCnt, reviewCnt, s
     }
     
     // 2. 평균 소음 인덱스 계산
-    const v1 = reviewCnt[1]
-    const v2 = reviewCnt[2]
-    const v3 = reviewCnt[3]
-    setAvgIdx(getAvg(v1, v2, v3))
+    setAvgIdx(getAvg(lv1, lv2, lv3))
 
     // 3. 리뷰 목록 구하기
     // 구 리뷰

@@ -3,7 +3,8 @@ import axios from 'axios';
 import getAvg from '../functions/getAvg'
 
 const allReviewClicked = async (currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx) => {
-    
+    let lv1, lv2, lv3 = [0, 0, 0]
+
     // 1. 리뷰 개수 구하기
     if (currentState.currentView == 'gu') {
         console.log('allReviewClicked')
@@ -12,7 +13,6 @@ const allReviewClicked = async (currentState, more, setList, setReviewCnt, revie
             .then(v=>{
                 const all = v.data.reviewCount[0].totalReview
                 const arr = v.data.noiseLevelCount
-                let lv1, lv2, lv3 = [0, 0, 0]
                 arr.forEach(ele => {
                     if(ele._id == 1){lv1 = ele.total}
                     if(ele._id == 2){lv2 = ele.total}
@@ -32,14 +32,12 @@ const allReviewClicked = async (currentState, more, setList, setReviewCnt, revie
             .then(v=>{
                 const all = v.data.reviewCount[0].totalReview
                 const arr = v.data.noiseLevelCount
-                let lv1, lv2, lv3 = [0, 0, 0]
                 arr.forEach(ele => {
                     if(ele._id == 1){lv1 = ele.total}
                     if(ele._id == 2){lv2 = ele.total}
                     if(ele._id == 3){lv3 = ele.total}
                 });
                 setReviewCnt(()=>[all, lv1, lv2, lv3])
-                
             })
         }
         catch{
@@ -47,11 +45,11 @@ const allReviewClicked = async (currentState, more, setList, setReviewCnt, revie
         }
     }
 
+
     // 2. 평균 소음 인덱스 계산
-    const v1 = reviewCnt[1]
-    const v2 = reviewCnt[2]
-    const v3 = reviewCnt[3]
-    setAvgIdx(getAvg(v1, v2, v3))
+    setAvgIdx(getAvg(lv1, lv2, lv3))
+
+
 
     // 3. 리뷰 목록 구하기
     // 3-1 구 리뷰 목록 구하기

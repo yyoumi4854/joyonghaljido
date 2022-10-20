@@ -3,6 +3,7 @@ import getAvg from '../functions/getAvg'
 
 const Load_Dong = async (
     currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx) => {
+    let lv1, lv2, lv3 = [0, 0, 0]
 
     try {
         await axios.get(`http://localhost:5001/reviews/count?dongId=${currentState.clickSpotId}`)
@@ -10,7 +11,7 @@ const Load_Dong = async (
             console.log('동 리뷰개수', v.data)
             const all = v.data.reviewCount[0].totalReview
             const arr = v.data.noiseLevelCount
-            let lv1, lv2, lv3 = [0, 0, 0]
+            
             arr.forEach(ele => {
                 if(ele._id == 1){lv1 = ele.total}
                 if(ele._id == 2){lv2 = ele.total}
@@ -24,10 +25,7 @@ const Load_Dong = async (
     }
 
     // 2. 평균 소음 인덱스 계산
-    const v1 = reviewCnt[1]
-    const v2 = reviewCnt[2]
-    const v3 = reviewCnt[3]
-    setAvgIdx(getAvg(v1, v2, v3))
+    setAvgIdx(getAvg(lv1, lv2, lv3))
 
     // 3-1 동 목록 구하기
     try {
