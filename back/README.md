@@ -1,8 +1,6 @@
 # 조용할지도 백엔드
 
-📌 [**조용할지도 API 명세**](https://docs.google.com/spreadsheets/d/1SAP_Yc2HSR3E3hdOgMTEE_jvnj4RDiVaQQbsuSi8bhg/edit#gid=0)
-
-<br/>
+### 📌 [**조용할지도 API 명세**](https://docs.google.com/spreadsheets/d/1SAP_Yc2HSR3E3hdOgMTEE_jvnj4RDiVaQQbsuSi8bhg/edit#gid=0)
 
 <br/>
 
@@ -31,7 +29,6 @@
 ```javascript
 exports.PORT = Server port number (Default: 5001)
 exports.MONGODB_URL = MongoDB URI
-exports.SALT_ROUND = Password hashing salt count
 ```
 
 <br/>
