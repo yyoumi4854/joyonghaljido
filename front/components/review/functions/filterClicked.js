@@ -26,7 +26,7 @@ const filterClicked = async (currentState, more, setList, setReviewCnt, reviewCn
     }
     else if (currentState.currentView === 'dong') {
         try {
-            await axios.get(`http://localhost:5001/reviews/count?guId=${currentState.clickSpotId}`)
+            await axios.get(`http://localhost:5001/reviews/count?dongId=${currentState.clickSpotId}`)
             .then(v=>{
                 const all = v.data.reviewCount[0].totalReview
                 const arr = v.data.noiseLevelCount

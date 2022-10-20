@@ -77,17 +77,24 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
     try {
       console.log('review', review)
       await axios.post("http://localhost:5001/reviews", review);
-      
-    // 다시 GET 하기
-    if(reviewType=='default'){
-        allReviewClicked(
-            currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
-        }
-    if(reviewType=='filter'){
-        filterClicked(
-            currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
-        }
 
+      try{    
+        // 다시 GET 하기
+        if(reviewType=='default'){
+            alert('allReviewClicked')
+            allReviewClicked(
+                currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
+            }
+        if(reviewType=='filter'){
+            alert('allReviewClicked')
+            filterClicked(
+                currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
+            }
+        }
+        catch{
+            // console.log('값 생성은 했는데 get 실패!')
+            alert('값 생성은 했는데 get 실패!')
+        }
 
       setIsWriting(false);
     } catch (e) {
@@ -95,6 +102,7 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
       setModal('ban') // 작성금지 모달
       console.log("POST 요청이 실패했습니다.", e);
       console.log('보낸 값', review)
+      alert('생성실패!')
     }
   }
 
