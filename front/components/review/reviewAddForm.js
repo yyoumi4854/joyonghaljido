@@ -99,7 +99,6 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
       setModal('ban') // 작성금지 모달
       console.log("POST 요청이 실패했습니다.", e);
       console.log('보낸 값', review)
-      alert('생성실패!')
     }
   }
 
