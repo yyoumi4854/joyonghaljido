@@ -51,7 +51,7 @@ class reviewService {
     const noiseLevelDefault = NOISE_LEVEL_DEFAULT_VALUES.slice();
 
     if (count.reviewCount.length === 0) {
-      count.reviewCount[0] = { totalReveiw: 0 };
+      count.reviewCount[0] = { totalReview: 0 };
       count.noiseLevelCount = noiseLevelDefault;
     } else if (count.noiseLevelCount.length < 3) {
       count.noiseLevelCount.forEach((levelCount) => {
