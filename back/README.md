@@ -37,8 +37,46 @@ exports.SALT_ROUND = Password hashing salt count
 <br/>
 
 ## 파일 구조 설명
+```
+📦back
+ ┣ 📂initData
+ ┣ 📂src
+ ┃ ┣ 📂constants
+ ┃ ┃ ┗ 📜index.js
+ ┃ ┣ 📂db
+ ┃ ┃ ┣ 📂models
+ ┃ ┃ ┃ ┣ 📜Dong.js
+ ┃ ┃ ┃ ┣ 📜Gu.js
+ ┃ ┃ ┃ ┣ 📜Pin.js
+ ┃ ┃ ┃ ┗ 📜Review.js
+ ┃ ┃ ┣ 📂schemas
+ ┃ ┃ ┃ ┣ 📜dong.js
+ ┃ ┃ ┃ ┣ 📜gu.js
+ ┃ ┃ ┃ ┣ 📜pin.js
+ ┃ ┃ ┃ ┗ 📜review.js
+ ┃ ┃ ┗ 📜index.js
+ ┃ ┣ 📂middlewares
+ ┃ ┃ ┣ 📜errorMiddleware.js
+ ┃ ┃ ┣ 📜ipLimitMiddleware.js
+ ┃ ┃ ┗ 📜passwordMiddleware.js
+ ┃ ┣ 📂routers
+ ┃ ┃ ┣ 📜dongRouter.js
+ ┃ ┃ ┣ 📜guRouter.js
+ ┃ ┃ ┣ 📜locationRouter.js
+ ┃ ┃ ┣ 📜pinRouter.js
+ ┃ ┃ ┗ 📜reviewRouter.js
+ ┃ ┗ 📂services
+ ┃   ┣ 📜dongService.js
+ ┃   ┣ 📜guService.js
+ ┃   ┣ 📜locationService.js
+ ┃   ┣ 📜pinService.js
+ ┃   ┗ 📜reviewService.js
+ ┗ 📜app.js
 
-src 폴더 내 `routers`, `services`, `models`, `schemas`, `middlewares`
+ 
+```
+
+src 폴더 내 `routers`, `services`, `models`, `schemas`, `middlewares`, `constants`
 
 ### routers
 
@@ -95,3 +133,9 @@ Mongoose 스키마를 정의합니다.
   \- IP 별 시간 당 게시글 1개 제한
 - **passwordMiddleware**  
   \- 비밀번호 체크
+
+<br/>
+
+### constants
+
+환경변수를 포함한 상수들을 정의합니다.
