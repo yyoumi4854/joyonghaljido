@@ -9,8 +9,10 @@ import getReview from './functions/notUsing/getReview'
 import getReviewNum from './functions/notUsing/getReviewNum'
 import getMorePages from './functions/notUsing/getMorePages.js'
 import getReviewByLv from './functions/notUsing/getReviewByLv'
+
 import filterClicked from './functions/filterClicked.js'
 import allReviewClicked from './functions/allReviewClicked.js'
+
 import Load_Dong from './functions/Load_Dong.js'
 import Load_Gu from './functions/Load_Gu'
 
@@ -71,58 +73,24 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
             console.log('getReview 실패')
         }
     }
-
     // 1. 기본 : 리뷰수 + 리뷰목록 + 평균 소음 인덱스 구하기
     useEffect(() => {
         getDongsByGuId()
         setMore(0);
         // 1-1. Load_Gu 
         if(currentState.currentView == 'gu'){
-            setReviewType('default');
             Load_Gu( 
                 currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx,
             )
         }
         // 1-2. Load_Dong 
         if(currentState.currentView == 'dong'){
-            setReviewType('default');
             Load_Dong(
                 currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx
             ) 
         }
     }, [currentState.currentView, currentState.guId, currentState.clickSpotId])
-
-
-    // 2. 필터 타입 변경
-    // : 더불러오기-제거, 해당 필터 타입 보여주기
-    useEffect(() => {
-        setMore(0)
-        if(reviewType=='default'){
-            allReviewClicked(
-                currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
-        }
-        if(reviewType=='filter'){
-            filterClicked(
-                currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
-            }
-        }, [typeChanged])
-
         
-    // 3. 더 불러오기(more) or 리뷰 CRD시 (listChanged) : 
-    // :  더불러오기-수행, 해당 필터 타입 보여주기
-    useEffect(() => {
-        alert()
-        if(reviewType=='default'){
-            allReviewClicked(
-                currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
-        }
-        if(reviewType=='filter'){
-            filterClicked(
-                currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
-            }
-        }, [more, listChanged]) 
-
-
   //***** [더보기] *****//
   const toggleEllipsis = (str, limit) => {
     return {
@@ -175,7 +143,8 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
         <div>
           <div className='reviewAll'>
             <button>
-              <AiFillWechat onClick={()=>{setReviewType('default'); setTypeChanged(prev=>!prev)}}/>
+              <AiFillWechat onClick={()=>{allReviewClicked(
+                currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)}}/>
             </button>
             {/* 한번에 모든 게시글을 불러오지 않기 때문에 모든 모든 게시글 개수를 불러오는 api 설정 필요 */}
             <span>{reviewCnt[0]}</span> 
@@ -208,11 +177,11 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
           reviewCnt={reviewCnt}
           avgIdx={avgIdx}
           typeChanged={typeChanged}
-          setTypeChanged={setTypeChanged}
           lv={lv}
           setLv={setLv}
           dongList={dongList}
           dongListChanged={dongListChanged}
+          setReviewCnt={setReviewCnt} setAvgIdx={setAvgIdx}          
         />
       }
       <ReviewBtn>
@@ -233,7 +202,14 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
       {modal == 'pw_delete' && <Modal_Pw_Del
         setModal={setModal}
         reviewObj={reviewObj}
-        setListChanged={setListChanged}
+        reviewType={reviewType}
+        currentState={currentState}
+        more={more}
+        setList={setList}
+        setReviewCnt={setReviewCnt}
+        reviewCnt={reviewCnt}
+        setAvgIdx={setAvgIdx}
+        lv={lv}
       />}
 
       {/* 비번확인 FOR 수정 */}
@@ -248,16 +224,30 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
       {isEditing && <ReviewEditForm
         currentReview={reviewObj}
         closeIsEditing={closeIsEditing}
-        setListChanged={setListChanged}
         editDongInfo={editDongInfo}
+        reviewType={reviewType}
+        currentState={currentState}
+        more={more}
+        setList={setList}
+        setReviewCnt={setReviewCnt}
+        reviewCnt={reviewCnt}
+        setAvgIdx={setAvgIdx}
+        lv={lv}
+        
       />}
 
       {/* 입력 폼 */}
       {isWriting && <ReviewAddForm
         setIsWriting={setIsWriting}
-        setListChanged={setListChanged}
         currentState={currentState}
         setModal={setModal}
+        reviewType={reviewType}
+        more={more}
+        setList={setList}
+        setReviewCnt={setReviewCnt}
+        reviewCnt={reviewCnt}
+        setAvgIdx={setAvgIdx}
+        lv={lv}
       />}
     </>
   );

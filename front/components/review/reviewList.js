@@ -1,6 +1,9 @@
 import nameId from '../../Id_book/nameId.json'
 import { useState, useEffect} from 'react'
 
+import filterClicked from './functions/filterClicked.js'
+import allReviewClicked from './functions/allReviewClicked.js'
+
 // styled
 import ReviewListContent from './reviewListStyles';
 import Modal_TripleDots from './modal/Modal_TripleDots';
@@ -9,11 +12,12 @@ import Modal_TripleDots from './modal/Modal_TripleDots';
 // react-icons
 import { AiOutlineMore } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
+import getMorePages from './functions/notUsing/getMorePages';
 
 const ReviewList = ({ 
     list, limit, toggleEllipsis, onClickMore, setModal, setReviewObj, 
-    setIsWriting, isWriting, setMore, dongList, currentState, more, setList, reviewType, 
-    setReviewType, reviewCnt, avgIdx, typeChanged, setTypeChanged, lv, setLv, dongListChanged}) => {
+    setIsWriting, isWriting, setMore, dongList, currentState, more, setList, reviewType, setReviewCnt, setAvgIdx, avgIdx,
+    reviewCnt, typeChanged, lv, setLv, dongListChanged, setReviewType}) => {
 
     const [noiseTabActive, setNoiseTabActive] = useState([-1, 0, 0, 0]);
     const [tripleDotModal, setTripleDotModal] = useState(false);
@@ -23,13 +27,21 @@ const ReviewList = ({
       // review type Changed
       setLv(e.target.id)
       setReviewType('filter')
-      setTypeChanged(prev=>!prev)
 
       // 해당 레벨 CSS 활성화
       let arr = [-1, 0, 0, 0]
       arr[lv] = 1;
       setNoiseTabActive(arr);
-  }
+
+      filterClicked(
+          currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
+      }
+    
+
+    const getMoreClicked = (reviewType, currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv) => {
+        if(reviewType=='default'){allReviewClicked(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)}
+        if(reviewType=='filter'){filterClicked(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)}
+    }
 
   const noiseText = { 1: '나쁨', 2: '보통', 3: '좋음' }
   const [editBtns, setEditBtns] = useState(new Array(list.length).fill(0));
@@ -114,11 +126,14 @@ const ReviewList = ({
             })
           }
         </ul>
-
-        <button className='reviewAddBtn' onClick={() => { setMore(prev => prev + 1) }}>소음 리뷰 10개 더보기 <BiChevronDown /></button>
+        <button className='reviewAddBtn' onClick={() => {getMoreClicked()}}>
+            소음 리뷰 10개 더보기
+            <BiChevronDown />
+        </button>
       </div>
     </ReviewListContent>
   );
 };
 
 export default ReviewList;
+

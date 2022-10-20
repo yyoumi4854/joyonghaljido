@@ -73,7 +73,7 @@ return (
               src={LeftArrow}
               alt="LeftArrow"
               onClick={() => {
-                alert();
+                // alert();
               }}
             ></Image>
           </h2>

@@ -1,13 +1,16 @@
 import { SmallBtn } from '../../../styles/btnStyles';
 import { useState, useRef, useEffect } from "react";
 
+import filterClicked from '../functions/filterClicked.js'
+import allReviewClicked from '../functions/allReviewClicked.js'
+
 import axios from 'axios';
 
 // styled
 import DarkArea from '../darkAreaStyles';
 import ModalContent from './modalStyles';
 
-const Modal_Pw = ({setModal, reviewObj, setListChanged}) => {
+const Modal_Pw = ({setModal, reviewObj, reviewType, currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv}) => {
 
   const [showWrong, setShowWrong] = useState(false)
   const [inputValue, setInputValue] = useState('')
@@ -34,12 +37,26 @@ const Modal_Pw = ({setModal, reviewObj, setListChanged}) => {
   const deleteReview = async() => {
     const reviewId = reviewObj._id;
     console.log(reviewId)
-    try{
+    
+    try{ // DEL
       await del('/reviews', reviewId)
-      setListChanged(prev=>!prev)
       console.log('삭제 성공')
       alert('삭제 성공')
       setModal('none')
+      
+      try{ // GET
+        if(reviewType=='default'){
+          allReviewClicked(
+          currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
+        }
+        if(reviewType=='filter'){
+          filterClicked(
+          currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
+        }
+      }
+      catch{
+        console.log('수정 이후 get 오류')
+      }
     }
     catch{
       fail();
