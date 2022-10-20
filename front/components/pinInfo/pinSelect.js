@@ -132,10 +132,6 @@ const PinSelect = ({ currentState, setCurrentState, pins }) => {
                     </div>
                 </div>
             </div>
-
-            <ReviewBtn>
-                <button>소음 리뷰 쓰러가기</button>
-            </ReviewBtn>
         </PinSelectLayout>
     );
 }

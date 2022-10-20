@@ -255,9 +255,9 @@ const Map = ({ currentState, setCurrentState, pins, setPins, dongs, setDongs }) 
                                         setTooltipName('');
                                     }}
                                     style={{
-                                        default: { fill: theme.colors.mainLight1 },
+                                        default: { fill: 'rgba(172, 232, 207, .9)' },
                                         hover: {
-                                            fill: theme.colors.mainLight1,
+                                            fill: 'rgba(172, 232, 207, .9)',
                                             outline: 'none',
                                             stroke: theme.colors.main,
                                             strokeWidth: 0.1,
@@ -265,7 +265,7 @@ const Map = ({ currentState, setCurrentState, pins, setPins, dongs, setDongs }) 
                                     }}
                                     coordinates={[dong.longitude, dong.latitude]}>
                                     <circle
-                                        r={0.5}
+                                        r={0.8}
                                     />
                                 </Marker>
                             }) : null}
