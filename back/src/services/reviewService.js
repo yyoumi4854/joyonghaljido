@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const Review = require("../db/models/Review");
-const { SALT_ROUND } = require("../constants");
+const { SALT_ROUND, NOISE_LEVEL_DEFAULT_VALUES } = require("../constants");
 
 class reviewService {
   //create review
@@ -47,7 +47,18 @@ class reviewService {
 
   //get review count
   static async getCount(guId, dongId) {
-    const count = await Review.getCount(guId, dongId);
+    let count = await Review.getCount(guId, dongId);
+    const noiseLevelDefault = NOISE_LEVEL_DEFAULT_VALUES.slice();
+
+    if (count.reviewCount.length === 0) {
+      count.reviewCount[0] = { totalReveiw: 0 };
+      count.noiseLevelCount = noiseLevelDefault;
+    } else if (count.noiseLevelCount.length < 3) {
+      count.noiseLevelCount.forEach((levelCount) => {
+        noiseLevelDefault.splice(levelCount._id - 1, 1, levelCount);
+      });
+      count.noiseLevelCount = noiseLevelDefault;
+    }
 
     return count;
   }
