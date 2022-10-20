@@ -124,7 +124,7 @@ const Index = () => {
         </div>
 
         <div className='graph'>
-          <p>구 별 소음민원 발생량 및 인구 수</p>
+          <p>구 별 소음민원 발생량</p>
           <div className='graphBox graph3Box'>
             <G3_EachGu></G3_EachGu>
             <p>노원구</p>
