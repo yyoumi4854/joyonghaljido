@@ -19,6 +19,7 @@ import Review from '../components/review/review';
 import PinSelect from '../components/pinInfo/pinSelect';
 import RankingInfo from '../components/sideInfo/rankingInfo';
 import PinMarkerInfo from '../components/sideInfo/pinMarkerInfo';
+import PinLevelInfo from '../components/sideInfo/pinLevelInfo';
 
 // styled
 import FindLayout from './findLayoutStyles';
@@ -84,11 +85,15 @@ const Find = () => {
             setModal={setModal}
           /> : null}
         {currentState.currentView === 'info' ?
-          <PinSelect
-            pins={pins}
-            setPins={setPins}
-            currentState={currentState}
-            setCurrentState={setCurrentState} /> : null}
+          <>
+            <PinSelect
+              pins={pins}
+              setPins={setPins}
+              currentState={currentState}
+              setCurrentState={setCurrentState} />
+            <PinLevelInfo/>
+          </>
+            : null}
         <FooterStyle>&copy; 2022 조용할지도</FooterStyle>
       </div>
 

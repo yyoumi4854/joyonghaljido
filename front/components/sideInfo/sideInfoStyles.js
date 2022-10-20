@@ -1,4 +1,34 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
+const pin1 = css`
+    background: url('/images/pins/purplePin.svg') no-repeat center;
+    background-size: contain; 
+`;
+
+const pin2 = css`
+    background: url('/images/pins/bluePin.svg') no-repeat center;
+    background-size: contain; 
+`;
+
+const pin3 = css`
+    background: url('/images/pins/greenPin.svg') no-repeat center;
+    background-size: contain; 
+`;
+
+const pin4 = css`
+    background: url('/images/pins/yellowPin.svg') no-repeat center;
+    background-size: contain; 
+`;
+
+const pin5 = css`
+    background: url('/images/pins/orangePin.svg') no-repeat center;
+    background-size: contain; 
+`;
+
+const pin6 = css`
+    background: url('/images/pins/redPin.svg') no-repeat center;
+    background-size: contain; 
+`;
 
 const SideInfoContent = styled.div`
   position: fixed;
@@ -7,7 +37,7 @@ const SideInfoContent = styled.div`
   padding: 16px;
   background: rgba(255, 255, 255, 0.6);
   border: 1px solid ${({ theme }) => theme.colors.grey3};
-  border-radius: 2px;
+  border-radius: 4px;
   z-index: 990; 
 
   .ranking{
@@ -87,10 +117,39 @@ const SideInfoContent = styled.div`
       }
     }
   }
+
+  .pinLevel{
+    dl{
+      ${({ theme }) => theme.common.flexCenter}
+      &+dl {margin-top: 16px;}
+
+      dt{
+        width: 32px;
+        height: 32px;
+        text-indent: -9999px;
+        margin-right: 12px;
+      }
+
+      &:nth-child(1) dt{
+        ${pin6}
+      }
+      &:nth-child(2) dt{
+        ${pin5}
+      }
+      &:nth-child(3) dt{
+        ${pin4}
+      }
+      &:nth-child(4) dt{
+        ${pin3}
+      }
+      &:nth-child(5) dt{
+        ${pin2}
+      }
+      &:nth-child(6) dt{
+        ${pin1}
+      }
+    }
+  }
 `;
 
 export default SideInfoContent;
-
-  /* .info{
-    
-  } */

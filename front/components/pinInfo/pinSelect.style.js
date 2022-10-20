@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 const pin1 = css`
-    background: url('/images/pins/puplePin.svg') no-repeat center;
+    background: url('/images/pins/purplePin.svg') no-repeat center;
     background-size: contain; 
 `;
 
