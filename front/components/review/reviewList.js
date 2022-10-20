@@ -17,29 +17,27 @@ import getMorePages from './functions/notUsing/getMorePages';
 const ReviewList = ({ 
     list, limit, toggleEllipsis, onClickMore, setModal, setReviewObj, 
     setIsWriting, isWriting, setMore, dongList, currentState, more, setList, reviewType, setReviewCnt, setAvgIdx, avgIdx,
-    reviewCnt, typeChanged, lv, setLv, dongListChanged, setReviewType, setFilterClicked}) => {
+    reviewCnt, typeChanged, lv, setLv, dongListChanged, setReviewType, setBasic}) => {
 
     const [noiseTabActive, setNoiseTabActive] = useState([-1, 0, 0, 0]);
     const [tripleDotModal, setTripleDotModal] = useState(false);
 
     const noiseTabHandler = (e) => {
-      
-      // review type Changed
-      setLv(e.target.id)
-      setReviewType('filter')
+        // 해당 레벨 CSS 활성화 
 
-      // 해당 레벨 CSS 활성화
-      let arr = [-1, 0, 0, 0]
-      arr[lv] = 1;
-      setNoiseTabActive(arr);
-
-      setFilterClicked(prev=>false)
-      filtering(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
-      }
+        setLv((prev)=>e.target.id)
+        let arr = [-1, 0, 0, 0]
+        arr[e.target.id] = 1;
+        const lvValue = e.target.id
+        setBasic(false)
+        setNoiseTabActive(arr);
+        setReviewType(prev=>'filter')
+        filtering(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lvValue)
+    }
     
-    // const getMoreClicked = () => {
-    //     setMore(()=>{more+1})
-    // }
+    const getMoreClicked = () => {
+        setMore((prev)=>prev+1)
+    }
 
   const noiseText = { 1: '나쁨', 2: '보통', 3: '좋음' }
   const [editBtns, setEditBtns] = useState(new Array(list.length).fill(0));

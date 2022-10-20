@@ -6,7 +6,7 @@ const allReviewClicked = async (currentState, more, setList, setReviewCnt, revie
     
     // 1. 리뷰 개수 구하기
     if (currentState.currentView == 'gu') {
-
+        console.log('allReviewClicked')
         try{
             await axios.get(`http://localhost:5001/reviews/count?guId=${currentState.guId}`)
             .then(v=>{

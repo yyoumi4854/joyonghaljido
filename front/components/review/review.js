@@ -77,44 +77,49 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
     }
     // 1. 기본 : 리뷰수 + 리뷰목록 + 평균 소음 인덱스 구하기
     useEffect(() => {
+        console.log('reviewType more basic')
+        console.log('reviewType more basic', reviewType, more, basic)
         getDongsByGuId()
-        setMore(0);
+        setMore(prev=>0);
+
         if(basic == true){
-            // 1-1. Load_Gu 
+            // 1-1. 구 리뷰 [개수,평균,목록] 구함
             if(currentState.currentView == 'gu'){
                 Load_Gu( 
                     currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx,
                 )
             }
-            // 1-2. Load_Dong 
+            // 1-2. 동 리뷰 [개수,평균,목록] 구함
             if(currentState.currentView == 'dong'){
                 Load_Dong(
                     currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx
                 ) 
             }
+            setBasic(false)
         }
-        // if(basic == false){
-        //     // more 반영한 GET 실행 (필터링 함수 실행)
-        //     if(filterClicked == true ){
-        //         filtering(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
-        //     }
-        //     // more 반영한 반영 GET 실행 (디폴트 함수 실행)
-        //     if(reviewType=='default'){
-        //         allReviewClicked(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
-        //     }
-        // }
-        
+
     }, [currentState.currentView, 
         currentState.guId, 
-        currentState.clickSpotId,
-        filterClicked, basic, more])
+        currentState.clickSpotId])
 
 
+    useEffect(() => {
+        getDongsByGuId()
 
-
-
-
-
+        if(basic == false){
+            
+            // 필터된 구동 리뷰 정보 구함
+            if(reviewType == 'filter' ){
+                filtering(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
+            }
+            // more 반영한 반영 GET 실행 (디폴트 함수 실행)
+            if(reviewType=='default'){
+                allReviewClicked(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
+            }
+        }
+        
+    }, [filterClicked, basic, more, currentState.clickSpotId])
+    
 
 
         
@@ -170,8 +175,9 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
         <div>
           <div className='reviewAll'>
             <button>
-              <AiFillWechat onClick={()=>{allReviewClicked(
-                currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)}}/>
+              <AiFillWechat onClick={()=>{
+                setReviewType('default')
+              }}/>
             </button>
             {/* 한번에 모든 게시글을 불러오지 않기 때문에 모든 모든 게시글 개수를 불러오는 api 설정 필요 */}
             <span>{reviewCnt[0]}</span> 
@@ -208,7 +214,7 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
           setLv={setLv}
           dongList={dongList}
           dongListChanged={dongListChanged}
-          setReviewCnt={setReviewCnt} setAvgIdx={setAvgIdx} setFilterClicked={setFilterClicked}   
+          setReviewCnt={setReviewCnt} setAvgIdx={setAvgIdx} setBasic={setBasic}  
         />
       }
       <ReviewBtn>

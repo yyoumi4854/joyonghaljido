@@ -3,7 +3,7 @@ import getAvg from '../functions/getAvg'
 
 const Load_Dong = async (
     currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx) => {
-    console.log('Load_Dong')
+
     try {
         await axios.get(`http://localhost:5001/reviews/count?dongId=${currentState.clickSpotId}`)
         .then(v=>{
