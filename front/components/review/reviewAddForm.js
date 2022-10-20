@@ -81,19 +81,16 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
       try{    
         // 다시 GET 하기
         if(reviewType=='default'){
-            alert('allReviewClicked')
             allReviewClicked(
                 currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
             }
         if(reviewType=='filter'){
-            alert('allReviewClicked')
             filterClicked(
                 currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
             }
         }
         catch{
-            // console.log('값 생성은 했는데 get 실패!')
-            alert('값 생성은 했는데 get 실패!')
+            console.log('값 생성은 했는데 get 실패!')
         }
 
       setIsWriting(false);
