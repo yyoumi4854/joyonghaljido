@@ -52,6 +52,7 @@ class reviewService {
 
     if (count.reviewCount.length === 0) {
       count.reviewCount[0] = { totalReveiw: 0 };
+      count.noiseLevelCount = noiseLevelDefault;
     } else if (count.noiseLevelCount.length < 3) {
       count.noiseLevelCount.forEach((levelCount) => {
         noiseLevelDefault.splice(levelCount._id - 1, 1, levelCount);
