@@ -60,7 +60,7 @@ const filtering = async (currentState, more, setList, setReviewCnt, reviewCnt, s
           // 다음~
           for (let i = 1; i <= more; i++) {
               await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}&noiseLevel=${lv}&skip=${i}`)
-                  .then(v => (setList((prev) => [...prev, ...v.data])));
+                  .then(v => (setList((prev) => [...v.data, ...prev])));
           }
         }
         catch { console.log('구 리뷰(레벨별) 로딩 실패!'); }
@@ -74,7 +74,7 @@ const filtering = async (currentState, more, setList, setReviewCnt, reviewCnt, s
           // 이후
           for (let i = 1; i <= more; i++) {
             await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}&noiseLevel=${lv}&skip=${i}`)
-              .then(v => (setList((prev) => [...prev, ...v.data])));
+              .then(v => (setList((prev) => [...v.data, ...prev])));
           }
         }
         catch { console.log('동 리뷰(레벨별) 로딩 실패!'); }
