@@ -42,6 +42,11 @@ class Review {
       {
         $limit: limit,
       },
+      {
+        $sort: {
+          updatedAt: -1,
+        },
+      },
     ]);
 
     return reviews;
@@ -78,6 +83,11 @@ class Review {
       {
         $limit: limit,
       },
+      {
+        $sort: {
+          updatedAt: -1,
+        },
+      },
     ]);
 
     return reviews;
@@ -111,6 +121,11 @@ class Review {
           total: {
             $count: {},
           },
+        },
+      },
+      {
+        $sort: {
+          _id: 1,
         },
       },
     ]);
