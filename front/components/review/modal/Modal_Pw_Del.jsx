@@ -12,6 +12,7 @@ import ModalContent from './modalStyles';
 
 const Modal_Pw = ({setModal, reviewObj, reviewType, currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv}) => {
 
+  const serverUrl = 'http://kdt-ai5-team04.elicecoding.com'
   const [showWrong, setShowWrong] = useState(false)
   const [inputValue, setInputValue] = useState('')
 
@@ -26,21 +27,17 @@ const Modal_Pw = ({setModal, reviewObj, reviewType, currentState, more, setList,
   }
 
   async function del(endpoint, params = "") {
-    console.log(`DELETE 요청 ${'http://localhost:5001' + endpoint + "/" + params}`);
-    return axios.delete("http://localhost:5001" + endpoint + "/" + params,  
+
+    return axios.delete(`${serverUrl}${endpoint}/${params}`,  
       { data: { currentPassword: inputValue+'' } }, 
     );
   }
-  
-
 
   const deleteReview = async() => {
     const reviewId = reviewObj._id;
-    console.log(reviewId)
     
     try{ // DEL
       await del('/reviews', reviewId)
-      console.log('삭제 성공')
       setModal('none')
       
       try{ // GET

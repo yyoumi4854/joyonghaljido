@@ -2,12 +2,12 @@ import axios from 'axios';
 
 const getMorePages = async (currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv, reviewType) => {
 
-    console.log('getMorePages')
+    const serverUrl = 'http://kdt-ai5-team04.elicecoding.com'
     // 1. 리뷰 개수 구하기
 
     if (currentState.currentView === 'gu') {
         try{
-            await axios.get(`http://localhost:5001/reviews/count?guId=${currentState.guId}`)
+            await axios.get(`${serverUrl}/reviews/count?guId=${currentState.guId}`)
             .then(v=>{
                 const all = v.data.reviewCount[0].totalReview
                 const arr = v.data.noiseLevelCount
@@ -26,7 +26,7 @@ const getMorePages = async (currentState, more, setList, setReviewCnt, reviewCnt
     }
     else if (currentState.currentView === 'dong') {
         try {
-            await axios.get(`http://localhost:5001/reviews/count?guId=${currentState.clickSpotId}`)
+            await axios.get(`${serverUrl}/reviews/count?guId=${currentState.clickSpotId}`)
             .then(v=>{
                 const all = v.data.reviewCount[0].totalReview
                 const arr = v.data.noiseLevelCount
@@ -65,13 +65,12 @@ const getMorePages = async (currentState, more, setList, setReviewCnt, reviewCnt
     
     if (currentState.currentView === 'gu') {
         try {
-          await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}&noiseLevel=${lv}`)
+          await axios.get(`${serverUrl}/reviews?guId=${currentState.guId}&noiseLevel=${lv}`)
             .then(v => {
-              console.log(v.data)
               setList(v.data)
             });
           for (let i = 1; i <= more; i++) {
-              await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}&noiseLevel=${lv}&skip=${i}`)
+              await axios.get(`${serverUrl}/reviews?guId=${currentState.guId}&noiseLevel=${lv}&skip=${i}`)
                   .then(v => (setList((prev) => {
                   return [...prev, ...v.data]
               })));
@@ -82,10 +81,10 @@ const getMorePages = async (currentState, more, setList, setReviewCnt, reviewCnt
       // 동 리뷰
       else if (currentState.currentView === 'dong') {
         try {
-          await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}&noiseLevel=${lv}`)
+          await axios.get(`${serverUrl}/reviews?dongId=${currentState.clickSpotId}&noiseLevel=${lv}`)
             .then(v => (setList(v.data)));
           for (let i = 1; i <= more; i++) {
-            await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}&noiseLevel=${lv}&skip=${i}`)
+            await axios.get(`${serverUrl}/reviews?dongId=${currentState.clickSpotId}&noiseLevel=${lv}&skip=${i}`)
               .then(v => (setList((prev) => {
                 return [...prev, ...v.data]
               })));

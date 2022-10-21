@@ -5,8 +5,10 @@ const Load_Dong = async (
     currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx) => {
     let lv1, lv2, lv3 = [0, 0, 0]
 
+    const serverUrl = 'http://kdt-ai5-team04.elicecoding.com'
+
     try {
-        await axios.get(`http://localhost:5001/reviews/count?dongId=${currentState.clickSpotId}`)
+        await axios.get(`${serverUrl}/reviews/count?dongId=${currentState.clickSpotId}`)
         .then(v=>{
             console.log('동 리뷰개수', v.data)
             const all = v.data.reviewCount[0].totalReview
@@ -29,10 +31,10 @@ const Load_Dong = async (
 
     // 3-1 동 목록 구하기
     try {
-        await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}`)
+        await axios.get(`${serverUrl}/reviews?dongId=${currentState.clickSpotId}`)
         .then(v => (setList(v.data)));
         for (let i = 1; i <= more; i++) {
-        await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}&skip=${i}`)
+        await axios.get(`${serverUrl}/reviews?dongId=${currentState.clickSpotId}&skip=${i}`)
             .then(v => (setList((prev) => {
                 return [...v.data, ...prev]
             })));

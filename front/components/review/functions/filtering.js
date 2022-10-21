@@ -2,14 +2,14 @@ import axios from 'axios';
 import getAvg from './getAvg'
 
 const filtering = async (currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv) => {
-    
+    const serverUrl = 'http://kdt-ai5-team04.elicecoding.com'
     let lv1, lv2, lv3 = [0, 0, 0]
 
     // 1. 리뷰 개수 구하기
     if (currentState.currentView === 'gu') {
 
         try{
-            await axios.get(`http://localhost:5001/reviews/count?guId=${currentState.guId}`)
+            await axios.get(`${serverUrl}/reviews/count?guId=${currentState.guId}`)
             .then(v=>{
                 const all = v.data.reviewCount[0].totalReview
                 const arr = v.data.noiseLevelCount
@@ -27,7 +27,7 @@ const filtering = async (currentState, more, setList, setReviewCnt, reviewCnt, s
     }
     else if (currentState.currentView === 'dong') {
         try {
-            await axios.get(`http://localhost:5001/reviews/count?dongId=${currentState.clickSpotId}`)
+            await axios.get(`${serverUrl}/reviews/count?dongId=${currentState.clickSpotId}`)
             .then(v=>{
                 const all = v.data.reviewCount[0].totalReview
                 const arr = v.data.noiseLevelCount
@@ -52,14 +52,13 @@ const filtering = async (currentState, more, setList, setReviewCnt, reviewCnt, s
     if (currentState.currentView === 'gu') {
         try {
           // 첫 10개
-          await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}&noiseLevel=${lv}`)
+          await axios.get(`${serverUrl}/reviews?guId=${currentState.guId}&noiseLevel=${lv}`)
             .then(v => {
-              console.log(v.data)
               setList(v.data)
             });
           // 다음~
           for (let i = 1; i <= more; i++) {
-              await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}&noiseLevel=${lv}&skip=${i}`)
+              await axios.get(`${serverUrl}/reviews?guId=${currentState.guId}&noiseLevel=${lv}&skip=${i}`)
                   .then(v => (setList((prev) => [...v.data, ...prev])));
           }
         }
@@ -69,11 +68,11 @@ const filtering = async (currentState, more, setList, setReviewCnt, reviewCnt, s
       else if (currentState.currentView === 'dong') {
         try {
           // 첫 10개
-          await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}&noiseLevel=${lv}`)
+          await axios.get(`${serverUrl}/reviews?dongId=${currentState.clickSpotId}&noiseLevel=${lv}`)
             .then(v => (setList(v.data)));
           // 이후
           for (let i = 1; i <= more; i++) {
-            await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}&noiseLevel=${lv}&skip=${i}`)
+            await axios.get(`${serverUrl}/reviews?dongId=${currentState.clickSpotId}&noiseLevel=${lv}&skip=${i}`)
               .then(v => (setList((prev) => [...v.data, ...prev])));
           }
         }

@@ -464,5 +464,3 @@ test.forEach((e,i) => {
         hash[former] = ((hash[former]/cnt).toFixed(2))*1
     }
 });
-
-console.log(hash)

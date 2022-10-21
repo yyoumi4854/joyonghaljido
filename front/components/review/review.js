@@ -4,12 +4,6 @@ import Modal_Pw_Update from './modal/Modal_Pw_Update'
 import Modal_Ban from './modal/Modal_Ban'
 import Modal_Ask from './modal/Modal_Ask'
 
-// functions
-import getReview from './functions/notUsing/getReview'
-import getReviewNum from './functions/notUsing/getReviewNum'
-import getMorePages from './functions/notUsing/getMorePages.js'
-import getReviewByLv from './functions/notUsing/getReviewByLv'
-
 import filtering from './functions/filtering.js'
 import allReviewClicked from './functions/allReviewClicked.js'
 
@@ -36,6 +30,8 @@ import seoulMap from '../../data/map/seoul.json';
 
 const Review = ({ currentState, setCurrentState, setModal, modal }) => {
   
+    const serverUrl = 'http://kdt-ai5-team04.elicecoding.com'
+    
   // 값 조정 관련
   const [list, setList] = useState([]);
   const [reviewCnt, setReviewCnt] = useState([0,0,0,0]);  // [all, lv1, lv2, lv3]
@@ -65,10 +61,9 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
     // 0. 구에 따른 동 목록 받기
     const getDongsByGuId = async () => {
         try{
-            await axios.get(`http://localhost:5001/location/gus/${currentState.guId}/dongs`)
+            await axios.get(`${serverUrl}/location/gus/${currentState.guId}/dongs`)
             .then((res) => {
                 setDongList(res.data.dongs);
-                console.log('res.data.dongs', res.data.dongs)
                 setDongListChanged(true)
             });
         }

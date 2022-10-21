@@ -2,9 +2,9 @@
 import axios from 'axios';
 
 const getReviewNum = async (currentState, setReviewCnt) => {
-
+    const serverUrl = 'http://kdt-ai5-team04.elicecoding.com'
     try{
-        await axios.get(`http://localhost:5001/reviews/count?guId=${currentState.guId}`)
+        await axios.get(`${serverUrl}/reviews/count?guId=${currentState.guId}`)
         .then(v=>{
             const all = v.data.reviewCount[0].totalReview
             const lv1 = v.data.noiseLevelCount[0].total
