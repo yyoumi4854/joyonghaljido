@@ -17,7 +17,7 @@ import getMorePages from './functions/notUsing/getMorePages';
 const ReviewList = ({ 
     list, limit, toggleEllipsis, onClickMore, setModal, setReviewObj, 
     setIsWriting, isWriting, setMore, dongList, currentState, more, setList, reviewType, setReviewCnt, setAvgIdx, avgIdx,
-    reviewCnt, typeChanged, lv, setLv, dongListChanged, setReviewType, setBasic}) => {
+    reviewCnt, typeChanged, lv, setLv, dongListChanged, setReviewType, setBasic, filterIcon, setFilterIcon}) => {
 
     const [noiseTabActive, setNoiseTabActive] = useState([-1, 0, 0, 0]);
     const [tripleDotModal, setTripleDotModal] = useState(false);
@@ -31,8 +31,10 @@ const ReviewList = ({
         const lvValue = e.target.id
         setBasic(false)
         setNoiseTabActive(arr);
+        setFilterIcon(true)
         setReviewType(prev=>'filter')
         filtering(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lvValue)
+        {/* // const [filterIcon, setFilterIcon] = useState(false) */}
     }
     
     const getMoreClicked = () => {
@@ -54,20 +56,20 @@ const ReviewList = ({
 
       <ul className='noiseTab'>
         {/* 클릭할때마다 li에 active가 붙는걸로 -> active가 붙을때마다 아이콘 밑 글씨가 굵어지고 색상이 바뀜 */}
-        <li className={noiseTabActive[3] && 'active'}>
+        <li className={(noiseTabActive[3] && filterIcon) &&'active' }>
           <span id='3' onClick={noiseTabHandler}>좋음</span>
           <p>{reviewCnt[3] || 0}</p>
         </li>
-        <li className={noiseTabActive[2] && 'active'}>
+        <li className={(noiseTabActive[2] && filterIcon) &&'active'}>
           <span id='2' onClick={noiseTabHandler}>보통</span>
           <p>{reviewCnt[2] || 0}</p>
         </li>
-        <li className={noiseTabActive[1] && 'active'}>
+        <li className={(noiseTabActive[1] && filterIcon) && 'active'}>
           <span id='1' onClick={noiseTabHandler}>나쁨</span>
           <p>{reviewCnt[1] || 0}</p>
         </li>
       </ul>
-
+      
       <div className='reviewList'>
         <ul>
           {
@@ -132,4 +134,3 @@ const ReviewList = ({
 };
 
 export default ReviewList;
-

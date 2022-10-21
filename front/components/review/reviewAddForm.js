@@ -73,6 +73,18 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
   // 제출 시점   
   const handleAddSubmit = async (e) => {
     e.preventDefault();
+    if(review.guId == '' 
+    || review.dongId == ''
+    || review.title == ''
+    || review.description == ''
+    || review.password == ''
+    || review.noiseLevel == ''
+    ){
+        alert('모든 항목을 채워 주세요')
+        return
+    }
+
+    // API 요청
     try {
       console.log('review', review)
       await axios.post("http://localhost:5001/reviews", review);
@@ -83,7 +95,7 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
             allReviewClicked(
                 currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
             }
-        if(reviewType=='filter'){
+        else if(reviewType=='filter'){
             filterClicked(
                 currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
             }

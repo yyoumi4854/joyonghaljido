@@ -55,6 +55,7 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
   const [typeChanged, setTypeChanged] = useState(false);
   const [isWriting, setIsWriting] = useState(false)
   const [dongListChanged, setDongListChanged] = useState(false)
+  const [filterIcon, setFilterIcon] = useState(false)
   const openIsEditing  = () => { setIsEditing(true);}
   const closeIsEditing = () => { setIsEditing(false);}
 
@@ -176,7 +177,8 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
               <AiFillWechat onClick={()=>{
                 // setReviewType('default')
                 allReviewClicked(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
-
+                setFilterIcon((prev)=>false)
+                // const [filterIcon, setFilterIcon] = useState(false)
               }}/>
             </button>
             {/* 한번에 모든 게시글을 불러오지 않기 때문에 모든 모든 게시글 개수를 불러오는 api 설정 필요 */}
@@ -214,7 +216,12 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
           setLv={setLv}
           dongList={dongList}
           dongListChanged={dongListChanged}
-          setReviewCnt={setReviewCnt} setAvgIdx={setAvgIdx} setBasic={setBasic}  
+          setReviewCnt={setReviewCnt} 
+          setAvgIdx={setAvgIdx} 
+          setBasic={setBasic} 
+          setFilterIcon={setFilterIcon} 
+          filterIcon={filterIcon}
+          
         />
       }
       <ReviewBtn>
