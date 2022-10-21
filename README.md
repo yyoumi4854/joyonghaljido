@@ -2,7 +2,7 @@
 
 <br/>
 
-<img src="https://user-images.githubusercontent.com/85475577/196641841-5b755230-8325-4e40-a66d-d29b054b06e2.svg" alt="logo" width="40%" />    
+<img src="https://user-images.githubusercontent.com/85475577/196641841-5b755230-8325-4e40-a66d-d29b054b06e2.svg" alt="logo" width="40%" />
 
 <br/>
 
@@ -21,31 +21,37 @@
 ## 🫶 팀원 소개
 
 **박지연**
+
 - Front-End
 - katkrarrrr@gmail.com
 - Github: [@yeoooon](https://github.com/yeoooon)
 
 **연다은봄**
+
 - Back-End
 - robin.yeon@gmail.com
 - Github: [@robinyeon](https://github.com/robinyeon)
 
 **유민지**
+
 - Front-End
-- yyoumi4854@gmail.com  
+- yyoumi4854@gmail.com
 - Github: [@yyoumi4854](https://github.com/yyoumi4854)
 
 **윤시준**
+
 - Front-End
 - webcodur@gmail.com
 - Github: [@webcodur](https://github.com/webcodur)
 
 **채은빈**
+
 - Back-End
 - alrxltkfkd@gmail.com
 - Github: [@VelyVelyn](https://github.com/VelyVelyn)
 
 **최은오**
+
 - Front-End
 - pixel@kakao.com
 - Github: [@EunoChoi](https://github.com/EunoChoi)
@@ -53,6 +59,7 @@
 <br/>
 
 ## 기술 스택
+
 ### Front-End
 
 <div>
@@ -129,6 +136,7 @@
 ![핀클릭시화면](https://user-images.githubusercontent.com/85475577/196635019-fb82eb80-daaa-42be-a649-79e45c712f70.png)
 
 #### 📌 소음 정보를 알려주는 핀과 마커
+
 - 📍 핀 : [국가에서 선정한 소음 측정지점](https://www.noiseinfo.or.kr/)을 바탕으로 소음 정보를 알기 쉽게 설명해 놓았어요.
   1. 소음 정도에 따라 귀여운 **이모지 색깔**이 달라서 어느 정도의 소음인지 파악할 수 있어요.
   2. 핀을 클릭하면,
@@ -147,14 +155,17 @@
 ![리뷰작성화면](https://user-images.githubusercontent.com/85475577/196635811-5353d253-6be8-4585-a609-dbeaf323b59f.png)
 
 #### 소음 리뷰 작성
+
 - 리뷰를 작성하기 위해선 **비밀번호**를 입력해야해요.
 - 무분별한 리뷰 포스팅을 막기 위해 **IP 계정 당 20초에 리뷰 1개**만 작성하도록 되어있어요.
 
 #### 소음 리뷰 조회
+
 - 조회 시 리뷰 게시물 **10개씩 조회**가 가능해요.
 - 유저들이 평가한 소음 정도에 따라 리뷰를 **필터링**하여 조회할 수 있어요.
 
 #### 소음 리뷰 수정, 삭제
+
 - 리뷰를 수정하거나 삭제하려면 생성했을 때 만든 비밀번호를 입력해야 해요.
 
 <br />
@@ -172,40 +183,32 @@
 2. 프로젝트 실행에 필요한 패키지를 설치합니다.
 
    ```
-   # npm 사용 시
+   cd front
+   npm install
 
    cd back
    npm install
    ```
 
-   ```
-   # yarn 사용 시
-
-   cd back
-   yarn
-   ```
-
-3. 몽고디비를 연결합니다.
+3. MongoDB를 연결합니다.
 
    ```
-   -- 몽고디비 아틀라스 사용 시 --
-
-   1. 몽고디비 아틀라스 클라우드 데이터베이스 생성
-   2. back 디렉토리의 .env 파일 편집
-   3. MONGODB_URL 변수에 DB URL을 삽입
-   ```
-
-   ```
-   -- 로컬에서 몽고디비 사용 시 --
-
-   1. 몽고디비 설치
-   2. back 디렉토리의 .env 파일 편집
-   3. MONGODB_URL 변수에 mongodb://localhost:27017/ 삽입
+   1. back 폴더의 initData를 확인합니다.
+   2. gus.json : 모든 자치구의 GeoJSON을 담고 있습니다.
+     - `gus` 컬렉션을 생성해 임포트 합니다.
+   3. dongs.json: 모든 행정동의 정보를 담고 있습니다.
+     - `dongs` 컬렉션을 생성해 임포트 합니다.
+   4. pins.json: 모든 측정지점(핀)의 정보를 담고 있습니다.
+     - `pins` 컬렉션을 생성해 임포트 합니다.
+   5. `reviews` 컬렉션을 생성하여 리뷰 CRUD를 확인합니다.
    ```
 
 4. 프론트엔드와 백엔드를 실행합니다.
 
    ```
+   cd front
+   npm run dev
+
    cd back
    npm start
    ```
