@@ -39,7 +39,7 @@ const Load_Gu = async (
             await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}&skip=${i}`)
                 .then(v => (setList((prev) => {
                 // return [...prev, ...v.data]
-                return [...v.data, ...prev]
+                return [...prev, ...v.data]
                 })));
             }
         }
@@ -53,7 +53,7 @@ const Load_Gu = async (
             for (let i = 1; i <= more; i++) {
             await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}&skip=${i}`)
                 .then(v => (setList((prev) => {
-                    return [...v.data, ...prev]
+                    return [...prev, ...v.data]
                 })));
             }
         }
