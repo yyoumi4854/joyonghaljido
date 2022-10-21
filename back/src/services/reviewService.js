@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const Review = require("../db/models/Review");
+const { SALT_ROUND, NOISE_LEVEL_DEFAULT_VALUES } = require("../constants");
 
 class reviewService {
   //create review
@@ -11,7 +12,7 @@ class reviewService {
     password,
     noiseLevel,
   }) {
-    const hashedPassword = await bcrypt.hash(password, 8);
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUND);
 
     const newReview = {
       guId,
@@ -24,49 +25,66 @@ class reviewService {
 
     const createdReview = await Review.create(newReview);
 
-    if (createdReview) {
-      createdReview.errorMessage = null;
-    } else {
-      createdReview.errorMessage = "리뷰 등록에 실패했습니다.";
+    if (!createdReview) {
+      throw new Error("리뷰 등록에 실패했습니다.");
     }
 
     return createdReview;
   }
 
   //get reivews
-  static async getList(guId, dongId, skip, filter) {
+  static async getList(guId, dongId, skip, limit, noiseLevel) {
     let reviews = [];
 
     if (!dongId) {
-      reviews = await Review.getListByGu(guId, skip, filter);
+      reviews = await Review.getListByGu(guId, skip, limit, noiseLevel);
     } else {
-      reviews = await Review.getListByDong(dongId, skip, filter);
-    }
-
-    if (reviews.length === 0) {
-      reviews.errorMessage = "리뷰가 존재하지 않습니다.";
-    } else {
-      reviews.errorMessage = null;
+      reviews = await Review.getListByDong(dongId, skip, limit, noiseLevel);
     }
 
     return reviews;
   }
 
-  //update review
-  static async update(reviewId, toUpdate) {
-    const updates = Object.keys(toUpdate);
+  //get review count
+  static async getCount(guId, dongId) {
+    let count = await Review.getCount(guId, dongId);
+    const noiseLevelDefault = NOISE_LEVEL_DEFAULT_VALUES.slice();
 
-    //password hashing before update
-    if (toUpdate.password) {
-      const hashedPassword = await bcrypt.hash(toUpdate.password, 8);
-      toUpdate.password = hashedPassword;
+    if (count.reviewCount.length === 0) {
+      count.reviewCount[0] = { totalReview: 0 };
+      count.noiseLevelCount = noiseLevelDefault;
+    } else if (count.noiseLevelCount.length < 3) {
+      count.noiseLevelCount.forEach((levelCount) => {
+        noiseLevelDefault.splice(levelCount._id - 1, 1, levelCount);
+      });
+      count.noiseLevelCount = noiseLevelDefault;
     }
 
-    updates.forEach(async (update) => {
-      await Review.update({ _id: reviewId }, { [update]: toUpdate[update] });
-    });
+    return count;
+  }
 
-    const updatedReview = await Review.getByReviewId(reviewId);
+  //check password
+  static async checkPassword(reviewId, password) {
+    const review = await Review.getByReviewId(reviewId);
+
+    if (!review) {
+      throw new Error("해당 리뷰는 존재하지 않습니다.");
+    }
+
+    const isMatched = await bcrypt.compare(password, review.password);
+
+    return isMatched;
+  }
+
+  //update review
+  static async update(reviewId, toUpdate) {
+    const review = await Review.getByReviewId(reviewId);
+
+    if (!review) {
+      throw new Error("해당 리뷰는 존재하지 않습니다.");
+    }
+
+    const updatedReview = await Review.update(reviewId, toUpdate);
 
     return updatedReview;
   }
