@@ -50,9 +50,11 @@ class reviewService {
     let count = await Review.getCount(guId, dongId);
     const noiseLevelDefault = NOISE_LEVEL_DEFAULT_VALUES.slice();
 
+    //no reviews
     if (count.reviewCount.length === 0) {
       count.reviewCount[0] = { totalReview: 0 };
       count.noiseLevelCount = noiseLevelDefault;
+      //no some noise level reviews
     } else if (count.noiseLevelCount.length < 3) {
       count.noiseLevelCount.forEach((levelCount) => {
         noiseLevelDefault.splice(levelCount._id - 1, 1, levelCount);
