@@ -109,9 +109,8 @@ const ReviewList = ({
       </div> 
 
       <ul className='noiseTab'>
-        {/* 클릭할때마다 li에 active가 붙는걸로 -> active가 붙을때마다 아이콘 밑 글씨가 굵어지고 색상이 바뀜 */}
         <li className={(noiseTabActive[3] && reviewType=='filter') && 'active'}>
-''          <span id='3' onClick={noiseTabHandler}>좋음</span>
+          <span id='3' onClick={noiseTabHandler}>좋음</span>
           <p>{reviewCnt[3] || 0}</p>
         </li>
         <li className={(noiseTabActive[2] && reviewType=='filter') && 'active'}>

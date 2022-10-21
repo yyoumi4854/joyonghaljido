@@ -60,12 +60,13 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
   const closeIsEditing = () => { setIsEditing(false);}
 
   const [editDongInfo, setEditDongInfo] = useState(undefined);
-
+//   const serverUrl = "http://kdt-ai5-team04.elicecoding.com:5001";
+  const serverUrl = "http://localhost:5001";
     // ***** [GET] ***** //
     // 0. 구에 따른 동 목록 받기
     const getDongsByGuId = async () => {
         try{
-            await axios.get(`http://localhost:5001/location/gus/${currentState.guId}/dongs`)
+            await axios.get(`${serverUrl}/location/gus/${currentState.guId}/dongs`)
             .then((res) => {
                 setDongList(res.data.dongs);
                 console.log('res.data.dongs', res.data.dongs)
