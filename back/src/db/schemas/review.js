@@ -1,8 +1,6 @@
 const { Schema, model, Types } = require("mongoose");
 const moment = require("moment-timezone");
 
-const localTime = moment().tz("Asia/Seoul").format();
-
 const ReviewSchema = new Schema({
   _id: {
     type: String,
@@ -35,11 +33,7 @@ const ReviewSchema = new Schema({
   },
   createdAt: {
     type: String,
-    default: localTime,
-  },
-  updatedAt: {
-    type: String,
-    default: localTime,
+    default: () => moment().tz("Asia/Seoul").format(),
   },
 });
 
