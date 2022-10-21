@@ -9,15 +9,7 @@ import { SmallBtn } from '../../styles/btnStyles';
 
 const ReviewEditForm = ({ currentReview, closeIsEditing, editDongInfo, reviewType, currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv}) => {
 
-    
-    // const [editDongInfo, setEditDongInfo] = useState();
-    
-    // useEffect(() => {
-    //     axios.get(`http://localhost:5001/dongs/${currentReview.dongId}`)
-    //         .then((res) => {
-    //             setEditDongInfo(res.data);
-    //         })
-    // }, []);
+    const serverUrl = 'http://kdt-ai5-team04.elicecoding.com'
 
     const [review, setReview] = useState({
         guId: currentReview.guId,
@@ -40,7 +32,7 @@ const ReviewEditForm = ({ currentReview, closeIsEditing, editDongInfo, reviewTyp
         const reviewId = currentReview._id;
         // PUT
         try {
-            await axios.put(`http://localhost:5001/reviews/${reviewId}`, review);
+            await axios.put(`${serverUrl}/reviews/${reviewId}`, review);
             closeIsEditing();
             try{
                 // GET

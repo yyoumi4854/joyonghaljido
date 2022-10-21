@@ -4,12 +4,12 @@ import getAvg from '../functions/getAvg'
 
 const allReviewClicked = async (currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx) => {
     let lv1, lv2, lv3 = [0, 0, 0]
+    const serverUrl = 'http://kdt-ai5-team04.elicecoding.com'
 
     // 1. 리뷰 개수 구하기
     if (currentState.currentView == 'gu') {
-        console.log('allReviewClicked')
         try{
-            await axios.get(`http://localhost:5001/reviews/count?guId=${currentState.guId}`)
+            await axios.get(`${serverUrl}/reviews/count?guId=${currentState.guId}`)
             .then(v=>{
                 const all = v.data.reviewCount[0].totalReview
                 const arr = v.data.noiseLevelCount
@@ -28,7 +28,7 @@ const allReviewClicked = async (currentState, more, setList, setReviewCnt, revie
     else if (currentState.currentView == 'dong') {
         
         try {
-            await axios.get(`http://localhost:5001/reviews/count?dongId=${currentState.clickSpotId}`)
+            await axios.get(`${serverUrl}/reviews/count?dongId=${currentState.clickSpotId}`)
             .then(v=>{
                 const all = v.data.reviewCount[0].totalReview
                 const arr = v.data.noiseLevelCount
@@ -56,11 +56,11 @@ const allReviewClicked = async (currentState, more, setList, setReviewCnt, revie
     if (currentState.currentView === 'gu') {
 
         try {
-            await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}`)
+            await axios.get(`${serverUrl}/reviews?guId=${currentState.guId}`)
             .then(v => (setList(v.data)));
 
             for (let i = 1; i <= more; i++) {
-            await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}&skip=${i}`)
+            await axios.get(`${serverUrl}/reviews?guId=${currentState.guId}&skip=${i}`)
                 .then(v => (setList((prev) => {
                 return [...prev, ...v.data]
                 })));
@@ -72,10 +72,10 @@ const allReviewClicked = async (currentState, more, setList, setReviewCnt, revie
     else if (currentState.currentView === 'dong') {
         try {
             
-            await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}`)
+            await axios.get(`${serverUrl}/reviews?dongId=${currentState.clickSpotId}`)
             .then(v => (setList(v.data)));
             for (let i = 1; i <= more; i++) {
-            await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}&skip=${i}`)
+            await axios.get(`${serverUrl}/reviews?dongId=${currentState.clickSpotId}&skip=${i}`)
                 
                 .then(v => (setList((prev) => {
                 return [...prev, ...v.data]
@@ -83,7 +83,6 @@ const allReviewClicked = async (currentState, more, setList, setReviewCnt, revie
             }
         }
         catch { console.log('동 리뷰 로딩 실패!');}
-        console.log('firstLoad 종료')
     }
 
 }

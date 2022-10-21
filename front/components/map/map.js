@@ -46,11 +46,11 @@ const mapColor = (currentState) => {
 
 const Map = ({ currentState, setCurrentState, pins, setPins, dongs, setDongs }) => {
 
+    const serverUrl = 'http://kdt-ai5-team04.elicecoding.com'
 
     //tooltip때문에 호버할때마다 리렌더 발생 => 매우 비효율
     const [tooltipName, setTooltipName] = useState('');
     useEffect(() => {
-        console.log(pins);
     }, [pins])
 
     return (
@@ -142,13 +142,12 @@ const Map = ({ currentState, setCurrentState, pins, setPins, dongs, setDongs }) 
                                                 const guId = gu._id;
                                                 const guName = gu.name;
 
-                                                const mapData = await axios.get(`http://localhost:5001/gus/${guId}`);
-                                                const dongsAndPins = await axios.get(`http://localhost:5001/location/gus/${guId}`);
+                                                const mapData = await axios.get(`${serverUrl}/gus/${guId}`);
+                                                const dongsAndPins = await axios.get(`${serverUrl}/location/gus/${guId}`);
                                                 setDongs(dongsAndPins.data.dongs);
                                                 setPins(dongsAndPins.data.pins);
 
                                                 const { center } = zoomMap[name];
-                                                // const { center } = mapData.data;
 
                                                 setCurrentState({
                                                     ...currentState,

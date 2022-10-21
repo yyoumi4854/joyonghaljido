@@ -11,6 +11,8 @@ import { SmallBtn } from '../../styles/btnStyles';
 
 const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv}) => {
   
+  const serverUrl = 'http://kdt-ai5-team04.elicecoding.com'
+
   const [noiseLevel, setNoiseLevel] = useState('');
   const [guList, setGuList] = useState([]);
   const [dongList, setDongList] = useState([]);
@@ -26,14 +28,14 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
 
   // 구 리스트 불러오기
   useEffect(() => {
-    axios.get("http://localhost:5001/location/gus")
+    axios.get(`${serverUrl}/location/gus`)
         .then((res) => {
           setGuList(res.data);
         })
   }, []);
 
   useEffect(() => {
-    axios.get(`http://localhost:5001/location/gus/${currentState.guId}/dongs`)
+    axios.get(`${serverUrl}/location/gus/${currentState.guId}/dongs`)
       .then((res) => {
         setDongList(res.data.dongs);
       })
@@ -47,7 +49,7 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
       }else{
         setDefualtGu(false);
       }
-      await axios.get(`http://localhost:5001/location/gus/${selectedGuId}/dongs`)
+      await axios.get(`${serverUrl}/location/gus/${selectedGuId}/dongs`)
       .then((res) => {
         setDongList(res.data.dongs);
       });
@@ -55,7 +57,7 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
   // 노이즈레벨 입력 시점
   const handleNoiseLevelClick = (e) => {
     setNoiseLevel(e.target.value);
-    axios.get(`http://localhost:5001/location/gus/${currentState.guId}/dongs`)
+    axios.get(`${serverUrl}/location/gus/${currentState.guId}/dongs`)
       .then((res) => {
         setDongList(res.data.dongs);
       })
@@ -86,8 +88,7 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
 
     // API 요청
     try {
-      console.log('review', review)
-      await axios.post("http://localhost:5001/reviews", review);
+      await axios.post(`${serverUrl}/reviews", review`);
 
       try{    
         // 다시 GET 하기
@@ -101,7 +102,7 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
             }
         }
         catch{
-            console.log('값 생성은 했는데 get 실패!')
+            console.log('값 생성 후 리스트 불러오기 실패')
         }
 
       setIsWriting(false);
@@ -109,7 +110,6 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
       setIsWriting(false);
       setModal('ban') // 작성금지 모달
       console.log("POST 요청이 실패했습니다.", e);
-      console.log('보낸 값', review)
     }
   }
 

@@ -13,10 +13,10 @@ import nameIds from '../../Id_book/nameId.json';
 import zoomMap from '../../data/map/zoom.json';
 
 const Ranking2 = ({ currentState, setCurrentState, pins, setPins, dongs, setDongs }) => {
-  // const [tab, setTab] = useState(currentState.rankingTab);
+
+  const serverUrl = 'http://kdt-ai5-team04.elicecoding.com'
   const [sortBtns, setSortBtns] = useState('value');
   const [toggle, setToggle] = useState({ value: 0, name: 0 });
-
   const tabChange = {
     noise: ['소음', DB_OBJ],
     mw: ['민원', MW_OBJ]
@@ -54,14 +54,12 @@ const Ranking2 = ({ currentState, setCurrentState, pins, setPins, dongs, setDong
 
   const selectGu = async (gu) => {
     const selecGu = nameIds.find(v => v.name === gu.name);
-    console.log(selecGu);
-    const mapData = await axios.get(`http://localhost:5001/gus/${selecGu._id}`);
-    const dongsAndPins = await axios.get(`http://localhost:5001/location/gus/${selecGu._id}`);
+    const mapData = await axios.get(`${serverUrl}/gus/${selecGu._id}`);
+    const dongsAndPins = await axios.get(`${serverUrl}/location/gus/${selecGu._id}`);
     setDongs(dongsAndPins.data.dongs);
     setPins(dongsAndPins.data.pins);
 
     const { center } = zoomMap[selecGu.name];
-    // const { center } = mapData.data;
 
     setCurrentState({
       ...currentState,

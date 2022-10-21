@@ -10,6 +10,7 @@ import ModalContent from './modalStyles';
 
 const Modal_Pw = ({ setModal, reviewObj, openIsEditing, setEditDongInfo}) => {
 
+  const serverUrl = 'http://kdt-ai5-team04.elicecoding.com'
   const [showWrong, setShowWrong] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
@@ -28,10 +29,9 @@ const Modal_Pw = ({ setModal, reviewObj, openIsEditing, setEditDongInfo}) => {
     e.preventDefault();
 
     const reviewId = reviewObj._id;
-    console.log(inputValue);
 
     try {
-      await axios.post(`http://localhost:5001/reviews/${reviewId}`, { password: inputValue+'' })
+      await axios.post(`${serverUrl}/reviews/${reviewId}`, { password: inputValue+'' })
         .then((res) => {
           if(res.data === true) {
             setModal('none');
@@ -39,7 +39,6 @@ const Modal_Pw = ({ setModal, reviewObj, openIsEditing, setEditDongInfo}) => {
           }
         })
     } catch (e) {
-      console.log(e);
       fail()
     }
   }
@@ -58,7 +57,7 @@ const Modal_Pw = ({ setModal, reviewObj, openIsEditing, setEditDongInfo}) => {
   }
   // 수정할 동, 구 이름 불러와서 보내 주기
   const getDongInfo = async () => {
-    axios.get(`http://localhost:5001/dongs/${reviewObj.dongId}`)
+    axios.get(`${serverUrl}/dongs/${reviewObj.dongId}`)
       .then((res) => {
         setEditDongInfo(res.data);
         openIsEditing();
