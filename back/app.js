@@ -15,7 +15,7 @@ const locationRouter = require("./src/routers/locationRouter.js");
 const app = express();
 
 app.use(morgan("dev"));
-app.use(cors({ credentials: true }));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
