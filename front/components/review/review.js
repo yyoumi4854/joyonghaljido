@@ -42,7 +42,7 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
   const [reviewObj, setReviewObj] = useState(undefined)
   const [avgIdx, setAvgIdx] = useState(undefined);
   const [more, setMore] = useState(0)
-  const [limit, setLimit] = useState(71);
+  
   const [lv, setLv] = useState(-1);
   
   // 토글 관련
@@ -55,6 +55,7 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
   const [typeChanged, setTypeChanged] = useState(false);
   const [isWriting, setIsWriting] = useState(false)
   const [dongListChanged, setDongListChanged] = useState(false)
+
   const openIsEditing  = () => { setIsEditing(true);}
   const closeIsEditing = () => { setIsEditing(false);}
 
@@ -79,7 +80,6 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
     useEffect(() => {
         getDongsByGuId()
         setMore(prev=>0);
-
         if(basic == true){
             // 1-1. 구 리뷰 [개수,평균,목록] 구함
             if(currentState.currentView == 'gu'){
@@ -95,7 +95,6 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
             }
             setBasic(false)
         }
-
     }, [currentState.currentView, 
         currentState.guId, 
         currentState.clickSpotId])
@@ -103,9 +102,7 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
 
     useEffect(() => {
         getDongsByGuId()
-
         if(basic == false){
-            
             // 필터된 구동 리뷰 정보 구함
             if(reviewType == 'filter' ){
                 filtering(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
@@ -115,23 +112,8 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
                 allReviewClicked(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
             }
         }
-        
     }, [filterClicked, basic, more, currentState.clickSpotId])
     
-
-
-        
-  //***** [더보기] *****//
-  const toggleEllipsis = (str, limit) => {
-    return {
-      string: str.slice(0, limit),
-      isShowMore: str.length > limit
-    }
-  };
-  const onClickMore = (str) => () => {
-    setLimit(str.length);
-  };
-
 
   //***** [뒤로가기] *****//
   const back = (currentState, setCurrentState) => {
@@ -174,9 +156,8 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
           <div className='reviewAll'>
             <button>
               <AiFillWechat onClick={()=>{
-                // setReviewType('default')
+                setReviewType('default')
                 allReviewClicked(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
-
               }}/>
             </button>
             {/* 한번에 모든 게시글을 불러오지 않기 때문에 모든 모든 게시글 개수를 불러오는 api 설정 필요 */}
@@ -194,9 +175,6 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
         :
         <ReviewList
           list={list}
-          limit={limit}
-          toggleEllipsis={toggleEllipsis}
-          onClickMore={onClickMore}
           setModal={setModal}
           setReviewObj={setReviewObj}
           setIsWriting={setIsWriting}
@@ -214,7 +192,7 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
           setLv={setLv}
           dongList={dongList}
           dongListChanged={dongListChanged}
-          setReviewCnt={setReviewCnt} setAvgIdx={setAvgIdx} setBasic={setBasic}  
+          setReviewCnt={setReviewCnt} setAvgIdx={setAvgIdx} setBasic={setBasic} 
         />
       }
       <ReviewBtn>
