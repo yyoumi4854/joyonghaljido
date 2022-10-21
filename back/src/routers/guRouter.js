@@ -7,7 +7,10 @@ guRouter.get("/:guId", async (req, res, next) => {
   try {
     const { guId } = req.params;
     const foundGuGeoJSON = await guService.getGuGeoById(guId);
-    res.status(200).json(foundGuGeoJSON);
+    res
+      .header("Access-Control-Allow-Origin", "*")
+      .status(200)
+      .json(foundGuGeoJSON);
   } catch (error) {
     next(error);
   }
