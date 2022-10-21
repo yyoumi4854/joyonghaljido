@@ -38,7 +38,7 @@ class Review {
       },
       {
         $sort: {
-          updatedAt: -1,
+          createdAt: -1,
         },
       },
       {
@@ -79,7 +79,7 @@ class Review {
       },
       {
         $sort: {
-          updatedAt: -1,
+          createdAt: -1,
         },
       },
       {
