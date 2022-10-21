@@ -37,15 +37,15 @@ class Review {
         },
       },
       {
+        $sort: {
+          updatedAt: -1,
+        },
+      },
+      {
         $skip: skip * limit,
       },
       {
         $limit: limit,
-      },
-      {
-        $sort: {
-          updatedAt: -1,
-        },
       },
     ]);
 
@@ -78,15 +78,15 @@ class Review {
         },
       },
       {
+        $sort: {
+          updatedAt: -1,
+        },
+      },
+      {
         $skip: skip * limit,
       },
       {
         $limit: limit,
-      },
-      {
-        $sort: {
-          updatedAt: -1,
-        },
       },
     ]);
 

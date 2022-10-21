@@ -1,97 +1,135 @@
+import { useEffect, useState } from 'react';
+
 import G4_PinGraph from './G4_PinGraph';
-import Image from 'next/image';
-import PinImg1 from '../../public/images/pin1.svg'
-import PinImg2 from '../../public/images/pin2.svg'
-import PinImg3 from '../../public/images/pin3.svg'
-import PinImg4 from '../../public/images/pin4.svg'
-import PinImg5 from '../../public/images/pin5.svg'
-import PinImg6 from '../../public/images/pin6.svg'
-import LeftArrow from '../../public/images/LeftArrow.svg'
+import { noiseDegree, noiseEffect } from './noiseInfo';
+import axios from 'axios';
+import pinIds from '../../Id_book/pinId.json'
+import * as Api from '../../api';
+
+// styled
 import PinSelectLayout from './pinSelect.style';
-import {noiseDegree, noiseEffect} from './noiseInfo';
+import Title from '../titleStyles';
 
-const PinSelect = () => {
-    // dummy data
-    const dummy = {
-        pinID:'',
-        pinName:'스타벅스 앞', 
-        GuName:'강남구', 
-        DongName:'1동', 
-        time:[88,77,44,66,55,77]
+// react-icons
+import { AiOutlineArrowLeft } from "react-icons/ai";
+
+const calc = (avg) => {
+    const result = {
+        noiseDegreeMessage: '',
+        noiseEffectMessage: '',
+        imgSrcState: -1,
+        avg: 0,
+    }
+    result.avg = avg;
+
+    const val = ((result.avg - (result.avg % 10)) + '');
+
+    for (let i = 0; i < noiseDegree.length; i++) {
+        if (noiseDegree[i].dB == val) { result.noiseDegreeMessage = noiseDegree[i].MSG }
+    }
+    for (let i = 0; i < noiseEffect.length; i++) {
+        if (noiseEffect[i].dB == val) { result.noiseEffectMessage = noiseEffect[i].MSG }
     }
 
-    // calculating figures
-    let sum = 0;
-    dummy.time.forEach(element => {sum += element});
-    const avg = Math.floor(sum/6);
-    const val = (avg-(avg%10))+'';
+    if (result.avg <= 50) { result.imgSrcState = 1 } // 보라
+    else if (result.avg > 50 && result.avg <= 55) { result.imgSrcState = 2 } // 파랑
+    else if (result.avg > 55 && result.avg <= 60) { result.imgSrcState = 3 } // 초록
+    else if (result.avg > 60 && result.avg <= 65) { result.imgSrcState = 4 } // 노랑
+    else if (result.avg > 65 && result.avg <= 70) { result.imgSrcState = 5 } // 주황
+    else if (result.avg > 70) { result.imgSrcState = 6 } // 빨강
 
-    let noiseDegreeMessage = ''
-    let noiseEffectMessage = ''
+    return result;
+}
 
-    for(let i=0; i<noiseDegree.length; i++){
-        if(noiseDegree[i].dB == val){ noiseDegreeMessage = noiseDegree[i].MSG }
+const PinSelect = ({ currentState, setCurrentState, pins }) => {
+
+    const pin = pins.find(v => v._id === currentState.clickSpotId);
+
+    const [pinState, setPinstate] = useState({
+        name: '',
+        timeDecibels: [],
+        dong: '',
+        gu: '',
+
+        noiseDegreeMessage: '',
+        noiseEffectMessage: '',
+        imgSrcNum: -1,
+        avg: 0,
+    })
+
+    useEffect(() => {
+        const result = calc(pin.timeDecibelsAvg);
+        setPinstate({
+            ...pinState,
+            name: pin.name,
+            timeDecibels: pin.timeDecibels,
+            dong: pin.dongName,
+            gu: currentState.guName,
+
+            noiseDegreeMessage: result.noiseDegreeMessage,
+            noiseEffectMessage: result.noiseEffectMessage,
+            imgSrcNum: result.imgSrcState,
+            avg: result.avg,
+        })
+    }, [currentState.clickSpotId])
+    const back = (currentState, setCurrentState) => {
+        if (currentState.currentView === 'dong' || currentState.currentView === 'info') {
+            const gu = currentState.guName;
+            setCurrentState({
+                ...currentState,
+                currentView: 'gu',
+                clickSpotId: '',
+                clickedName: gu,
+            })
+        }
     }
-    for(let i=0; i<noiseEffect.length; i++){
-        if(noiseEffect[i].dB == val){ noiseEffectMessage = noiseEffect[i].MSG}
-    }
-
-    let imgSrc = -1
-    if(avg <= 50){imgSrc = 6}
-    else if(avg > 50 && avg <= 55){imgSrc = 5}
-    else if(avg > 55 && avg <= 60){imgSrc = 4}
-    else if(avg > 60 && avg <= 65){imgSrc = 3}
-    else if(avg > 65 && avg <= 70){imgSrc = 2}
-    else if(avg > 70 && avg <= 75){imgSrc = 1}
-
-    // render thi
     return (
         <PinSelectLayout>
-            <div>
-                <div className='section1'>
-                    <div className='Lside'>
-                        <h2><Image src={LeftArrow} alt='LeftArrow' onClick={()=>{alert()}}></Image></h2>
-                    </div>
-                    <div className='Rside'>
-                        <h2>{dummy.pinName}</h2>
-                        <h4>{dummy.GuName} {dummy.DongName}</h4>
-                    </div>
-                </div>
-                <hr></hr>
-                <div className='section2'>
-                <div>
-                    <h3>어느 정도의 소음인가요?</h3>
-                </div>
-                <div className='Lside'>
-                    {imgSrc==6 && (<p><Image src={PinImg1} alt='PinImg1'></Image></p>)}
-                    {imgSrc==5 && (<p><Image src={PinImg2} alt='PinImg2'></Image></p>)}
-                    {imgSrc==4 && (<p><Image src={PinImg3} alt='PinImg3'></Image></p>)}
-                    {imgSrc==3 && (<p><Image src={PinImg4} alt='PinImg4'></Image></p>)}
-                    {imgSrc==2 && (<p><Image src={PinImg5} alt='PinImg5'></Image></p>)}
-                    {imgSrc==1 && (<p><Image src={PinImg6} alt='PinImg6'></Image></p>)}
-                    <p className='average'>{avg}</p>
-                </div>
-                <div className='Rside'>
-                    <p className='bold'> 소음 정도 </p>
-                    <p className="gray"> {noiseDegreeMessage}</p>
-                    <p className='bold'> 소음 영향 </p>
-                    <p className="gray"> {noiseEffectMessage}</p>
-                </div>
-                </div>
-                
-                <hr></hr>
-                <div className='section3'>
-                    <h3>시간대별 소음 그래프</h3>
-                    <div className='graph'>
-                        <G4_PinGraph time={dummy.time} colorIdx= {imgSrc}/>
-                    </div>
+            <Title alignItem='flexStart'>
+                <div className='title'>
+                    <button className='back' onClick={() => { back(currentState, setCurrentState) }}>
+                        <AiOutlineArrowLeft />
+                    </button>
                     <div>
-                        <button type="button" className="toReview" data-toggle="modal" data-target="">
-                        소음 리뷰 쓰러가기
-                        </button>
+                        <h3>{pinState.name}</h3>
+                        <h4>{pinState.gu} {pinState.dong}</h4>
                     </div>
                 </div>
+            </Title>
 
+            <div className='pinInfoCon'>
+                <div className='textCon'>
+                    <h5 className='title'>어느 정도의 소음인가요?</h5>
+                    <div className='textBox'>
+                        <div className={`pin${pinState.imgSrcNum}`}>
+                            <span>{`pin${pinState.imgSrcNum}`}</span>
+                            <p>{Math.floor(pinState.avg)}</p>
+                        </div>
+
+                        <div className='infoBox'>
+                            <dl>
+                                <dt>소음 정도</dt>
+                                <dd>{pinState.noiseDegreeMessage}</dd>
+                            </dl>
+                            <dl>
+                                <dt>소음 영향</dt>
+                                <dd>{pinState.noiseEffectMessage}</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                <div className='graphCon'>
+                    <h5 className='title'>시간대별 소음 그래프</h5>
+                    <div className='graphBox'>
+                        <G4_PinGraph time={pinState.timeDecibels} colorIdx={pinState.imgSrcNum} />
+                    </div>
+                    <div className={`graphPin${pinState.imgSrcNum}`}>
+                        <dl>
+                            <dt></dt>
+                            <dd>소음 측정량 (dB)</dd>
+                        </dl>
+                    </div>
+                </div>
             </div>
         </PinSelectLayout>
     );

@@ -1,16 +1,17 @@
 import styled from "styled-components";
 
 const Title = styled.div`
+
   ${({ theme }) => theme.common.flexCenter};
   justify-content: space-between;
 
-  height: ${({alignItem}) => alignItem === 'flexStart'? '100px' : '68px' };
+  height: ${({ alignItem }) => alignItem === 'flexStart' ? '100px' : '68px'};
   padding: 0 24px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.grey1};
 
   .title{
     ${({ theme }) => theme.common.flexCenter}
-    align-items:  ${({alignItem}) => alignItem !== 'flexStart' || 'flex-start'};
+    align-items:  ${({ alignItem }) => alignItem !== 'flexStart' || 'flex-start'};
 
     .back{
       margin-right: 12px;
@@ -58,6 +59,23 @@ const Title = styled.div`
           color: #fff;
         }
       }
+    }
+  }
+
+  // 전체리뷰 확인 버튼
+  .reviewAll{
+    ${({ theme }) => theme.common.flexCenter};
+    flex-direction: column;
+
+    button{
+      svg{
+        width: 40px;
+        height: 32px;
+        color: ${({ theme }) => theme.colors.main};
+      }
+    }
+    span {
+      color: ${({ theme }) => theme.colors.main};
     }
   }
   `;

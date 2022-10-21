@@ -7,13 +7,7 @@ const FindLayout = styled.div`
   overflow: hidden;
 
   .view{
-    display: grid;
-    grid-template-rows: 1fr 48px;
     border-right: 1px solid ${({ theme }) => theme.colors.grey1};
-  }
-
-  .map{
-    background: ${({ theme }) => theme.colors.grey4};
   }
 `;
 

@@ -8,9 +8,9 @@ import {
   Title,
   Tooltip,
   Legend,
-} from "chart.js";
+} from 'chart.js';
 
-import { Bar } from "react-chartjs-2";
+import { Bar } from 'react-chartjs-2';
 
 ChartJS.register(
   CategoryScale,
@@ -34,8 +34,7 @@ const G1_YearbyGu = () => {
 
   const options = {
     plugins: {
-      legend: {
-        // 범례 스타일링
+      legend: { // 범례 스타일링
         display: false,
       },
 
@@ -60,20 +59,20 @@ const G1_YearbyGu = () => {
           display: false,
         },
         ticks: {
-          color: "#C4C4C4",
-        },
+          color: '#C4C4C4',
+        }
       },
 
       y: {
         grid: {
-          color: "#E4E5E9",
+          color: '#E4E5E9',
         },
         ticks: {
-          color: "#C4C4C4",
-        },
+          color: '#C4C4C4',
+        }
       },
-    },
-  };
+    }
+  }
 
   const data = {
     labels: year, // x축
