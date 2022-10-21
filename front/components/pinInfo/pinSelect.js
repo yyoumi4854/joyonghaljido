@@ -2,9 +2,6 @@ import { useEffect, useState } from 'react';
 
 import G4_PinGraph from './G4_PinGraph';
 import { noiseDegree, noiseEffect } from './noiseInfo';
-import axios from 'axios';
-import pinIds from '../../Id_book/pinId.json'
-import * as Api from '../../api';
 
 // styled
 import PinSelectLayout from './pinSelect.style';

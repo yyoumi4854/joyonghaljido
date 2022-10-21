@@ -1,38 +1,44 @@
-import React, { useState } from 'react';
-import { MW_OBJ, DB_OBJ } from './rankData';
-import axios from 'axios';
+import React, { useState } from "react";
+import { MW_OBJ, DB_OBJ } from "./rankData";
+import axios from "axios";
 
 // styled
-import Title from '../titleStyles';
-import RankingContent from './rankingStyles';
+import Title from "../titleStyles";
+import RankingContent from "./rankingStyles";
 
 // react-icons
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 
-import nameIds from '../../Id_book/nameId.json';
-import zoomMap from '../../data/map/zoom.json';
+import nameIds from "../../Id_book/nameId.json";
+import zoomMap from "../../data/map/zoom.json";
 
-const Ranking2 = ({ currentState, setCurrentState, pins, setPins, dongs, setDongs }) => {
-  // const [tab, setTab] = useState(currentState.rankingTab);
-  const [sortBtns, setSortBtns] = useState('value');
+const Ranking2 = ({
+  currentState,
+  setCurrentState,
+  pins,
+  setPins,
+  dongs,
+  setDongs,
+}) => {
+  const serverUrl = "http://kdt-ai5-team04.elicecoding.com:5001";
+  const [sortBtns, setSortBtns] = useState("value");
   const [toggle, setToggle] = useState({ value: 0, name: 0 });
-
   const tabChange = {
-    noise: ['소음', DB_OBJ],
-    mw: ['민원', MW_OBJ]
+    noise: ["소음", DB_OBJ],
+    mw: ["민원", MW_OBJ],
   };
 
   const handlerValueClick = () => {
-    setSortBtns('value');
-    let newObj = { ...toggle }
-    newObj[sortBtns] = !newObj[sortBtns]
+    setSortBtns("value");
+    let newObj = { ...toggle };
+    newObj[sortBtns] = !newObj[sortBtns];
     setToggle(newObj);
   };
 
   const handlerNameClick = () => {
-    setSortBtns('name');
-    let newObj = { ...toggle }
-    newObj[sortBtns] = !newObj[sortBtns]
+    setSortBtns("name");
+    let newObj = { ...toggle };
+    newObj[sortBtns] = !newObj[sortBtns];
     setToggle(newObj);
   };
 
@@ -53,19 +59,19 @@ const Ranking2 = ({ currentState, setCurrentState, pins, setPins, dongs, setDong
   };
 
   const selectGu = async (gu) => {
-    const selecGu = nameIds.find(v => v.name === gu.name);
-    console.log(selecGu);
-    const mapData = await axios.get(`http://localhost:5001/gus/${selecGu._id}`);
-    const dongsAndPins = await axios.get(`http://localhost:5001/location/gus/${selecGu._id}`);
+    const selecGu = nameIds.find((v) => v.name === gu.name);
+    const mapData = await axios.get(`${serverUrl}/gus/${selecGu._id}`);
+    const dongsAndPins = await axios.get(
+      `${serverUrl}/location/gus/${selecGu._id}`
+    );
     setDongs(dongsAndPins.data.dongs);
     setPins(dongsAndPins.data.pins);
 
     const { center } = zoomMap[selecGu.name];
-    // const { center } = mapData.data;
 
     setCurrentState({
       ...currentState,
-      currentView: 'gu',
+      currentView: "gu",
       zoom: 7,
       map: mapData.data,
       clickedName: selecGu.name,
@@ -77,22 +83,30 @@ const Ranking2 = ({ currentState, setCurrentState, pins, setPins, dongs, setDong
 
   return (
     <RankingContent>
-      <ul className='tab'>
+      <ul className="tab">
         <li
-          className={currentState.rankingTab === 'noise' ? 'active' : 'tabDB'}
+          className={currentState.rankingTab === "noise" ? "active" : "tabDB"}
           onClick={() => {
-            setCurrentState({ ...currentState, rankingTab: 'noise' });
-          }}>소음(db)</li>
+            setCurrentState({ ...currentState, rankingTab: "noise" });
+          }}
+        >
+          소음(db)
+        </li>
         <li
-          className={currentState.rankingTab === 'mw' ? 'active' : 'tabMW'}
+          className={currentState.rankingTab === "mw" ? "active" : "tabMW"}
           onClick={() => {
-            setCurrentState({ ...currentState, rankingTab: 'mw' });
-          }}>민원(건)</li>
+            setCurrentState({ ...currentState, rankingTab: "mw" });
+          }}
+        >
+          민원(건)
+        </li>
       </ul>
 
       <Title>
-        <div className='title'>
-          <h3>{tabChange[currentState.rankingTab][0]} <span>순위</span></h3>
+        <div className="title">
+          <h3>
+            {tabChange[currentState.rankingTab][0]} <span>순위</span>
+          </h3>
         </div>
 
         <ul className="toggleList">
@@ -111,17 +125,26 @@ const Ranking2 = ({ currentState, setCurrentState, pins, setPins, dongs, setDong
         </ul>
       </Title>
 
-      <ul className='ranking'>
-        {
-          rankingSort(sortBtns, toggle[sortBtns], tabChange[currentState.rankingTab][1]).filter(v => v.value !== 0).map((x, i) => {
+      <ul className="ranking">
+        {rankingSort(
+          sortBtns,
+          toggle[sortBtns],
+          tabChange[currentState.rankingTab][1]
+        )
+          .filter((v) => v.value !== 0)
+          .map((x, i) => {
             return (
-              <li key={i} onClick={() => { selectGu(x); }}>
+              <li
+                key={i}
+                onClick={() => {
+                  selectGu(x);
+                }}
+              >
                 <p>{x.name}</p>
                 <span>{x.value}</span>
               </li>
-            )
-          })
-        }
+            );
+          })}
       </ul>
     </RankingContent>
   );
