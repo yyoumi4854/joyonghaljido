@@ -101,7 +101,7 @@ const ReviewAddForm = ({
 
     // API 요청
     try {
-      await axios.post(`${serverUrl}/reviews", review`);
+      await axios.post(`${serverUrl}/reviews`, review);
 
       try {
         // 다시 GET 하기
