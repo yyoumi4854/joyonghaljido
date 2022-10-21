@@ -76,6 +76,7 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
             console.log('getReview 실패')
         }
     }
+
     // 1. 기본 : 리뷰수 + 리뷰목록 + 평균 소음 인덱스 구하기
     useEffect(() => {
         getDongsByGuId()
@@ -178,7 +179,6 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
                 // setReviewType('default')
                 allReviewClicked(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
                 setFilterIcon((prev)=>false)
-                // const [filterIcon, setFilterIcon] = useState(false)
               }}/>
             </button>
             {/* 한번에 모든 게시글을 불러오지 않기 때문에 모든 모든 게시글 개수를 불러오는 api 설정 필요 */}

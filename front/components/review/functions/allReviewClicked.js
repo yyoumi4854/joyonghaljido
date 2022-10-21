@@ -62,7 +62,7 @@ const allReviewClicked = async (currentState, more, setList, setReviewCnt, revie
             for (let i = 1; i <= more; i++) {
             await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}&skip=${i}`)
                 .then(v => (setList((prev) => {
-                return [...v.data, ...prev]
+                return [...prev, ...v.data]
                 })));
             }
         }
@@ -78,7 +78,7 @@ const allReviewClicked = async (currentState, more, setList, setReviewCnt, revie
             await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}&skip=${i}`)
                 
                 .then(v => (setList((prev) => {
-                return [...v.data, ...prev]
+                return [...prev, ...v.data]
                 })));
             }
         }
@@ -89,3 +89,4 @@ const allReviewClicked = async (currentState, more, setList, setReviewCnt, revie
 }
 
 export default allReviewClicked
+
