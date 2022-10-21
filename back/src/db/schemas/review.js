@@ -2,7 +2,6 @@ const { Schema, model, Types } = require("mongoose");
 const moment = require("moment-timezone");
 
 const localTime = moment().tz("Asia/Seoul").format();
-console.log(localTime);
 
 const ReviewSchema = new Schema({
   _id: {
