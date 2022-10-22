@@ -67,7 +67,6 @@ const PinSelect = () => {
                 src={LeftArrow}
                 alt="LeftArrow"
                 onClick={() => {
-                  alert();
                 }}
               ></Image>
             </h2>

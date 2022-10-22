@@ -41,7 +41,6 @@ const Modal_Pw = ({setModal, reviewObj, reviewType, currentState, more, setList,
     try{ // DEL
       await del('/reviews', reviewId)
       console.log('삭제 성공')
-      alert('삭제 성공')
       setModal('none')
       
       try{ // GET
@@ -61,7 +60,6 @@ const Modal_Pw = ({setModal, reviewObj, reviewType, currentState, more, setList,
     catch{
       fail();
       console.log('삭제 실패')
-      alert('삭제 실패')
     }
   }
 

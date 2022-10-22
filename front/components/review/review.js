@@ -69,7 +69,6 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
             await axios.get(`${serverUrl}/location/gus/${currentState.guId}/dongs`)
             .then((res) => {
                 setDongList(res.data.dongs);
-                console.log('res.data.dongs', res.data.dongs)
                 setDongListChanged(true)
             });
         }
@@ -158,6 +157,7 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
             <button>
               <AiFillWechat onClick={()=>{
                 setReviewType('default')
+                setMore(0)
                 allReviewClicked(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
               }}/>
             </button>

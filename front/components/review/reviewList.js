@@ -122,7 +122,7 @@ const ReviewList = ({
           <p>{reviewCnt[1] || 0}</p>
         </li>
       </ul>
-
+      
       <div className='reviewList'>
         <ul>
           {
@@ -139,10 +139,8 @@ const ReviewList = ({
                       <span>{x.createdAt.slice(2, 10) + ',  ' + x.createdAt.slice(11, 16)}</span>{/* 날짜데이터넣기 */}
                     </div>
 
-
                     <div className='textBottom'>
                       <p>
-                        
                         {/* 일반 텍스트 */}
                         { maskArrForTxt[i] && x.description}
                         {/* 장문 텍스트 */}
@@ -151,7 +149,6 @@ const ReviewList = ({
                         { maskArrForMoreBtn[i] && <button onClick={()=>{onClickMore(i)}}>...더보기</button>}
                         {/* 숨기기 버튼 */}
                         { maskArrForHideBtn[i] && <button onClick={()=>{onClickHide(i)}}>...숨기기</button>}
-
                       </p>
                     </div>
 
