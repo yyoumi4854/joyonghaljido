@@ -5,9 +5,9 @@ import IndexStyles from './indexStyles'
 import FooterStyle from '../styles/footerStyles';
 
 // graph
-import G1_YearbyGu from './stats/G1_YearbyGu';
-import G2_Seoul_VS_Else from './stats/G2_Seoul_VS_Else';
-import G3_EachGu from './stats/G3_EachGu';
+import G1_YearbyGu from '../components/stats/G1_YearbyGu';
+import G2_Seoul_VS_Else from '../components/stats/G2_Seoul_VS_Else';
+import G3_EachGu from '../components/stats/G3_EachGu';
 
 
 const Index = () => {
