@@ -1,3 +1,6 @@
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+
 import {
   ComposableMap,
   Geographies,
@@ -49,65 +52,68 @@ const Find = () => {
   // 모달종류 : pw, chk, deny, pw_delete, pw_update, none
 
   return (
-    <FindLayout>
-      <div className="view">
-        {currentState.currentView === "ranking" ? (
-          <>
-            <Ranking
-              currentState={currentState}
-              setCurrentState={setCurrentState}
-              pins={pins}
-              setPins={setPins}
-              dongs={dongs}
-              setDongs={setDongs}
-            />
-            <RankingInfo />
-          </>
-        ) : null}
-        {currentState.currentView === "gu" ? (
-          <>
+    <div style={{ marginTop: '64px' }}>
+      <Row className='gx-0'>
+        <Col xs={12} lg={4}>
+          {currentState.currentView === "ranking" ? (
+            <>
+              <Ranking
+                currentState={currentState}
+                setCurrentState={setCurrentState}
+                pins={pins}
+                setPins={setPins}
+                dongs={dongs}
+                setDongs={setDongs}
+              />
+              <RankingInfo />
+            </>
+          ) : null}
+          {currentState.currentView === "gu" ? (
+            <>
+              <Review
+                currentState={currentState}
+                setCurrentState={setCurrentState}
+                modal={modal}
+                setModal={setModal}
+              />
+              <PinMarkerInfo />
+            </>
+          ) : null}
+          {currentState.currentView === "dong" ? (
             <Review
               currentState={currentState}
               setCurrentState={setCurrentState}
               modal={modal}
               setModal={setModal}
             />
-            <PinMarkerInfo />
-          </>
-        ) : null}
-        {currentState.currentView === "dong" ? (
-          <Review
+          ) : null}
+          {currentState.currentView === "info" ? (
+            <>
+              <PinSelect
+                pins={pins}
+                setPins={setPins}
+                currentState={currentState}
+                setCurrentState={setCurrentState}
+              />
+              <PinLevelInfo />
+            </>
+          ) : null}
+          <FooterStyle>&copy; 2022 조용할지도</FooterStyle>
+        </Col>
+        <Col sm={12} lg={8} style={{ overflow: 'hidden' }}>
+          <Map
             currentState={currentState}
             setCurrentState={setCurrentState}
-            modal={modal}
-            setModal={setModal}
+            pins={pins}
+            setPins={setPins}
+            dongs={dongs}
+            setDongs={setDongs}
           />
-        ) : null}
-        {currentState.currentView === "info" ? (
-          <>
-            <PinSelect
-              pins={pins}
-              setPins={setPins}
-              currentState={currentState}
-              setCurrentState={setCurrentState}
-            />
-            <PinLevelInfo />
-          </>
-        ) : null}
-        <FooterStyle>&copy; 2022 조용할지도</FooterStyle>
-      </div>
+        </Col>
+      </Row>
+    </div>
 
-      <div>
-        <Map
-          currentState={currentState}
-          setCurrentState={setCurrentState}
-          pins={pins}
-          setPins={setPins}
-          dongs={dongs}
-          setDongs={setDongs}
-        />
-      </div>
-    </FindLayout>
+
   );
 };
 
