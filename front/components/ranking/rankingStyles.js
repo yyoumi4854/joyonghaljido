@@ -26,6 +26,7 @@ const RankingContent = styled.div`
       justify-content: space-between;
       padding: 16px 0;
       border-bottom: 1px solid ${({ theme }) => theme.colors.grey3};
+      cursor: pointer;
 
       p{
         font-weight: 500;

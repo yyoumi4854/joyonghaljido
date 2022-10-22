@@ -10,10 +10,10 @@ class Review {
   }
 
   //get reviews by gu
-  static async getListByGu(guId, skip, filter) {
+  static async getListByGu(guId, skip, limit, noiseLevel) {
     const reviews = await ReviewModel.aggregate([
       {
-        $match: filter ? { guId, noiseLevel: parseInt(filter) } : { guId },
+        $match: { guId, ...(noiseLevel && { noiseLevel }) },
       },
       {
         $lookup: {
@@ -37,10 +37,15 @@ class Review {
         },
       },
       {
-        $skip: parseInt(skip) * 10,
+        $sort: {
+          createdAt: -1,
+        },
       },
       {
-        $limit: 10,
+        $skip: skip * limit,
+      },
+      {
+        $limit: limit,
       },
     ]);
 
@@ -48,10 +53,10 @@ class Review {
   }
 
   //get reviews by dong
-  static async getListByDong(dongId, skip, filter) {
+  static async getListByDong(dongId, skip, limit, noiseLevel) {
     const reviews = await ReviewModel.aggregate([
       {
-        $match: filter ? { dongId, noiseLevel: parseInt(filter) } : { dongId },
+        $match: { dongId, ...(noiseLevel && { noiseLevel }) },
       },
       {
         $lookup: {
@@ -73,10 +78,15 @@ class Review {
         },
       },
       {
-        $skip: parseInt(skip) * 10,
+        $sort: {
+          createdAt: -1,
+        },
       },
       {
-        $limit: 10,
+        $skip: skip * limit,
+      },
+      {
+        $limit: limit,
       },
     ]);
 
@@ -90,12 +100,45 @@ class Review {
     return review;
   }
 
+  //get review count
+  static async getCount(guId, dongId) {
+    const reviewCount = await ReviewModel.aggregate([
+      {
+        $match: (dongId && { dongId }) || { guId },
+      },
+      {
+        $count: "totalReview",
+      },
+    ]);
+
+    const noiseLevelCount = await ReviewModel.aggregate([
+      {
+        $match: (dongId && { dongId }) || { guId },
+      },
+      {
+        $group: {
+          _id: "$noiseLevel",
+          total: {
+            $count: {},
+          },
+        },
+      },
+      {
+        $sort: {
+          _id: 1,
+        },
+      },
+    ]);
+
+    return { reviewCount, noiseLevelCount };
+  }
+
   //update review
   static async update(reviewId, toUpdate) {
     const updatedReview = await ReviewModel.findOneAndUpdate(
-      reviewId,
+      { _id: reviewId },
       toUpdate,
-      { returnDocument: "after" }
+      { returnOriginal: false }
     );
 
     return updatedReview;

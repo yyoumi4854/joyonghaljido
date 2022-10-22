@@ -28,43 +28,46 @@ const G2_Seoul_VS_Else = () => {
 
   const options = {
     plugins: {
-      legend: { // 범례 스타일링
+      legend: {
+        // 범례 스타일링
         display: false,
       },
 
-      tooltip:{ // 툴팁 스타일
+      tooltip: {
+        // 툴팁 스타일
         padding: 8,
-        backgroundColor: '#F5F5F5', // 툴팁배경
-        titleColor: '#333',
-        bodyColor: '#333',
+        backgroundColor: "#F5F5F5", // 툴팁배경
+        titleColor: "#333",
+        bodyColor: "#333",
         bodyFont: {
           font: {
             family: "'Noto Sans KR', sans-serif",
-          }
-        }
-      }
+          },
+        },
+      },
     },
 
-    scales: { // x축과 y축 설정
+    scales: {
+      // x축과 y축 설정
       x: {
         grid: {
           display: false,
         },
         ticks: {
-          color: '#C4C4C4',
-        }
+          color: "#C4C4C4",
+        },
       },
 
       y: {
         grid: {
-          color: '#E4E5E9',
+          color: "#E4E5E9",
         },
         ticks: {
-          color: '#C4C4C4',
-        }
+          color: "#C4C4C4",
+        },
       },
-    }
-  }
+    },
+  };
 
   const data = {
     labels,
@@ -74,21 +77,17 @@ const G2_Seoul_VS_Else = () => {
         data: 서울,
         borderColor: "#F55073",
         backgroundColor: "#F55073",
-  
       },
       {
         label: "기타 광역시 평균",
         data: 평균,
         borderColor: "#5BB8FB",
         backgroundColor: "#5BB8FB",
-  
       },
     ],
   };
 
-  return (
-    <Line options={options} data={data} />
-  );
+  return <Line options={options} data={data} />;
 };
 
 export default G2_Seoul_VS_Else;

@@ -33,12 +33,17 @@ const IndexStyle = styled.div`
             }
 
             button{
-                width: 200px;
+                width: 224px;
                 height: 32px;
                 margin-top: 60px;
                 background: ${({ theme }) => theme.colors.main};
                 border-radius: 32px;
                 color: #fff;
+                transition: all .3s;
+
+                &:hover{
+                    background: #59D19E;
+                }
             }
         }
     }
@@ -81,10 +86,26 @@ const IndexStyle = styled.div`
                 color: ${({ theme }) => theme.colors.grey2};
             }
 
+            
             .graphBox{
+                position: relative;
                 width: 100%;
                 margin-top: 8px;
                 z-index: 20;
+                
+                &.graph3Box{
+                    margin-bottom: 40px;
+                }
+
+
+                p{
+                    position: absolute;
+                    bottom: -20px;
+                    color: #30C586;
+                    font-weight: 500;
+                }
+                p:first-of-type{left: 34px;} 
+                p:last-of-type{right: -7px;} 
             }
             .label{
                 margin-top: 16px;
@@ -113,7 +134,7 @@ const IndexStyle = styled.div`
                     dl:nth-child(2) dt{background: #5BB8FB;}
                 }
                 &.graph3{
-                    dl:nth-child(1) dt{background: #F55073;}
+                    dl:nth-child(1) dt{background: rgba(245, 80, 115, 0.8);}
                     dl:nth-child(2) dt{background: #5BB8FB;}
                 }
             }

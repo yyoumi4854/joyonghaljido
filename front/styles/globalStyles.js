@@ -1,10 +1,11 @@
-import {createGlobalStyle} from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset'
 
 const GlobalStyles = createGlobalStyle`
   ${reset}
   *{
     box-sizing: border-box;
+    outline: none;
   }
   
   body{
@@ -20,8 +21,8 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
     background: transparent;
     border: 0;
+    font-size: 16px;
     cursor: pointer;
-    outline: none;
   }
 
   svg{
