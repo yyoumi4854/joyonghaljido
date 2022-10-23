@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const outerModalStyle2 = styled.div`
+const outerModal = styled.div`
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -9,4 +9,4 @@ const outerModalStyle2 = styled.div`
     z-index: 999;
 `;
 
-export default outerModalStyle2;
+export default outerModal
