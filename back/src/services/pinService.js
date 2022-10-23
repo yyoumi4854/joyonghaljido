@@ -2,8 +2,7 @@ const Pin = require("../db/models/Pin");
 
 class pinService {
   static async getPinById(pinId) {
-    const foundPin = await Pin.getPinById(pinId);
-    return foundPin;
+    return Pin.getPinById(pinId);
   }
 }
 
