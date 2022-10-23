@@ -103,7 +103,16 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
         }
     }, [reviewType, basic, more, currentState.clickSpotId])
     
-
+    // esc 클릭 시 모달창 종료
+    useEffect(()=>{
+        document.addEventListener('keydown', (event) => {
+          if(event.key == 'Escape'){
+            setModal('none')
+            setIsWriting(false)
+          }
+        });
+      }, [])
+      
   //***** [뒤로가기] *****//
   const back = (currentState, setCurrentState) => {
     if (currentState.currentView === 'gu') {
