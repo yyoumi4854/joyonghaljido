@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from 'react';
-import DarkArea2 from '../darkAreaStyles2';
+import outerModalStyle2 from './modalStyles/outerModalStyle2';
 
 const TripleDotsModalStyle = styled.div`
   z-index:1000;
@@ -48,7 +48,7 @@ const TripleDotsModal = ({ setModal,x,setReviewObj, setTripleDotModal}) => {
   }
   return (
     <>
-      <DarkArea2 onClick={() => { outerScreen++; outerCheck(); }}></DarkArea2 >
+      <outerModalStyle2 onClick={() => { outerScreen++; outerCheck(); }}></outerModalStyle2 >
       <TripleDotsModalStyle onClick={() => { innerScreen++; innerCheck(); }}>
         <button className='ud_btn' onClick={() => { putBtnClicked() }}>수정</button>
         <button className='ud_btn' onClick={() => { delBtnClicked() }}>삭제</button>

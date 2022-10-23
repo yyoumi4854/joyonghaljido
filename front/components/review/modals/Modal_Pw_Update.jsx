@@ -5,8 +5,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 // styled
-import DarkArea from '../darkAreaStyles';
-import ModalContent from './modalStyles';
+import DarkArea from './modalStyles/outerModalStyle1';
+import ModalContent from './modalStyles/modalStyles';
 
 const Modal_Pw = ({ setModal, reviewObj, openIsEditing, setEditDongInfo}) => {
 
@@ -58,7 +58,7 @@ const Modal_Pw = ({ setModal, reviewObj, openIsEditing, setEditDongInfo}) => {
   }
   // 수정할 동, 구 이름 불러와서 보내 주기
   const getDongInfo = async () => {
-    axios.get(`http://localhost:5001/dongs/${reviewObj.dongId}`)
+    await axios.get(`http://localhost:5001/dongs/${reviewObj.dongId}`)
       .then((res) => {
         setEditDongInfo(res.data);
         openIsEditing();

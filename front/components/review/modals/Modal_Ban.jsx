@@ -2,8 +2,8 @@ import { SmallBtn } from '../../../styles/btnStyles';
 import {useState} from 'react';
 
 import styled from 'styled-components'
-import ModalContent from './modalStyles';
-import DarkArea from '../darkAreaStyles';
+import ModalContent from './modalStyles/modalStyles';
+import DarkArea from './modalStyles/outerModalStyle1';
 
 const Modal_Ban = ({setModal}) => {
 

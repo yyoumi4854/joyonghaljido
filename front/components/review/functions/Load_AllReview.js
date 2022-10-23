@@ -1,13 +1,13 @@
+
 import axios from 'axios';
 import getAvg from './getAvg'
 
-const filtering = async (currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv) => {
-    
+const Load_AllReview = async (currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx) => {
     let lv1, lv2, lv3 = [0, 0, 0]
 
     // 1. 리뷰 개수 구하기
-    if (currentState.currentView === 'gu') {
-
+    if (currentState.currentView == 'gu') {
+        console.log('Load_AllReview')
         try{
             await axios.get(`http://localhost:5001/reviews/count?guId=${currentState.guId}`)
             .then(v=>{
@@ -25,7 +25,8 @@ const filtering = async (currentState, more, setList, setReviewCnt, reviewCnt, s
             console.log('구 리뷰 수 파악 불가')
         }
     }
-    else if (currentState.currentView === 'dong') {
+    else if (currentState.currentView == 'dong') {
+        
         try {
             await axios.get(`http://localhost:5001/reviews/count?dongId=${currentState.clickSpotId}`)
             .then(v=>{
@@ -43,51 +44,48 @@ const filtering = async (currentState, more, setList, setReviewCnt, reviewCnt, s
             console.log('동 리뷰 수 파악 불가')
         }
     }
-    
+
+
     // 2. 평균 소음 인덱스 계산
     setAvgIdx(getAvg(lv1, lv2, lv3))
 
+
+
     // 3. 리뷰 목록 구하기
-    // 구 리뷰
+    // 3-1 구 리뷰 목록 구하기
     if (currentState.currentView === 'gu') {
+
         try {
-          // 첫 10개
-          await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}&noiseLevel=${lv}`)
-            .then(v => {
-              console.log(v.data)
-              setList(v.data)
-            });
-          // 다음~
-          for (let i = 1; i <= more; i++) {
-              await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}&noiseLevel=${lv}&skip=${i}`)
-                  .then(v => (setList((prev) => [...prev, ...v.data])));
-          }
-        }
-        catch { console.log('구 리뷰(레벨별) 로딩 실패!'); }
-      }
-      // 동 리뷰
-      else if (currentState.currentView === 'dong') {
-        try {
-          // 첫 10개
-          await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}&noiseLevel=${lv}`)
+            await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}`)
             .then(v => (setList(v.data)));
-          // 이후
-          for (let i = 1; i <= more; i++) {
-            await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}&noiseLevel=${lv}&skip=${i}`)
-              .then(v => (setList((prev) => [...prev, ...v.data])));
-          }
+
+            for (let i = 1; i <= more; i++) {
+            await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}&skip=${i}`)
+                .then(v => (setList((prev) => {
+                return [...prev, ...v.data]
+                })));
+            }
         }
-        catch { console.log('동 리뷰(레벨별) 로딩 실패!'); }
-      }
+        catch { console.log('구 리뷰 로딩 실패!'); }
+    }
+    // 3-1 동 리뷰 목록 구하기
+    else if (currentState.currentView === 'dong') {
+        try {
+            
+            await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}`)
+            .then(v => (setList(v.data)));
+            for (let i = 1; i <= more; i++) {
+            await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}&skip=${i}`)
+                
+                .then(v => (setList((prev) => {
+                return [...prev, ...v.data]
+                })));
+            }
+        }
+        catch { console.log('동 리뷰 로딩 실패!');}
+        console.log('firstLoad 종료')
+    }
 
 }
 
-
-export default filtering
-
-
-
-
-
-
-
+export default Load_AllReview

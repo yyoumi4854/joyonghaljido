@@ -1,5 +1,5 @@
 import axios from 'axios';
-import getAvg from '../functions/getAvg'
+import getAvg from './getAvg'
 
 const Load_Dong = async (
     currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx) => {

@@ -72,7 +72,7 @@
  ┃ ┃ ┃ ┗ 📜G3_EachGu.js
  ┃ ┃ ┣ 📂review
  ┃ ┃ ┃ ┣ 📂modal
- ┃ ┃ ┃ ┃ ┣ 📜DarkArea.style.js
+ ┃ ┃ ┃ ┃ ┣ 📜outerModal1.style.js
  ┃ ┃ ┃ ┃ ┣ 📜Modal_Ask.jsx
  ┃ ┃ ┃ ┃ ┣ 📜Modal_Ask.style.js
  ┃ ┃ ┃ ┃ ┣ 📜Modal_Deny.jsx
@@ -80,7 +80,7 @@
  ┃ ┃ ┃ ┃ ┣ 📜Modal_Pw.style.js
  ┃ ┃ ┃ ┃ ┣ 📜Modal_Pw_Del.jsx
  ┃ ┃ ┃ ┃ ┗ 📜Modal_Pw_Update.jsx
- ┃ ┃ ┃ ┣ 📜darkAreaStyles.js
+ ┃ ┃ ┃ ┣ 📜outerModal1Styles.js
  ┃ ┃ ┃ ┣ 📜review.js
  ┃ ┃ ┃ ┣ 📜reviewAddForm.js
  ┃ ┃ ┃ ┣ 📜reviewAddForm.style.js

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const DarkArea2 = styled.div`
+const outerModalStyle2 = styled.div`
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -9,4 +9,4 @@ const DarkArea2 = styled.div`
     z-index: 999;
 `;
 
-export default DarkArea2;
+export default outerModalStyle2;

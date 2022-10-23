@@ -1,27 +1,20 @@
 import { useState, useEffect } from 'react';
-import Modal_Pw_Del from './modal/Modal_Pw_Del'
-import Modal_Pw_Update from './modal/Modal_Pw_Update'
-import Modal_Ban from './modal/Modal_Ban'
-import Modal_Ask from './modal/Modal_Ask'
+import Modal_Pw_Del from './modals/Modal_Pw_Del'
+import Modal_Pw_Update from './modals/Modal_Pw_Update'
+import Modal_Ban from './modals/Modal_Ban'
+import Modal_Ask from './modals/Modal_Ask'
 
-// functions
-import getReview from './functions/notUsing/getReview'
-import getReviewNum from './functions/notUsing/getReviewNum'
-import getMorePages from './functions/notUsing/getMorePages.js'
-import getReviewByLv from './functions/notUsing/getReviewByLv'
-
-import filtering from './functions/filtering.js'
-import allReviewClicked from './functions/allReviewClicked.js'
-
-import Load_Dong from './functions/Load_Dong.js'
-import Load_Gu from './functions/Load_Gu'
+import Load_Filtered from './functions/Load_Filtered.js'
+import Load_AllReview from './functions/Load_AllReview.js'
+import Load_Dong from './functions/Load_BasicDong.js'
+import Load_Gu from './functions/Load_BasicGu'
 
 // import nameId from '../../Id_book/nameId.json'
 import axios from 'axios';
-import ReviewList from './reviewList';
-import ReviewNone from './reviewNone';
-import ReviewEditForm from './reviewEditForm';
-import ReviewAddForm from './reviewAddForm'
+import ReviewList from './reviewList/reviewList';
+import ReviewNone from './reviewNone/reviewNone';
+import ReviewEditForm from './modals/reviewEditForm';
+import ReviewAddForm from './modals/reviewAddForm'
 
 // styled
 import Title from '../titleStyles';
@@ -42,40 +35,38 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
   const [reviewObj, setReviewObj] = useState(undefined)
   const [avgIdx, setAvgIdx] = useState(undefined);
   const [more, setMore] = useState(0)
-  
+  const [editDongInfo, setEditDongInfo] = useState(undefined);
   const [lv, setLv] = useState(-1);
   
   // 토글 관련
   const [isEditing, setIsEditing] = useState(false);
   const [dongList, setDongList] = useState([]);
-  const [listChanged, setListChanged] = useState(false); // toggle
   const [reviewType, setReviewType] = useState('default'); // or lv
-  const [filterClicked, setFilterClicked] = useState(false);
   const [basic, setBasic] = useState(true);
-  const [typeChanged, setTypeChanged] = useState(false);
   const [isWriting, setIsWriting] = useState(false)
   const [dongListChanged, setDongListChanged] = useState(false)
 
   const openIsEditing  = () => { setIsEditing(true);}
   const closeIsEditing = () => { setIsEditing(false);}
 
-  const [editDongInfo, setEditDongInfo] = useState(undefined);
-//   const serverUrl = "http://kdt-ai5-team04.elicecoding.com:5001";
-  const serverUrl = "http://localhost:5001";
     // ***** [GET] ***** //
     // 0. 구에 따른 동 목록 받기
     const getDongsByGuId = async () => {
+        alert(`${process.env.SERVER_URL}`)
+        
         try{
-            await axios.get(`${serverUrl}/location/gus/${currentState.guId}/dongs`)
+            await axios.get(`http://localhost:5001/location/gus/${currentState.guId}/dongs`)
+            
             .then((res) => {
                 setDongList(res.data.dongs);
                 setDongListChanged(true)
             });
         }
         catch{
-            console.log('getReview 실패')
+            console.log('get Review 실패')
         }
     }
+    
     // 1. 기본 : 리뷰수 + 리뷰목록 + 평균 소음 인덱스 구하기
     useEffect(() => {
         getDongsByGuId()
@@ -105,14 +96,14 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
         if(basic == false){
             // 필터된 구동 리뷰 정보 구함
             if(reviewType == 'filter' ){
-                filtering(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
+                Load_Filtered(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
             }
             // more 반영한 반영 GET 실행 (디폴트 함수 실행)
-            if(reviewType=='default'){
-                allReviewClicked(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
+            if(reviewType == 'default'){
+                Load_AllReview(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
             }
         }
-    }, [filterClicked, basic, more, currentState.clickSpotId])
+    }, [reviewType, basic, more, currentState.clickSpotId])
     
 
   //***** [뒤로가기] *****//
@@ -158,10 +149,9 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
               <AiFillWechat onClick={()=>{
                 setReviewType('default')
                 setMore(0)
-                allReviewClicked(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
+                Load_AllReview(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
               }}/>
             </button>
-            {/* 한번에 모든 게시글을 불러오지 않기 때문에 모든 모든 게시글 개수를 불러오는 api 설정 필요 */}
             <span>{reviewCnt[0]}</span> 
             
           </div>
@@ -178,8 +168,6 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
           list={list}
           setModal={setModal}
           setReviewObj={setReviewObj}
-          setIsWriting={setIsWriting}
-          isWriting={isWriting}
           setMore={setMore}
           currentState={currentState}
           more={more}
@@ -188,8 +176,6 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
           setReviewType={setReviewType}
           reviewCnt={reviewCnt}
           avgIdx={avgIdx}
-          typeChanged={typeChanged}
-          lv={lv}
           setLv={setLv}
           dongList={dongList}
           dongListChanged={dongListChanged}
@@ -245,7 +231,6 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
         reviewCnt={reviewCnt}
         setAvgIdx={setAvgIdx}
         lv={lv}
-        
       />}
 
       {/* 입력 폼 */}

@@ -1,23 +1,19 @@
-import nameId from '../../Id_book/nameId.json'
+import nameId from '../../../Id_book/nameId.json'
 import { useState, useEffect} from 'react'
 
-import filtering from './functions/filtering.js'
-import allReviewClicked from './functions/allReviewClicked.js'
+import Load_Filtered from '../functions/Load_Filtered.js'
+import Load_AllReview from '../functions/Load_AllReview.js'
 
 // styled
 import ReviewListContent from './reviewListStyles';
-import Modal_TripleDots from './modal/Modal_TripleDots';
-
+import Modal_TripleDots from '../modals/Modal_TripleDots';
 
 // react-icons
 import { AiOutlineMore } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
-import getMorePages from './functions/notUsing/getMorePages';
 
 const ReviewList = ({ 
-    list, setModal, setReviewObj, 
-    setIsWriting, isWriting, setMore, dongList, currentState, more, setList, reviewType, setReviewCnt, setAvgIdx, avgIdx,
-    reviewCnt, typeChanged, lv, setLv, dongListChanged, setReviewType, setBasic}) => {
+    list, setModal, setReviewObj, setMore, dongList, currentState, more, setList, reviewType, setReviewCnt, setAvgIdx, avgIdx, reviewCnt, setLv, dongListChanged, setReviewType, setBasic}) => {
 
     const [noiseTabActive, setNoiseTabActive] = useState([-1, 0, 0, 0]);
     const [tripleDotModal, setTripleDotModal] = useState(false);
@@ -26,8 +22,9 @@ const ReviewList = ({
     const [editBtns,   setEditBtns]   = useState(new Array(list.length).fill(0));
     const limit = 71
     
-    // ***** [접기 열기] ***** //
-    // 최초 마스킹
+
+    // ***** 1. [펼치기 접기] ***** //
+    // 1-1 시작값 
     let btnArrForMore = new Array(list.length).fill(false)
     for(let i=0; i<list.length; i++){
         if(list[i].description.length > limit){btnArrForMore[i] = true}
@@ -35,8 +32,8 @@ const ReviewList = ({
     const [maskArrForMoreBtn, setMaskArrForMoreBtn] = useState(new Array(list.length).fill([...btnArrForMore]));
     const [maskArrForHideBtn, setMaskArrForHideBtn] = useState(new Array(list.length).fill(false));
     const [maskArrForTxt, setMaskArrForTxt] = useState(new Array(list.length).fill(false));
-
-    // 리스트 변동 시
+    
+    // 1-2 리스트 변경에 따른 재조정
     useEffect(()=>{
         let btnArrForMore = new Array(list.length).fill(false)
         let txtArr = new Array(list.length).fill(false)
@@ -50,50 +47,43 @@ const ReviewList = ({
         setMaskArrForTxt([...txtArr])
     }, [list])
     
-    const onClickMore = (i) => {
+    // 1-3 더보기 숨기기 클릭에 따른 재조정
+    const openHide = (e,i) => {
         let btnArrForMore = maskArrForMoreBtn
         let btnArrForHide = maskArrForHideBtn
         let txtArr = maskArrForTxt
 
-        btnArrForMore[i] = false
-        btnArrForHide[i] = true
-        txtArr[i] = true
-
-        setMaskArrForMoreBtn([...btnArrForMore])
-        setMaskArrForHideBtn([...btnArrForHide])
-        setMaskArrForTxt([...txtArr])
-    };
-
-    const onClickHide = (i) => {
-        let btnArrForMore = maskArrForMoreBtn
-        let btnArrForHide = maskArrForHideBtn
-        let txtArr = maskArrForTxt
-
-        btnArrForMore[i] = true
-        btnArrForHide[i] = false
-        txtArr[i] = false
-
+        if(e.target.id == 'more'){
+            btnArrForMore[i] = false
+            btnArrForHide[i] = true
+            txtArr[i] = true
+        }
+        if(e.target.id == 'hide'){
+            btnArrForMore[i] = true
+            btnArrForHide[i] = false
+            txtArr[i] = false
+        }
         setMaskArrForMoreBtn([...btnArrForMore])
         setMaskArrForHideBtn([...btnArrForHide])
         setMaskArrForTxt([...txtArr])
     };
 
 
-    //***** [필터링] *****//
+
+    //***** 2. [필터링] *****//
     const noiseTabHandler = (e) => {
-        // 해당 레벨 CSS 활성화 
-
-        setLv(prev=>e.target.id)
+        const level = e.target.id
+        setLv(prev=>level)
         let arr = [-1, 0, 0, 0]
-        arr[e.target.id] = 1;
-        const lvValue = e.target.id
+        arr[level] = 1;
+        
         setBasic(false)
         setNoiseTabActive(arr);
         setReviewType(prev=>'filter')
-        filtering(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lvValue)
+        Load_Filtered(currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, level)
     }
     
-    //***** [더 불러오기] *****//
+    //***** 3. [더 불러오기] *****//
     const getMoreClicked = () => {
         setMore(prev=>prev+1)
     }
@@ -110,15 +100,15 @@ const ReviewList = ({
 
       <ul className='noiseTab'>
         <li className={(noiseTabActive[3] && reviewType=='filter') && 'active'}>
-          <span id='3' onClick={noiseTabHandler}>좋음</span>
+          <span id='3' onClick={(e)=>{noiseTabHandler(e)}}>좋음</span>
           <p>{reviewCnt[3] || 0}</p>
         </li>
         <li className={(noiseTabActive[2] && reviewType=='filter') && 'active'}>
-          <span id='2' onClick={noiseTabHandler}>보통</span>
+          <span id='2' onClick={(e)=>{noiseTabHandler(e)}}>보통</span>
           <p>{reviewCnt[2] || 0}</p>
         </li>
         <li className={(noiseTabActive[1] && reviewType=='filter') && 'active'}>
-          <span id='1' onClick={noiseTabHandler}>나쁨</span>
+          <span id='1' onClick={(e)=>{noiseTabHandler(e)}}>나쁨</span>
           <p>{reviewCnt[1] || 0}</p>
         </li>
       </ul>
@@ -141,14 +131,10 @@ const ReviewList = ({
 
                     <div className='textBottom'>
                       <p>
-                        {/* 일반 텍스트 */}
                         { maskArrForTxt[i] && x.description}
-                        {/* 장문 텍스트 */}
                         {!maskArrForTxt[i] && x.description.slice(0, limit)}
-                        {/* 더보기 버튼 */}
-                        { maskArrForMoreBtn[i] && <button onClick={()=>{onClickMore(i)}}>...더보기</button>}
-                        {/* 숨기기 버튼 */}
-                        { maskArrForHideBtn[i] && <button onClick={()=>{onClickHide(i)}}>...숨기기</button>}
+                        { maskArrForMoreBtn[i] && <button id='open' onClick={(e)=>{openHide(e,i)}}>...더보기</button>}
+                        { maskArrForHideBtn[i] && <button id='hide' onClick={(e)=>{openHide(e,i)}}>...숨기기</button>}
                       </p>
                     </div>
 
@@ -185,6 +171,7 @@ const ReviewList = ({
             })
           }
         </ul>
+
         <button className='reviewAddBtn' onClick={() => {getMoreClicked()}}>
             소음 리뷰 10개 더보기
             <BiChevronDown />

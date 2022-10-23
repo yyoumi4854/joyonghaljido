@@ -1,19 +1,19 @@
 import { SmallBtn } from '../../../styles/btnStyles';
 import { useState, useRef, useEffect } from "react";
 
-import filterClicked from '../functions/filtering.js'
-import allReviewClicked from '../functions/allReviewClicked.js'
+import Load_Filtered from '../functions/Load_Filtered.js'
+import Load_AllReview from '../functions/Load_AllReview.js'
 
 import axios from 'axios';
 
 // styled
-import DarkArea from '../darkAreaStyles';
-import ModalContent from './modalStyles';
+import DarkArea from './modalStyles/outerModalStyle1';
+import ModalContent from './modalStyles/modalStyles';
 
 const Modal_Pw = ({setModal, reviewObj, reviewType, currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv}) => {
 
   const [showWrong, setShowWrong] = useState(false)
-  const [inputValue, setInputValue] = useState('')
+  const [PW, setPW] = useState('')
 
   let innerScreen = 0
   let outerScreen = 0
@@ -26,11 +26,12 @@ const Modal_Pw = ({setModal, reviewObj, reviewType, currentState, more, setList,
   }
 
   async function del(endpoint, params = "") {
-    console.log(`DELETE 요청 ${'http://localhost:5001' + endpoint + "/" + params}`);
-    return axios.delete("http://localhost:5001" + endpoint + "/" + params,  
-      { data: { currentPassword: inputValue+'' } }, 
+    return axios.delete(`http://localhost:5001${endpoint}/${params}`,  
+      { data: { currentPassword: PW+'' } }, 
     );
   }
+  
+  
   
 
 
@@ -45,11 +46,11 @@ const Modal_Pw = ({setModal, reviewObj, reviewType, currentState, more, setList,
       
       try{ // GET
         if(reviewType=='default'){
-          allReviewClicked(
+          Load_AllReview(
           currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
         }
         if(reviewType=='filter'){
-          filterClicked(
+          Load_Filtered(
           currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
         }
       }
@@ -93,7 +94,7 @@ const Modal_Pw = ({setModal, reviewObj, reviewType, currentState, more, setList,
               id="pwInput" 
               name="name" 
               placeholder='글 작성시 사용한 비밀번호' 
-              onChange={(e)=>{setInputValue(e.target.value); onChangeHandler()}} required
+              onChange={(e)=>{setPW(e.target.value); onChangeHandler()}} required
             />
             { showWrong && <p className='wrong'>비밀번호가 틀렸습니다</p>}
             {/* {!showWrong && <p className='space'></p>} */}

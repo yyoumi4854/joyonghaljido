@@ -1,24 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
-import filterClicked from './functions/filtering.js'
-import allReviewClicked from './functions/allReviewClicked.js'
-import FormContent from "./reviewAddForm.style";
-import DarkArea from "./darkAreaStyles";
-import { SmallBtn } from '../../styles/btnStyles';
+import Load_Filtered from '../functions/Load_Filtered'
+import Load_AllReview from '../functions/Load_AllReview'
+import FormContent from "./modalStyles/reviewForm.style";
+import DarkArea from "./modalStyles/outerModalStyle1";
+import { SmallBtn } from '../../../styles/btnStyles';
 
 const ReviewEditForm = ({ currentReview, closeIsEditing, editDongInfo, reviewType, currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv}) => {
 
     
-    // const [editDongInfo, setEditDongInfo] = useState();
-    
-    // useEffect(() => {
-    //     axios.get(`http://localhost:5001/dongs/${currentReview.dongId}`)
-    //         .then((res) => {
-    //             setEditDongInfo(res.data);
-    //         })
-    // }, []);
-
     const [review, setReview] = useState({
         guId: currentReview.guId,
         dongId: currentReview.dongId,
@@ -45,11 +36,11 @@ const ReviewEditForm = ({ currentReview, closeIsEditing, editDongInfo, reviewTyp
             try{
                 // GET
                 if(reviewType=='default'){
-                    allReviewClicked(
+                    Load_AllReview(
                         currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
                 }
                 if(reviewType=='filter'){
-                    filterClicked(
+                    Load_Filtered(
                         currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
                 }
             }

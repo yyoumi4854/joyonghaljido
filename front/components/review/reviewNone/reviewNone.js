@@ -1,5 +1,3 @@
-import React from 'react';
-
 // styled
 import ReviewNoneContent from './reviewNoneStyles';
 

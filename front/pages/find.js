@@ -33,10 +33,8 @@ const Find = () => {
   const [dongs, setDongs] = useState("");
 
   const [currentState, setCurrentState] = useState({
-    currentView: "ranking",
-    //'ranking', 'gu', 'dong', 'info'
-    rankingTab: "noise",
-    //'mw' or 'noise'
+    currentView: "ranking", //'ranking', 'gu', 'dong', 'info'
+    rankingTab:  "noise",   //'mw' or 'noise'
 
     zoom: 2,
     guId: "",
@@ -91,7 +89,6 @@ const Find = () => {
             <>
               <PinSelect
                 pins={pins}
-                setPins={setPins}
                 currentState={currentState}
                 setCurrentState={setCurrentState}
               />

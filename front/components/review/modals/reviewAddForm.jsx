@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
-import filterClicked from './functions/filtering.js'
-import allReviewClicked from './functions/allReviewClicked.js'
+import Load_Filtered from '../functions/Load_Filtered'
+import Load_AllReview from '../functions/Load_AllReview'
 
 // styled
-import FormContent from "./reviewAddForm.style";
-import DarkArea from "./darkAreaStyles";
-import { SmallBtn } from '../../styles/btnStyles';
+import FormContent from "./modalStyles/reviewForm.style";
+import DarkArea from "./modalStyles/outerModalStyle1";
+import { SmallBtn } from '../../../styles/btnStyles';
 
 const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv}) => {
   
@@ -23,20 +23,30 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
     password: "",
     noiseLevel: "",
   });
+  
+  // window.onkeypress = function (e) {
+  //   if(e.keyCode == 27){alert()}
+  // };
 
   // 구 리스트 불러오기
   useEffect(() => {
-    axios.get("http://localhost:5001/location/gus")
-        .then((res) => {
-          setGuList(res.data);
-        })
+    async function callApi(){
+      await axios.get(`http://localhost:5001/location/gus`)
+      .then((res) => {
+        setGuList(res.data);
+      })
+    }
+    callApi();
   }, []);
 
   useEffect(() => {
-    axios.get(`http://localhost:5001/location/gus/${currentState.guId}/dongs`)
+    async function callApi(){
+      await axios.get(`http://localhost:5001/location/gus/${currentState.guId}/dongs`)
       .then((res) => {
         setDongList(res.data.dongs);
       })
+    }
+    callApi()
   }, []);
 
   // 구 선택했을 때 속한 동 리스트 찾기
@@ -53,9 +63,9 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
       });
   }
   // 노이즈레벨 입력 시점
-  const handleNoiseLevelClick = (e) => {
+  const handleNoiseLevelClick = async (e) => {
     setNoiseLevel(e.target.value);
-    axios.get(`http://localhost:5001/location/gus/${currentState.guId}/dongs`)
+    await axios.get(`http://localhost:5001/location/gus/${currentState.guId}/dongs`)
       .then((res) => {
         setDongList(res.data.dongs);
       })
@@ -75,16 +85,16 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
     e.preventDefault();
     try {
       console.log('review', review)
-      await axios.post("http://localhost:5001/reviews", review);
+      await axios.post(`http://localhost:5001/reviews`, review);
 
       try{    
         // 다시 GET 하기
         if(reviewType=='default'){
-            allReviewClicked(
+            Load_AllReview(
                 currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx)
             }
         if(reviewType=='filter'){
-            filterClicked(
+            Load_Filtered(
                 currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv)
             }
         }
@@ -111,6 +121,13 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
   const modalRef = useRef();
   useEffect(() => {
     document.addEventListener('mousedown', handleOutsideClick);
+      // window.onkeypress = () =>{
+      //   handleOutsideClick()
+      // }
+    // window.onkeypress = function (e) {
+    //   if(e.keyCode == 27){handleOutsideClick();}
+    // };
+
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
