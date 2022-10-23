@@ -2,7 +2,7 @@ const { GuModel } = require("..");
 
 class Gu {
   static async getGuById(guId) {
-    const foundGu = await GuModel.findOne({ _id: guId }, "_id name");
+    const foundGu = await GuModel.findOne({ _id: guId }, "_id name").lean();
     if (!foundGu) {
       throw new Error("해당하는 자치구를 찾을 수 없습니다.");
     }

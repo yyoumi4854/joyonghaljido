@@ -13,7 +13,7 @@ class locationService {
     const foundPins = await Pin.getPinListByGuId(guId);
 
     const dongsAndPins = {
-      ...foundGu.toObject(),
+      ...foundGu,
       dongs: foundDongs,
       pins: foundPins,
     };
@@ -26,7 +26,7 @@ class locationService {
     const foundDongs = await Dong.getDongListByGuId(guId);
 
     const dongs = {
-      ...foundGu.toObject(),
+      ...foundGu,
       dongs: foundDongs,
     };
 
