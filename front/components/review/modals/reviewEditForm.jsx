@@ -4,7 +4,7 @@ import axios from "axios";
 import Load_Filtered from '../functions/Load_Filtered'
 import Load_AllReview from '../functions/Load_AllReview'
 import FormContent from "./modalStyles/reviewForm.style";
-import DarkArea from "./modalStyles/outerModalStyle1";
+import OuterModal from "./modalStyles/outerModalStyle1";
 import { SmallBtn } from '../../../styles/btnStyles';
 
 const ReviewEditForm = ({ currentReview, closeIsEditing, editDongInfo, reviewType, currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv}) => {
@@ -31,7 +31,7 @@ const ReviewEditForm = ({ currentReview, closeIsEditing, editDongInfo, reviewTyp
         const reviewId = currentReview._id;
         // PUT
         try {
-            await axios.put(`http://localhost:5001/reviews/${reviewId}`, review);
+            await axios.put(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/${reviewId}`, review);
             closeIsEditing();
             try{
                 // GET
@@ -68,7 +68,7 @@ const ReviewEditForm = ({ currentReview, closeIsEditing, editDongInfo, reviewTyp
     
     return (
         <>
-            <DarkArea></DarkArea>
+            <OuterModal></OuterModal>
             <FormContent ref={ modalRef } onChange={ handleReviewChange }>
                 <div className="formCon">
                     <form onSubmit={ handleUpdateSubmit }>

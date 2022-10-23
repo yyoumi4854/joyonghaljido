@@ -142,8 +142,8 @@ const Map = ({ currentState, setCurrentState, pins, setPins, dongs, setDongs }) 
                                                 const guId = gu._id;
                                                 const guName = gu.name;
 
-                                                const mapData = await axios.get(`http://localhost:5001/gus/${guId}`);
-                                                const dongsAndPins = await axios.get(`http://localhost:5001/location/gus/${guId}`);
+                                                const mapData = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/gus/${guId}`);
+                                                const dongsAndPins = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/location/gus/${guId}`);
                                                 setDongs(dongsAndPins.data.dongs);
                                                 setPins(dongsAndPins.data.pins);
 

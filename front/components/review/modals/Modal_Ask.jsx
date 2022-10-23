@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 
 // styled
-import DarkArea from "./modalStyles/outerModalStyle1";
+import OuterModal from "./modalStyles/outerModalStyle1";
 import ModalContent from "./modalStyles/modalStyles";
 import { SmallBtn } from '../../../styles/btnStyles';
 
@@ -21,7 +21,7 @@ const Modal_Ask = ({setModal}) => {
   }
     return (
     <>
-      <DarkArea onClick={()=>{outerScreen++; outerCheck();}}></DarkArea >
+      <OuterModal onClick={()=>{outerScreen++; outerCheck();}}></OuterModal >
       <ModalContent onClick={()=>{innerScreen++; innerCheck();}}>
           <h3 className="del">정말 삭제하시겠습니까?</h3>
           

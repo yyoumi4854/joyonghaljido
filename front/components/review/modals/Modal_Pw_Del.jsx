@@ -7,7 +7,7 @@ import Load_AllReview from '../functions/Load_AllReview.js'
 import axios from 'axios';
 
 // styled
-import DarkArea from './modalStyles/outerModalStyle1';
+import OuterModal from './modalStyles/outerModalStyle1';
 import ModalContent from './modalStyles/modalStyles';
 
 const Modal_Pw = ({setModal, reviewObj, reviewType, currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv}) => {
@@ -26,7 +26,7 @@ const Modal_Pw = ({setModal, reviewObj, reviewType, currentState, more, setList,
   }
 
   async function del(endpoint, params = "") {
-    return axios.delete(`http://localhost:5001${endpoint}/${params}`,  
+    return axios.delete(`${process.env.NEXT_PUBLIC_SERVER_URL}${endpoint}/${params}`,  
       { data: { currentPassword: PW+'' } }, 
     );
   }
@@ -84,7 +84,7 @@ const Modal_Pw = ({setModal, reviewObj, reviewType, currentState, more, setList,
   
   return (
     <>
-      <DarkArea onClick={()=>{outerScreen++; outerCheck();}}></DarkArea >
+      <OuterModal onClick={()=>{outerScreen++; outerCheck();}}></OuterModal >
         <ModalContent onClick={()=>{innerScreen++; innerCheck();}}>
           <h3>비밀번호를 입력해 주세요.</h3>
 

@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 // styled
-import DarkArea from './modalStyles/outerModalStyle1';
+import OuterModal from './modalStyles/outerModalStyle1';
 import ModalContent from './modalStyles/modalStyles';
 
 const Modal_Pw = ({ setModal, reviewObj, openIsEditing, setEditDongInfo}) => {
@@ -31,7 +31,7 @@ const Modal_Pw = ({ setModal, reviewObj, openIsEditing, setEditDongInfo}) => {
     console.log(inputValue);
 
     try {
-      await axios.post(`http://localhost:5001/reviews/${reviewId}`, { password: inputValue+'' })
+      await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/${reviewId}`, { password: inputValue+'' })
         .then((res) => {
           if(res.data === true) {
             setModal('none');
@@ -58,7 +58,7 @@ const Modal_Pw = ({ setModal, reviewObj, openIsEditing, setEditDongInfo}) => {
   }
   // 수정할 동, 구 이름 불러와서 보내 주기
   const getDongInfo = async () => {
-    await axios.get(`http://localhost:5001/dongs/${reviewObj.dongId}`)
+    await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/dongs/${reviewObj.dongId}`)
       .then((res) => {
         setEditDongInfo(res.data);
         openIsEditing();
@@ -67,7 +67,7 @@ const Modal_Pw = ({ setModal, reviewObj, openIsEditing, setEditDongInfo}) => {
 
   return (
     <>
-      <DarkArea onClick={() => { outerScreen++; outerCheck(); }}></DarkArea >
+      <OuterModal onClick={() => { outerScreen++; outerCheck(); }}></OuterModal >
       <ModalContent onClick={() => { innerScreen++; innerCheck(); }}>
         <h3>비밀번호를 입력해 주세요.</h3>
 

@@ -55,8 +55,8 @@ const Ranking2 = ({ currentState, setCurrentState, pins, setPins, dongs, setDong
   const selectGu = async (gu) => {
     const selecGu = nameIds.find(v => v.name === gu.name);
     console.log(selecGu);
-    const mapData = await axios.get(`http://localhost:5001/gus/${selecGu._id}`);
-    const dongsAndPins = await axios.get(`http://localhost:5001/location/gus/${selecGu._id}`);
+    const mapData = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/gus/${selecGu._id}`);
+    const dongsAndPins = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/location/gus/${selecGu._id}`);
     setDongs(dongsAndPins.data.dongs);
     setPins(dongsAndPins.data.pins);
 

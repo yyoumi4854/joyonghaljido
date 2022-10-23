@@ -17,7 +17,7 @@ const TripleDotsModalStyle = styled.div`
         :hover{
             color: ${({ theme }) => theme.colors.main};
         }
-    }
+    
     .ud_btn{
         z-index:5;
     }

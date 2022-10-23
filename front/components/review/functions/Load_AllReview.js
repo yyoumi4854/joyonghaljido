@@ -9,7 +9,7 @@ const Load_AllReview = async (currentState, more, setList, setReviewCnt, reviewC
     if (currentState.currentView == 'gu') {
         console.log('Load_AllReview')
         try{
-            await axios.get(`http://localhost:5001/reviews/count?guId=${currentState.guId}`)
+            await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/count?guId=${currentState.guId}`)
             .then(v=>{
                 const all = v.data.reviewCount[0].totalReview
                 const arr = v.data.noiseLevelCount
@@ -28,7 +28,7 @@ const Load_AllReview = async (currentState, more, setList, setReviewCnt, reviewC
     else if (currentState.currentView == 'dong') {
         
         try {
-            await axios.get(`http://localhost:5001/reviews/count?dongId=${currentState.clickSpotId}`)
+            await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/count?dongId=${currentState.clickSpotId}`)
             .then(v=>{
                 const all = v.data.reviewCount[0].totalReview
                 const arr = v.data.noiseLevelCount
@@ -56,11 +56,11 @@ const Load_AllReview = async (currentState, more, setList, setReviewCnt, reviewC
     if (currentState.currentView === 'gu') {
 
         try {
-            await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}`)
+            await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews?guId=${currentState.guId}`)
             .then(v => (setList(v.data)));
 
             for (let i = 1; i <= more; i++) {
-            await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}&skip=${i}`)
+            await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews?guId=${currentState.guId}&skip=${i}`)
                 .then(v => (setList((prev) => {
                 return [...prev, ...v.data]
                 })));
@@ -72,10 +72,10 @@ const Load_AllReview = async (currentState, more, setList, setReviewCnt, reviewC
     else if (currentState.currentView === 'dong') {
         try {
             
-            await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}`)
+            await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews?dongId=${currentState.clickSpotId}`)
             .then(v => (setList(v.data)));
             for (let i = 1; i <= more; i++) {
-            await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}&skip=${i}`)
+            await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews?dongId=${currentState.clickSpotId}&skip=${i}`)
                 
                 .then(v => (setList((prev) => {
                 return [...prev, ...v.data]

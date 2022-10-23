@@ -9,7 +9,7 @@ const Load_Filtered = async (currentState, more, setList, setReviewCnt, reviewCn
     if (currentState.currentView === 'gu') {
 
         try{
-            await axios.get(`http://localhost:5001/reviews/count?guId=${currentState.guId}`)
+            await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/count?guId=${currentState.guId}`)
             .then(v=>{
                 const all = v.data.reviewCount[0].totalReview
                 const arr = v.data.noiseLevelCount
@@ -27,7 +27,7 @@ const Load_Filtered = async (currentState, more, setList, setReviewCnt, reviewCn
     }
     else if (currentState.currentView === 'dong') {
         try {
-            await axios.get(`http://localhost:5001/reviews/count?dongId=${currentState.clickSpotId}`)
+            await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/count?dongId=${currentState.clickSpotId}`)
             .then(v=>{
                 const all = v.data.reviewCount[0].totalReview
                 const arr = v.data.noiseLevelCount
@@ -52,14 +52,14 @@ const Load_Filtered = async (currentState, more, setList, setReviewCnt, reviewCn
     if (currentState.currentView === 'gu') {
         try {
           // 첫 10개
-          await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}&noiseLevel=${lv}`)
+          await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews?guId=${currentState.guId}&noiseLevel=${lv}`)
             .then(v => {
               console.log(v.data)
               setList(v.data)
             });
           // 다음~
           for (let i = 1; i <= more; i++) {
-              await axios.get(`http://localhost:5001/reviews?guId=${currentState.guId}&noiseLevel=${lv}&skip=${i}`)
+              await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews?guId=${currentState.guId}&noiseLevel=${lv}&skip=${i}`)
                   .then(v => (setList((prev) => [...prev, ...v.data])));
           }
         }
@@ -69,11 +69,11 @@ const Load_Filtered = async (currentState, more, setList, setReviewCnt, reviewCn
       else if (currentState.currentView === 'dong') {
         try {
           // 첫 10개
-          await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}&noiseLevel=${lv}`)
+          await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews?dongId=${currentState.clickSpotId}&noiseLevel=${lv}`)
             .then(v => (setList(v.data)));
           // 이후
           for (let i = 1; i <= more; i++) {
-            await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}&noiseLevel=${lv}&skip=${i}`)
+            await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews?dongId=${currentState.clickSpotId}&noiseLevel=${lv}&skip=${i}`)
               .then(v => (setList((prev) => [...prev, ...v.data])));
           }
         }

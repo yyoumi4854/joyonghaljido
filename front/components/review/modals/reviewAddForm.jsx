@@ -6,7 +6,7 @@ import Load_AllReview from '../functions/Load_AllReview'
 
 // styled
 import FormContent from "./modalStyles/reviewForm.style";
-import DarkArea from "./modalStyles/outerModalStyle1";
+import OuterModal from "./modalStyles/outerModalStyle1";
 import { SmallBtn } from '../../../styles/btnStyles';
 
 const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more, setList, setReviewCnt, reviewCnt, setAvgIdx, lv}) => {
@@ -24,14 +24,11 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
     noiseLevel: "",
   });
   
-  // window.onkeypress = function (e) {
-  //   if(e.keyCode == 27){alert()}
-  // };
 
   // 구 리스트 불러오기
   useEffect(() => {
     async function callApi(){
-      await axios.get(`http://localhost:5001/location/gus`)
+      await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/location/gus`)
       .then((res) => {
         setGuList(res.data);
       })
@@ -41,7 +38,7 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
 
   useEffect(() => {
     async function callApi(){
-      await axios.get(`http://localhost:5001/location/gus/${currentState.guId}/dongs`)
+      await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/location/gus/${currentState.guId}/dongs`)
       .then((res) => {
         setDongList(res.data.dongs);
       })
@@ -57,7 +54,7 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
       }else{
         setDefualtGu(false);
       }
-      await axios.get(`http://localhost:5001/location/gus/${selectedGuId}/dongs`)
+      await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/location/gus/${selectedGuId}/dongs`)
       .then((res) => {
         setDongList(res.data.dongs);
       });
@@ -65,7 +62,7 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
   // 노이즈레벨 입력 시점
   const handleNoiseLevelClick = async (e) => {
     setNoiseLevel(e.target.value);
-    await axios.get(`http://localhost:5001/location/gus/${currentState.guId}/dongs`)
+    await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/location/gus/${currentState.guId}/dongs`)
       .then((res) => {
         setDongList(res.data.dongs);
       })
@@ -85,7 +82,7 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
     e.preventDefault();
     try {
       console.log('review', review)
-      await axios.post(`http://localhost:5001/reviews`, review);
+      await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews`, review);
 
       try{    
         // 다시 GET 하기
@@ -140,7 +137,7 @@ const ReviewAddForm = ({ setIsWriting, setModal, reviewType, currentState, more,
 
   return (
     <>
-      <DarkArea></DarkArea>
+      <OuterModal></OuterModal>
       <FormContent ref={modalRef} onChange={handleReviewChange}>
         <div className="formCon">
           <form onSubmit={handleAddSubmit}>

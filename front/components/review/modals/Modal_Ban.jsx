@@ -3,7 +3,7 @@ import {useState} from 'react';
 
 import styled from 'styled-components'
 import ModalContent from './modalStyles/modalStyles';
-import DarkArea from './modalStyles/outerModalStyle1';
+import OuterModal from './modalStyles/outerModalStyle1';
 
 const Modal_Ban = ({setModal}) => {
 
@@ -19,7 +19,7 @@ const Modal_Ban = ({setModal}) => {
 
   return (
     <>
-      <DarkArea onClick={()=>{outerScreen++; outerCheck();}}></DarkArea >
+      <OuterModal onClick={()=>{outerScreen++; outerCheck();}}></OuterModal >
       <ModalContent onClick={()=>{innerScreen++; innerCheck();}}>
       <h3>작성할 수 없습니다.</h3>
       <br></br>

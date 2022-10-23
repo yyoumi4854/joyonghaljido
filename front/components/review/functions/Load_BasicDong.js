@@ -6,7 +6,7 @@ const Load_Dong = async (
     let lv1, lv2, lv3 = [0, 0, 0]
 
     try {
-        await axios.get(`http://localhost:5001/reviews/count?dongId=${currentState.clickSpotId}`)
+        await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/count?dongId=${currentState.clickSpotId}`)
         .then(v=>{
             console.log('동 리뷰개수', v.data)
             const all = v.data.reviewCount[0].totalReview
@@ -29,10 +29,10 @@ const Load_Dong = async (
 
     // 3-1 동 목록 구하기
     try {
-        await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}`)
+        await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews?dongId=${currentState.clickSpotId}`)
         .then(v => (setList(v.data)));
         for (let i = 1; i <= more; i++) {
-        await axios.get(`http://localhost:5001/reviews?dongId=${currentState.clickSpotId}&skip=${i}`)
+        await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews?dongId=${currentState.clickSpotId}&skip=${i}`)
             .then(v => (setList((prev) => {
                 return [...prev, ...v.data]
             })));
