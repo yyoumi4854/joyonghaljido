@@ -109,6 +109,7 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
           if(event.key == 'Escape'){
             setModal('none')
             setIsWriting(false)
+            setIsEditing(false);
           }
         });
       }, [])
