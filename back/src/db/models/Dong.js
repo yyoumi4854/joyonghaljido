@@ -46,7 +46,7 @@ class Dong {
 
   static async getDongListByGuId(guId) {
     const dongList = await DongModel.find(
-      { guId },
+      { guId, name: /동$/ },
       "_id name longitude latitude"
     );
 
@@ -54,12 +54,7 @@ class Dong {
       throw new Error("해당하는 자치구의 동을 찾을 수 없습니다.");
     }
 
-    //"-동"으로 끝나는 dong name만 포함("-가"로 끝나는 것 제외)
-    const filteredDongList = dongList.filter(
-      (dong) => dong.name.slice(-1) === "동"
-    );
-
-    return filteredDongList;
+    return dongList;
   }
 }
 
