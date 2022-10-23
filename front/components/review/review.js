@@ -52,8 +52,6 @@ const Review = ({ currentState, setCurrentState, setModal, modal }) => {
     // ***** [GET] ***** //
     // 0. 구에 따른 동 목록 받기
     const getDongsByGuId = async () => {
-        alert(`${process.env.SERVER_URL}`)
-        
         try{
             await axios.get(`http://localhost:5001/location/gus/${currentState.guId}/dongs`)
             
