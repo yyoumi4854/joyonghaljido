@@ -4,8 +4,7 @@ const Pin = require("../db/models/Pin");
 
 class locationService {
   static async getGuNameAndIdList() {
-    const guNameAndIdList = await Gu.getGuNameAndIdList();
-    return guNameAndIdList;
+    return Gu.getGuNameAndIdList();
   }
 
   static async getDongsAndPins(guId) {
